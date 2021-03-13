@@ -140,6 +140,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="BpmImageReader.h" />
+    <ClInclude Include="ConsoleParser.h" />
     <ClInclude Include="GifImageReader.h" />
     <ClInclude Include="IImageReader.h" />
     <ClInclude Include="IImageWriter.h" />
@@ -148,6 +149,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BpmImageReader.cpp" />
+    <ClCompile Include="ConsoleParser.cpp" />
     <ClCompile Include="GifImageReader.cpp" />
     <ClCompile Include="IImageReader.cpp" />
     <ClCompile Include="IImageWriter.cpp" />

@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include <algorithm>
+#include <iostream>
 using namespace std;
 
 enum class imageType
@@ -28,7 +29,7 @@ public:
     ConsoleParser(ConsoleParser& other) = delete;
     void operator=(const ConsoleParser&) = delete;
     
-    static ConsoleParser* GetInstance(const std::string& value);
+    static ConsoleParser* GetInstance(const int argc, char* argv[]);
     
 	std::string pathSource() const {
         return pathSource_;

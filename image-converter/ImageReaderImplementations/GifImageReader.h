@@ -1,5 +1,5 @@
 #pragma once
-#include "IImageReader.h"
+#include "../IImageReader.h"
 class GifImageReader :
     public IImageReader
 {

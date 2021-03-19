@@ -139,8 +139,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="BpmImageReader.h" />
+    <ClInclude Include="BpmImageReader.h">
+      <FileType>CppCode</FileType>
+    </ClInclude>
     <ClInclude Include="ConsoleParser.h" />
+    <ClInclude Include="BmpImageWriter.h" />
     <ClInclude Include="GifImageReader.h" />
     <ClInclude Include="IImageReader.h" />
     <ClInclude Include="IImageWriter.h" />

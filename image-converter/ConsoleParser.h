@@ -1,5 +1,7 @@
 #pragma once
 #include <string>
+#include <algorithm>
+using namespace std;
 
 enum class imageType
 {
@@ -16,6 +18,7 @@ class ConsoleParser
 protected:
 	std::string pathSource_, pathOutput_;
 	imageType goalImageType_;
+	imageType sourceImageType_;
 
 	ConsoleParser(std::string pathSource, std::string pathOutput, std::string goalType);
 

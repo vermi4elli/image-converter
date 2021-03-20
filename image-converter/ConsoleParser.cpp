@@ -3,7 +3,13 @@
 ConsoleParser::ConsoleParser(std::string pathSource, std::string goalType, std::string pathOutput)
 {
 	pathSource_ = pathSource;
-	pathOutput_ = pathOutput;
+	
+	if (pathOutput.empty()) {
+		int lastDotIndex = pathSource.find_last_of('.');
+		if (lastDotIndex != std::string::npos) pathOutput_ = pathSource.substr(0, lastDotIndex) + goalType;
+		else throw std::exception("Enter a valid source image name!");
+	}
+	else pathOutput_ = pathOutput;
 
 	if (goalType == "ppm") goalImageType_ = imageType::PPM;
 	else if (goalType == "bpm") goalImageType_ = imageType::BPM;
@@ -11,6 +17,8 @@ ConsoleParser::ConsoleParser(std::string pathSource, std::string goalType, std::
 	else if (goalType == "png") goalImageType_ = imageType::PNG;
 	else if (goalType == "jpeg") goalImageType_ = imageType::JPEG;
 	else goalImageType_ = imageType::UNKNOWN;
+
+	if (goalImageType_ == imageType::UNKNOWN) throw std::exception("Enter a valid goal image type!");
 }
 
 ConsoleParser* ConsoleParser::GetInstance(const int argc, char* argv[])
@@ -27,10 +35,10 @@ ConsoleParser* ConsoleParser::GetInstance(const int argc, char* argv[])
 		}
 
 		if (pathSource.empty()) {
-			throw exception("Enter a source image value!");
+			throw std::exception("Enter a source image value!");
 		}
 		if (goalType.empty()) {
-			throw exception("Enter a goal image type value!");
+			throw std::exception("Enter a goal image type value!");
 		}
 		else {
 			if (consoleParser_ == nullptr) {
@@ -39,7 +47,36 @@ ConsoleParser* ConsoleParser::GetInstance(const int argc, char* argv[])
 			return consoleParser_;
 		}
 	}
-	throw exception("Enter a valid amount of arguments!");
+	throw std::exception("Enter a valid amount of arguments!");
 }
 
 ConsoleParser* ConsoleParser::consoleParser_ = nullptr;
+
+std::string printImageType(imageType value) {
+	std::string temp;
+	switch (value)
+	{
+	case imageType::PPM:
+		temp = "ppm";
+		break;
+	case imageType::BPM:
+		temp = "bpm";
+		break;
+	case imageType::GIF:
+		temp = "gif";
+		break;
+	case imageType::PNG:
+		temp = "png";
+		break;
+	case imageType::JPEG:
+		temp = "jpeg";
+		break;
+	case imageType::UNKNOWN:
+		temp = "unknown type";
+		break;
+	default:
+		break;
+	};
+
+	return temp;
+}

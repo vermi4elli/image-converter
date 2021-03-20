@@ -2,7 +2,6 @@
 #include <string>
 #include <algorithm>
 #include <iostream>
-using namespace std;
 
 enum class imageType
 {
@@ -14,12 +13,20 @@ enum class imageType
 	UNKNOWN
 };
 
+template <typename Enumeration>
+auto as_integer(Enumeration const value)
+-> typename std::underlying_type<Enumeration>::type
+{
+	return static_cast<typename std::underlying_type<Enumeration>::type>(value);
+}
+
+std::string printImageType(imageType value);
+
 class ConsoleParser
 {
 protected:
 	std::string pathSource_, pathOutput_;
 	imageType goalImageType_;
-	imageType sourceImageType_;
 
 	ConsoleParser(std::string pathSource, std::string pathOutput, std::string goalType);
 

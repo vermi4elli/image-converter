@@ -2,7 +2,7 @@
 #include <vector>;
 #include "../DataTypes/BmpHeader.h";
 #include "../DataTypes/rgbaquad.h";
-#include "../IImageWriter.h";
+#include "../ImageWriterInterface/IImageWriter.h";
 
 class BmpImageWriter {
 	void set16bit(uint16_t data, char buffer[]);

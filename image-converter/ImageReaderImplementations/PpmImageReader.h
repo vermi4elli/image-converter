@@ -1,5 +1,5 @@
 #pragma once
-#include "../IImageReader.h"
+#include "../ImageReaderInterface/IImageReader.h"
 class PpmImageReader :
     public IImageReader
 {

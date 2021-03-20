@@ -6,7 +6,7 @@ ConsoleParser::ConsoleParser(std::string pathSource, std::string goalType, std::
 	
 	if (pathOutput.empty()) {
 		int lastDotIndex = pathSource.find_last_of('.');
-		if (lastDotIndex != std::string::npos) pathOutput_ = pathSource.substr(0, lastDotIndex) + goalType;
+		if (lastDotIndex != std::string::npos) pathOutput_ = pathSource.substr(0, lastDotIndex) + '.' + goalType;
 		else throw std::exception("Enter a valid source image name!");
 	}
 	else pathOutput_ = pathOutput;
@@ -30,7 +30,7 @@ ConsoleParser* ConsoleParser::GetInstance(const int argc, char* argv[])
 		{
 			std::string temp = argv[i];
 			if (temp.find("--source") == 0) pathSource = temp.substr(9);
-			if (temp.find("--goal") == 0) goalType = temp.substr(7);
+			if (temp.find("--goal-format") == 0) goalType = temp.substr(14);
 			if (temp.find("--output") == 0) pathOutput = temp.substr(9);
 		}
 

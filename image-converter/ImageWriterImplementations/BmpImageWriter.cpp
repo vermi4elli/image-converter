@@ -4,7 +4,6 @@
 #include <iomanip>
 #include <algorithm>
 #include <vector>
-#include "BmpHeader.h";
 
 bool BmpImageWriter::print(const char* error) {
     std::cout << error << std::endl;

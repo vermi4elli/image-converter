@@ -28,7 +28,6 @@ std::vector<std::vector<RGBAquad>> PpmImageReader::read()
     // basic vars
     std::string header;
     int W, H, maxValue;
-    RGBAquad rgba_temp;
 
     // reading file type header (P3 or P6)
     fin >> header;
@@ -72,10 +71,8 @@ std::vector<std::vector<RGBAquad>> PpmImageReader::read()
     else if (header == "P6")
     {
         if (maxValue > 255) throw std::exception("PPM's binary version cannot have a maximum color-component value higher than 255!");
-        uint8_t t_r, t_g, t_b;
         char ch;
         char* buffer = new char(4);
-        RGBAquad pixel;
         
         if (fin.peek() == '\n' || fin.peek() == ' ') {
             fin.get(ch);

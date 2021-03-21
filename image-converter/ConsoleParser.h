@@ -1,6 +1,5 @@
 #pragma once
 #include <string>
-#include <algorithm>
 #include <iostream>
 #include "DataTypes/ImageType.h"
 

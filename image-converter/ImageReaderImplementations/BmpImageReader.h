@@ -1,6 +1,8 @@
 #pragma once
-#include "../DataTypes/rgbaquad.h";
-#include "../ImageReaderInterface/IImageReader.h";
+#include "../DataTypes/rgbaquad.h"
+#include "../DataTypes/BmpHeader.h"
+#include "../ImageReaderInterface/IImageReader.h"
+
 class BmpImageReader :
 	public IImageReader {
 	constexpr uint32_t get32bit(char buffer[]);
@@ -8,6 +10,6 @@ class BmpImageReader :
 	bool print(const char* error);
 	void makeRGBAquad(RGBAquad& res, uint32_t data);
 public:
-	BmpImageReader(const char* name) : IImageReader(name) {};
+	BmpImageReader(std::string name) : IImageReader(name) {};
 	std::vector< std::vector <RGBAquad> > read();
 };

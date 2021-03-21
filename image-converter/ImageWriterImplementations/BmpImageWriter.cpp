@@ -1,10 +1,10 @@
-#include "BmpImageWriter.h";
-#include <fstream>;
-#include <iostream>;
-#include <iomanip>;
-#include <algorithm>;
-#include <vector>;
-#include "../DataTypes/BmpHeader.h";
+#include "BmpImageWriter.h"
+#include <fstream>
+#include <iostream>
+#include <iomanip>
+#include <algorithm>
+#include <vector>
+#include "../DataTypes/BmpHeader.h"
 
 bool BmpImageWriter::print(const char* error) {
     std::cout << error << std::endl;

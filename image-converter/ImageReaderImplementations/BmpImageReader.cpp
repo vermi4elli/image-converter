@@ -4,9 +4,8 @@
 #include <iomanip>
 #include <algorithm>
 #include <vector>
-#include "BmpImageReader.h";
-#include "../DataTypes/BmpHeader.h";
-#include "../ImageWriterImplementations/BmpImageWriter.h";
+#include "BmpImageReader.h"
+
 void BmpImageReader::makeRGBAquad(RGBAquad& res, uint32_t data)
 {
     res.r = (data & 0xff0000) >> 16;
@@ -128,8 +127,6 @@ std::vector< std::vector <RGBAquad> > BmpImageReader::read () {
     std::reverse(data.begin(), data.end());
 
     fin.close();
-
-    BmpImageWriter writer;
 
     return data;
 

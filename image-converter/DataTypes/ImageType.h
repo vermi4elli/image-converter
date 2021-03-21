@@ -1,9 +1,10 @@
 #pragma once
+#include <string>
 
 enum class imageType
 {
 	PPM,
-	BPM,
+	BMP,
 	GIF,
 	PNG,
 	JPEG,
@@ -17,14 +18,14 @@ auto as_integer(Enumeration const value)
 	return static_cast<typename std::underlying_type<Enumeration>::type>(value);
 }
 
-std::string printImageType(imageType value) {
+inline std::string printImageType(imageType value) {
 	std::string temp;
 	switch (value)
 	{
 	case imageType::PPM:
 		temp = "ppm";
 		break;
-	case imageType::BPM:
+	case imageType::BMP:
 		temp = "bpm";
 		break;
 	case imageType::GIF:

@@ -1,6 +1,6 @@
 #pragma once
 #include "../ImageWriterInterface/IImageWriter.h"
-#include "../DataTypes/BmpHeader.h";
+#include "../DataTypes/BmpHeader.h"
 
 class BmpImageWriter :
 	public IImageWriter {
@@ -9,5 +9,6 @@ class BmpImageWriter :
 	uint32_t saveRGBAquad(const RGBAquad& pixel);
 	bool print(const char* error);
 public:
+	BmpImageWriter(std::string name) : IImageWriter(name) {};
 	void write(std::vector< std::vector <RGBAquad> > data);
 };

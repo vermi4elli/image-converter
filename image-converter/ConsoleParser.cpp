@@ -32,9 +32,9 @@ ConsoleParser* ConsoleParser::GetInstance(const int argc, char* argv[])
 		for (int i = 1; i < argc; i++)
 		{
 			std::string temp = argv[i];
-			if (temp.find("--source") == 0) pathSource = temp.substr(9);
+			if (temp.find("--source") == 0) pathSource = "..\\" + temp.substr(9);
 			if (temp.find("--goal-format") == 0) goalType = temp.substr(14);
-			if (temp.find("--output") == 0) pathOutput = temp.substr(9);
+			if (temp.find("--output") == 0) pathOutput = "..\\" + temp.substr(9);
 		}
 
 		if (pathSource.empty()) {
@@ -55,7 +55,7 @@ ConsoleParser* ConsoleParser::GetInstance(const int argc, char* argv[])
 void ConsoleParser::PrintInfo() const
 {
 	std::cout << "Source path: " << pathSource() <<
-		";\nGoal Image Type: " << printImageType(goalImageType()) <<
+		//";\nGoal Image Type: " << printImageType(goalImageType()) <<
 		";\nOutput path: " << pathOutput() << std::endl;
 }
 

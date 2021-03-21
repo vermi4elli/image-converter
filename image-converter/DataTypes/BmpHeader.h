@@ -1,5 +1,6 @@
 #pragma once
-#include <iostream>;
+#include <iostream>
+
 struct BmpHeader
 {
     // BM letters

@@ -141,6 +141,7 @@
   <ItemGroup>
     <ClInclude Include="ConsoleParser.h" />
     <ClInclude Include="DataTypes\BmpHeader.h" />
+    <ClInclude Include="DataTypes\ImageType.h" />
     <ClInclude Include="DataTypes\rgbaquad.h" />
     <ClInclude Include="ImageReaderImplementations\BmpImageReader.h" />
     <ClInclude Include="ImageReaderInterface\IImageReader.h" />
@@ -158,7 +159,9 @@
     <ClCompile Include="ImageConverter.cpp" />
     <ClCompile Include="ImageReaderImplementations\GifImageReader.cpp" />
     <ClCompile Include="ImageReaderImplementations\PpmImageReader.cpp" />
+    <ClCompile Include="ImageReaderInterface\IImageReader.cpp" />
     <ClCompile Include="ImageWriterImplementations\BmpImageWriter.cpp" />
+    <ClCompile Include="ImageWriterInterface\IImageWriter.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="ImageWriterImplementations\PpmImageWriter.cpp" />
   </ItemGroup>

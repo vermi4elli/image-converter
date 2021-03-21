@@ -4,7 +4,10 @@
 
 class IImageWriter
 {
+protected:
+	const char* name;
 public:
-	virtual void write(const char* name, std::vector< std::vector <RGBAquad> > data) = 0;
+	IImageWriter(const char* name);
+	virtual void write(std::vector< std::vector <RGBAquad> > data) = 0;
 };
 

@@ -1,6 +1,6 @@
 #include "ConsoleParser.h"
 
-ConsoleParser::ConsoleParser(std::string pathSource, std::string goalType, std::string pathOutput)
+ConsoleParser::ConsoleParser(std::string pathSource, std::string sourceType, std::string goalType, std::string pathOutput)
 {
 	pathSource_ = pathSource;
 	
@@ -12,13 +12,16 @@ ConsoleParser::ConsoleParser(std::string pathSource, std::string goalType, std::
 	else pathOutput_ = pathOutput;
 
 	if (goalType == "ppm") goalImageType_ = imageType::PPM;
-	else if (goalType == "bpm") goalImageType_ = imageType::BPM;
-	else if (goalType == "gif") goalImageType_ = imageType::GIF;
-	else if (goalType == "png") goalImageType_ = imageType::PNG;
-	else if (goalType == "jpeg") goalImageType_ = imageType::JPEG;
+	else if (goalType == "bpm") goalImageType_ = imageType::BMP;
 	else goalImageType_ = imageType::UNKNOWN;
-
-	if (goalImageType_ == imageType::UNKNOWN) throw std::exception("Enter a valid goal image type!");
+	if (goalImageType_ == imageType::UNKNOWN) throw std::exception("Enter a supported goal image type!");
+	
+	if (sourceType == "ppm") sourceImageType_ = imageType::PPM;
+	else if (sourceType == "bpm") sourceImageType_ = imageType::BMP;
+	else if (sourceType == "png") sourceImageType_ = imageType::PNG;
+	else if (sourceType == "gif") sourceImageType_ = imageType::GIF;
+	else sourceImageType_ = imageType::UNKNOWN;
+	if (sourceImageType_ == imageType::UNKNOWN) throw std::exception("Enter a supported source image type!");
 }
 
 ConsoleParser* ConsoleParser::GetInstance(const int argc, char* argv[])
@@ -37,12 +40,11 @@ ConsoleParser* ConsoleParser::GetInstance(const int argc, char* argv[])
 		if (pathSource.empty()) {
 			throw std::exception("Enter a source image value!");
 		}
-		if (goalType.empty()) {
-			throw std::exception("Enter a goal image type value!");
-		}
 		else {
+			std::string sourceType = pathSource.substr(pathSource.find_last_of('.'));
+
 			if (consoleParser_ == nullptr) {
-				consoleParser_ = new ConsoleParser(pathSource, goalType, pathOutput);
+				consoleParser_ = new ConsoleParser(pathSource, sourceType, goalType, pathOutput);
 			}
 			return consoleParser_;
 		}
@@ -50,33 +52,11 @@ ConsoleParser* ConsoleParser::GetInstance(const int argc, char* argv[])
 	throw std::exception("Enter a valid amount of arguments!");
 }
 
-ConsoleParser* ConsoleParser::consoleParser_ = nullptr;
-
-std::string printImageType(imageType value) {
-	std::string temp;
-	switch (value)
-	{
-	case imageType::PPM:
-		temp = "ppm";
-		break;
-	case imageType::BPM:
-		temp = "bpm";
-		break;
-	case imageType::GIF:
-		temp = "gif";
-		break;
-	case imageType::PNG:
-		temp = "png";
-		break;
-	case imageType::JPEG:
-		temp = "jpeg";
-		break;
-	case imageType::UNKNOWN:
-		temp = "unknown type";
-		break;
-	default:
-		break;
-	};
-
-	return temp;
+void ConsoleParser::PrintInfo() const
+{
+	std::cout << "Source path: " << pathSource() <<
+		";\nGoal Image Type: " << printImageType(goalImageType()) <<
+		";\nOutput path: " << pathOutput() << std::endl;
 }
+
+ConsoleParser* ConsoleParser::consoleParser_ = nullptr;

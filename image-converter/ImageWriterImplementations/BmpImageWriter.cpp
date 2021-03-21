@@ -32,7 +32,7 @@ uint32_t BmpImageWriter::saveRGBAquad(const RGBAquad& pixel)
         (static_cast<uint32_t>(pixel.a) << 24);
 }
 
-void BmpImageWriter::write(const char* name, std::vector< std::vector <RGBAquad> > data) {
+void BmpImageWriter::write(std::vector< std::vector <RGBAquad> > data) {
 
     BmpHeader head;
     head.width = data[0].size();

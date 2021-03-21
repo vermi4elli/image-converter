@@ -20,7 +20,7 @@ void PpmImageReader::printMatrix(const std::vector<std::vector<RGBAquad>>& res)
     }
 }
 
-std::vector<std::vector<RGBAquad>> PpmImageReader::read(const char* name)
+std::vector<std::vector<RGBAquad>> PpmImageReader::read()
 {
     std::ifstream fin(name);
     if (!fin.is_open()) throw std::exception("Failed to open the given file!");

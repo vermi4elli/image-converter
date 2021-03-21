@@ -6,6 +6,6 @@ class PpmImageWriter :
     public IImageWriter
 {
 public:
-	void write(const char* name, std::vector< std::vector <RGBAquad> > data);
+	void write(std::vector< std::vector <RGBAquad> > data);
 };
 

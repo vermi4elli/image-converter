@@ -3,10 +3,10 @@
 int main(int argc, char* argv[]) {
 	try
 	{
-		/*ConsoleParser* consoleParser = ConsoleParser::GetInstance(argc, argv);
-		std::cout << "Source path: " << consoleParser->pathSource() <<
-			";\nGoal Image Type: " << printImageType(consoleParser->goalImageType()) <<
-			";\nOutput path: " << consoleParser->pathOutput() << std::endl;*/
+		ImageConverter* imageConverter = new ImageConverter(argc, argv);
+		imageConverter->convertImage();
+
+		/**/
 
 		//PpmImageReader reader;
 		////auto res = reader.read("..\\images\\ppm\\pbmlib.ppm");

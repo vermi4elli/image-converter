@@ -34,7 +34,7 @@ bool BmpImageReader::print(const char* error) {
     exit(1);
 }
 
-std::vector< std::vector <RGBAquad> > BmpImageReader::read (const char* name) {
+std::vector< std::vector <RGBAquad> > BmpImageReader::read () {
     BmpHeader header;
 
     std::ifstream fin(name, std::ios::binary);

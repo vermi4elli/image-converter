@@ -2,33 +2,15 @@
 #include <string>
 #include <algorithm>
 #include <iostream>
-
-enum class imageType
-{
-	PPM,
-	BPM,
-	GIF,
-	PNG,
-	JPEG,
-	UNKNOWN
-};
-
-template <typename Enumeration>
-auto as_integer(Enumeration const value)
--> typename std::underlying_type<Enumeration>::type
-{
-	return static_cast<typename std::underlying_type<Enumeration>::type>(value);
-}
-
-std::string printImageType(imageType value);
+#include "DataTypes/ImageType.h"
 
 class ConsoleParser
 {
-protected:
+private:
 	std::string pathSource_, pathOutput_;
-	imageType goalImageType_;
+	imageType goalImageType_, sourceImageType_;
 
-	ConsoleParser(std::string pathSource, std::string pathOutput, std::string goalType);
+	ConsoleParser(std::string pathSource, std::string sourceType, std::string goalType, std::string pathOutput);
 
 	static ConsoleParser* consoleParser_;
 
@@ -42,7 +24,6 @@ public:
         return pathSource_;
     }
 
-
 	std::string pathOutput() const {
 		return pathOutput_;
 	}
@@ -50,5 +31,11 @@ public:
 	imageType goalImageType() const {
 		return goalImageType_;
 	}
+	
+	imageType sourceImageType() const {
+		return sourceImageType_;
+	}
+
+	void PrintInfo() const;
 
 };

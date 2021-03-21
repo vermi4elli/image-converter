@@ -4,10 +4,7 @@
 #include "ImageWriterImplementations/PpmImageWriter.h"
 #include "ImageReaderImplementations/BmpImageReader.h"
 #include "ImageWriterImplementations/BmpImageWriter.h"
-#include "ImageReaderImplementations/GifImageReader.h"
-//#include "ImageWriterImplementations/GifImageWriter.h"
-//#include "ImageReaderImplementations/PngImageReader.h"
-//#include "ImageWriterImplementations/PngImageWriter.h"
+#include "ImageReaderImplementations/png/PngImageReader.h"
 
 class ImageConverter
 {

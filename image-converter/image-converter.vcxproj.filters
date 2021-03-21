@@ -24,9 +24,6 @@
     <ClInclude Include="ImageWriterImplementations\BmpImageWriter.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="ImageReaderImplementations\GifImageReader.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
     <ClInclude Include="ImageReaderImplementations\PpmImageReader.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
@@ -63,6 +60,9 @@
     <ClInclude Include="ImageReaderImplementations\png\PngStruct.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
+    <ClInclude Include="ImageReaderImplementations\png\Deflate.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ImageConverter.cpp">
@@ -72,9 +72,6 @@
       <Filter>Исходные файлы</Filter>
     </ClCompile>
     <ClCompile Include="ImageWriterImplementations\BmpImageWriter.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="ImageReaderImplementations\GifImageReader.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
     <ClCompile Include="ImageReaderImplementations\PpmImageReader.cpp">
@@ -99,6 +96,9 @@
       <Filter>Исходные файлы</Filter>
     </ClCompile>
     <ClCompile Include="ImageReaderImplementations\png\PngFilter.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="ImageReaderImplementations\png\Deflate.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
   </ItemGroup>

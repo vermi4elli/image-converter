@@ -1,8 +1,8 @@
-#include "Deflate.h";
-#include <fstream>;
-#include <iomanip>;
-#include <algorithm>;
-#include <vector>;
+#include "Deflate.h"
+#include <fstream>
+#include <iomanip>
+#include <algorithm>
+#include <vector>
 #include <fstream>
 #include <iostream>
 #include <boost/iostreams/filtering_streambuf.hpp>

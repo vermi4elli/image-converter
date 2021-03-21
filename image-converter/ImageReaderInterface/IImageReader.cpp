@@ -1,7 +1,7 @@
 #include "IImageReader.h"
 #include "../ImageReaderImplementations/PpmImageReader.h"
 #include "../ImageReaderImplementations/BmpImageReader.h"
-//#include "../ImageReaderImplementations/GifImageReader.h"
+#include "../ImageReaderImplementations/png/PngImageReader.h"
 
 IImageReader::IImageReader(std::string name)
 {
@@ -17,6 +17,9 @@ IImageReader* IImageReader::createImageReader(imageType sourceType, std::string 
 		break;
 	case imageType::BMP:
 		return new BmpImageReader(name);
+		break;
+	case imageType::PNG:
+		return new PngImageReader(name);
 		break;
 	default:
 		throw std::exception("[Error]: Unknown or unsupported source image type!");

@@ -5,8 +5,7 @@
 #include "PngImageReader.h"
 #include "Deflate.h"
 #include <sstream>
-#include "../../ImageWriterImplementations/BmpImageWriter.h";
-#include <boost/iostreams/filtering_streambuf.hpp>
+#include "../../ImageWriterImplementations/BmpImageWriter.h"
 #include "PngFilter.h"
 
 constexpr uint32_t PngImageReader::get32bit(char bits[]) {
@@ -186,7 +185,7 @@ void PngImageReader::cHRM_chunk(std::ifstream& fin, PngStruct png, char* buffer)
 
 
 std::vector<std::vector<RGBAquad> > PngImageReader::read() {
-	std::ifstream fin("shisui.png", std::ios::binary);
+	std::ifstream fin(name, std::ios::binary);
 
 	PngStruct png;
 

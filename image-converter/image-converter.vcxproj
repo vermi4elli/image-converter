@@ -104,12 +104,14 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>C:\Users\nikit\Downloads\boost_1_75_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>C:\Users\nikit\Downloads\boost_1_75_0\libs\iostreams;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -146,13 +148,13 @@
     <ClInclude Include="DataTypes\ImageType.h" />
     <ClInclude Include="DataTypes\rgbaquad.h" />
     <ClInclude Include="ImageReaderImplementations\BmpImageReader.h" />
+    <ClInclude Include="ImageReaderImplementations\png\Deflate.h" />
     <ClInclude Include="ImageReaderImplementations\png\PngFilter.h" />
     <ClInclude Include="ImageReaderImplementations\png\PngImageReader.h" />
     <ClInclude Include="ImageReaderImplementations\png\PngStruct.h" />
     <ClInclude Include="ImageReaderInterface\IImageReader.h" />
     <ClInclude Include="ImageWriterInterface\IImageWriter.h" />
     <ClInclude Include="ImageConverter.h" />
-    <ClInclude Include="ImageReaderImplementations\GifImageReader.h" />
     <ClInclude Include="ImageReaderImplementations\PpmImageReader.h" />
     <ClInclude Include="ImageWriterImplementations\BmpImageWriter.h" />
     <ClInclude Include="ImageWriterImplementations\PpmImageWriter.h" />
@@ -162,7 +164,7 @@
     <ClCompile Include="ConsoleParser.cpp" />
     <ClCompile Include="ImageReaderImplementations\BmpImageReader.cpp" />
     <ClCompile Include="ImageConverter.cpp" />
-    <ClCompile Include="ImageReaderImplementations\GifImageReader.cpp" />
+    <ClCompile Include="ImageReaderImplementations\png\Deflate.cpp" />
     <ClCompile Include="ImageReaderImplementations\png\PngFilter.cpp" />
     <ClCompile Include="ImageReaderImplementations\png\PngImageReader.cpp" />
     <ClCompile Include="ImageReaderImplementations\PpmImageReader.cpp" />

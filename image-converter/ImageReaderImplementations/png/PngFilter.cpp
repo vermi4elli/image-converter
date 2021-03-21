@@ -1,4 +1,4 @@
-#include <iostream>;
+#include <iostream>
 #include "PngFilter.h"
 
 int PngFilter::None(int x, int a, int b, int c)

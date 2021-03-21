@@ -1,9 +1,12 @@
 #include "PngStruct.h"
 #include "../../DataTypes/rgbaquad.h"
+#include <boost/iostreams/filtering_streambuf.hpp>
+#include "../../ImageReaderInterface/IImageReader.h"
 #include <vector>
 
 #pragma once
-class PngImageReader {
+class PngImageReader :
+	public IImageReader {
 	constexpr uint32_t get32bit(char bits[]);
 	constexpr uint32_t get32bitrev(char bits[]);
 	uint32_t Crc32(char* stream, int offset, int length, uint32_t crc);
@@ -18,5 +21,6 @@ class PngImageReader {
 	void cHRM_chunk(std::ifstream& fin, PngStruct png, char* buffer);
 
 public:
+	PngImageReader(std::string name) : IImageReader(name) {};
 	std::vector<std::vector<RGBAquad> > read();
 };

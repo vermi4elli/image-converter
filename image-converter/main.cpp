@@ -11,10 +11,11 @@ int main(int argc, char* argv[]) {
 			";\nOutput path: " << consoleParser->pathOutput() << std::endl;*/
 
 		PpmImageReader reader;
+		//auto res = reader.read("..\\images\\ppm\\pbmlib.ppm");
 		//auto res = reader.read("..\\images\\ppm\\pbmlib.ascii.ppm");
 		//auto res = reader.read("..\\images\\ppm\\bell_206.ppm");
 		//auto res = reader.read("..\\images\\ppm\\star_field.ascii.ppm");
-		auto res = reader.read("..\\images\\ppm\\pbmlib.ppm");
+		auto res = reader.read("..\\images\\ppm\\newton.ppm");
 
 		PpmImageWriter writer;
 		writer.write("..\\images\\ppm\\result.ppm", res);

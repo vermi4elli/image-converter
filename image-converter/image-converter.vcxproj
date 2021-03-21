@@ -142,15 +142,18 @@
     <ClInclude Include="ConsoleParser.h" />
     <ClInclude Include="DataTypes\BmpHeader.h" />
     <ClInclude Include="DataTypes\rgbaquad.h" />
+    <ClInclude Include="ImageReaderImplementations\BmpImageReader.h" />
     <ClInclude Include="ImageReaderInterface\IImageReader.h" />
     <ClInclude Include="ImageWriterInterface\IImageWriter.h" />
     <ClInclude Include="ImageConverter.h" />
     <ClInclude Include="ImageReaderImplementations\GifImageReader.h" />
     <ClInclude Include="ImageReaderImplementations\PpmImageReader.h" />
     <ClInclude Include="ImageWriterImplementations\BmpImageWriter.h" />
+    <ClInclude Include="ImageWriterImplementations\PpmImageWriter.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ConsoleParser.cpp" />
+    <ClCompile Include="ImageReaderImplementations\BmpImageReader.cpp" />
     <ClCompile Include="ImageReaderInterface\IImageReader.cpp" />
     <ClCompile Include="ImageWriterInterface\IImageWriter.cpp" />
     <ClCompile Include="ImageConverter.cpp" />
@@ -158,6 +161,7 @@
     <ClCompile Include="ImageReaderImplementations\PpmImageReader.cpp" />
     <ClCompile Include="ImageWriterImplementations\BmpImageWriter.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="ImageWriterImplementations\PpmImageWriter.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

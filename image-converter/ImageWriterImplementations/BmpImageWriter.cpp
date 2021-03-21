@@ -112,6 +112,8 @@ void BmpImageWriter::write(std::vector< std::vector <RGBAquad> > data) {
         }
     }
 
+    std::cout << "[Debug]: Done writing" << std::endl;
+
     fout.close();
 
 }

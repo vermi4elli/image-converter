@@ -18,7 +18,7 @@ IImageWriter* IImageWriter::createImageWriter(imageType goalType, std::string na
 		return new BmpImageWriter(name);
 		break;
 	default:
-		throw std::exception("Unknown or unsupported goal image type!");
+		throw std::exception("[Error]: Unknown or unsupported goal image type!");
 		break;
 	}
 }

@@ -1,4 +1,5 @@
 #pragma once
+#include "ConsoleParser.h"
 #include "ImageReaderImplementations/PpmImageReader.h"
 #include "ImageWriterImplementations/PpmImageWriter.h"
 #include "ImageReaderImplementations/BmpImageReader.h"
@@ -7,8 +8,6 @@
 //#include "ImageWriterImplementations/GifImageWriter.h"
 //#include "ImageReaderImplementations/PngImageReader.h"
 //#include "ImageWriterImplementations/PngImageWriter.h"
-#include "ConsoleParser.h"
-#include "LZV.h"
 
 class ImageConverter
 {

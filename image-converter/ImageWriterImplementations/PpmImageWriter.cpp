@@ -17,5 +17,7 @@ void PpmImageWriter::write(std::vector<std::vector<RGBAquad>> data)
         }
     }
 
+    std::cout << "[Debug]: Done writing" << std::endl;
+
     fout.close();
 }

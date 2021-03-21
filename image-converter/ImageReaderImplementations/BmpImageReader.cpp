@@ -29,7 +29,7 @@ constexpr uint32_t BmpImageReader::get32bit(char buffer[])
 }
 
 bool BmpImageReader::print(const char* error) {
-    std::cout << error << std::endl;
+    std::cout << "[Error]: " << error << std::endl;
     exit(1);
 }
 
@@ -127,6 +127,8 @@ std::vector< std::vector <RGBAquad> > BmpImageReader::read () {
     std::reverse(data.begin(), data.end());
 
     fin.close();
+
+    std::cout << "[Debug]: Done reading" << std::endl;
 
     return data;
 

@@ -19,7 +19,7 @@ IImageReader* IImageReader::createImageReader(imageType sourceType, std::string 
 		return new BmpImageReader(name);
 		break;
 	default:
-		throw std::exception("Unknown or unsupported source image type!");
+		throw std::exception("[Error]: Unknown or unsupported source image type!");
 		break;
 	}
 }

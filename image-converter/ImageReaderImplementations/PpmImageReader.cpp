@@ -23,7 +23,7 @@ void PpmImageReader::printMatrix(const std::vector<std::vector<RGBAquad>>& res)
 std::vector<std::vector<RGBAquad>> PpmImageReader::read()
 {
     std::ifstream fin(name);
-    if (!fin.is_open()) throw std::exception("Failed to open the given file!");
+    if (!fin.is_open()) throw std::exception("[Error]: Failed to open the given file!");
 
     // basic vars
     std::string header;
@@ -48,7 +48,6 @@ std::vector<std::vector<RGBAquad>> PpmImageReader::read()
 
     // reading the width, height, max color value
     fin >> W >> H >> maxValue;
-    std::cout << header << " ; " << W << " ; " << H << " ; " << maxValue << std::endl;
 
     std::vector<std::vector<RGBAquad>> result(H, std::vector<RGBAquad>(W));
     if (header == "P3")
@@ -70,7 +69,7 @@ std::vector<std::vector<RGBAquad>> PpmImageReader::read()
     }
     else if (header == "P6")
     {
-        if (maxValue > 255) throw std::exception("PPM's binary version cannot have a maximum color-component value higher than 255!");
+        if (maxValue > 255) throw std::exception("[Error]: PPM's binary version cannot have a maximum color-component value higher than 255!");
         char ch;
         char* buffer = new char(4);
         
@@ -96,7 +95,7 @@ std::vector<std::vector<RGBAquad>> PpmImageReader::read()
     }
     result[0][0].a = maxValue;
 
-    std::cout << "Done parsing" << std::endl;
+    std::cout << "[Debug]: Done reading" << std::endl;
 
     //printMatrix(result);
     return result;

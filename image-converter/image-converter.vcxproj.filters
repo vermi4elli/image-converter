@@ -54,6 +54,15 @@
     <ClInclude Include="DataTypes\ImageType.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
+    <ClInclude Include="ImageReaderImplementations\png\PngFilter.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="ImageReaderImplementations\png\PngImageReader.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="ImageReaderImplementations\png\PngStruct.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ImageConverter.cpp">
@@ -84,6 +93,12 @@
       <Filter>Исходные файлы</Filter>
     </ClCompile>
     <ClCompile Include="ImageWriterInterface\IImageWriter.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="ImageReaderImplementations\png\PngImageReader.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="ImageReaderImplementations\png\PngFilter.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
   </ItemGroup>

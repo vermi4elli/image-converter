@@ -1,5 +1,5 @@
 #include "PngStruct.h"
-#include "RGBAquad.h"
+#include "../../DataTypes/rgbaquad.h"
 #include <vector>
 
 #pragma once

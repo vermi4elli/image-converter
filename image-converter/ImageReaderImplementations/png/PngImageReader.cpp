@@ -3,10 +3,9 @@
 #include <iomanip>
 #include <algorithm>
 #include "PngImageReader.h"
-#include "rgbaquad.h"
 #include "Deflate.h"
 #include <sstream>
-#include "BmpImageWriter.h";
+#include "../../ImageWriterImplementations/BmpImageWriter.h";
 #include <boost/iostreams/filtering_streambuf.hpp>
 #include "PngFilter.h"
 

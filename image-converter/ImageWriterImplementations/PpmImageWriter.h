@@ -1,7 +1,5 @@
 #pragma once
 #include "../ImageWriterInterface/IImageWriter.h"
-#include <vector>;
-#include "../DataTypes/rgbaquad.h";
 #include <fstream>
 
 class PpmImageWriter :

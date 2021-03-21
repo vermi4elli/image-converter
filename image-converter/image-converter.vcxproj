@@ -154,8 +154,6 @@
   <ItemGroup>
     <ClCompile Include="ConsoleParser.cpp" />
     <ClCompile Include="ImageReaderImplementations\BmpImageReader.cpp" />
-    <ClCompile Include="ImageReaderInterface\IImageReader.cpp" />
-    <ClCompile Include="ImageWriterInterface\IImageWriter.cpp" />
     <ClCompile Include="ImageConverter.cpp" />
     <ClCompile Include="ImageReaderImplementations\GifImageReader.cpp" />
     <ClCompile Include="ImageReaderImplementations\PpmImageReader.cpp" />

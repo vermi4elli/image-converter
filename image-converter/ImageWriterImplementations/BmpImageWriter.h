@@ -1,10 +1,9 @@
 #pragma once
-#include <vector>;
-#include "../DataTypes/rgbaquad.h";
+#include "../ImageWriterInterface/IImageWriter.h"
 #include "../DataTypes/BmpHeader.h";
 
-
-class BmpImageWriter {
+class BmpImageWriter :
+	public IImageWriter {
 	void set16bit(uint16_t data, char buffer[]);
 	void set32bit(uint32_t data, char buffer[]);
 	uint32_t saveRGBAquad(const RGBAquad& pixel);

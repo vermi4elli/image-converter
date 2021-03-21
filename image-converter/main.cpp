@@ -1,7 +1,4 @@
-#include "ConsoleParser.h"
-#include "LZV.h"
-#include "ImageReaderImplementations/PpmImageReader.h"
-#include "ImageWriterImplementations/PpmImageWriter.h"
+#include "ImageConverter.h"
 
 int main(int argc, char* argv[]) {
 	try

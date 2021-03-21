@@ -10,7 +10,7 @@ int main(int argc, char* argv[]) {
 			";\nOutput path: " << consoleParser->pathOutput() << std::endl;*/
 
 		PpmImageReader reader;
-		reader.read("C:\\Users\\nikit\\OneDrive\\Рабочий стол\\simplePPM.ppm");
+		reader.read("C:\\Users\\nikit\\OneDrive\\Рабочий стол\\star_field.ascii.ppm");
 	}
 	catch (const std::exception& e)
 	{

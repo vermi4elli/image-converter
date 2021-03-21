@@ -17,11 +17,11 @@ void PpmImageReader::makeRGBAquad(RGBAquad& res, uint32_t data)
 void PpmImageReader::printMatrix(const std::vector<std::vector<RGBAquad>>& res)
 {
     int W = res.front().size(), H = res.size();
-    for (int j = 0; j < H; j++)
+    for (int i = 0; i < H; i++)
     {
-        for (int i = 0; i < W; i++)
+        for (int j = 0; j < W; j++)
         {
-            std::cout << " (" << res[i][j].r << " " << res[i][j].g << " " << res[i][j].b << ")";
+            std::cout << " (" << static_cast<int>(res[i][j].r) << " " << static_cast<int>(res[i][j].g) << " " << static_cast<int>(res[i][j].b) << ")";
         }
         std::cout << std::endl;
     }
@@ -40,13 +40,13 @@ std::vector<std::vector<RGBAquad>> PpmImageReader::read(const char* name)
     fin >> header >> W >> H >> maxValue;
     std::cout << header << " ; " << W << " ; " << H << " ; " << maxValue << std::endl;
 
-    std::vector<std::vector<RGBAquad>> result(W, std::vector<RGBAquad>(H));
+    std::vector<std::vector<RGBAquad>> result(H, std::vector<RGBAquad>(W));
     if (header == "P3") {
         int t_r, t_g, t_b;
 
-        for (int j = 0; j < H; j++)
+        for (int j = 0; j < W; j++)
         {
-            for (int i = 0; i < W; i++)
+            for (int i = 0; i < H; i++)
             {
                 fin >> t_r >> t_g >> t_b;
 
@@ -54,6 +54,9 @@ std::vector<std::vector<RGBAquad>> PpmImageReader::read(const char* name)
                 result[i][j].g = t_g;
                 result[i][j].b = t_b;
                 result[i][j].a = 255;
+                
+                //std::cout << i << " : " << j << " ->" << " (" << t_r << " " << t_g << " " << t_b << ")" << std::endl;
+                //std::cout << i << " : " << j << " ->" << " (" << static_cast<int>(result[i][j].r) << " " << static_cast<int>(result[i][j].g) << " " << static_cast<int>(result[i][j].b) << ")" << std::endl;
             }
         }
     }
@@ -65,6 +68,7 @@ std::vector<std::vector<RGBAquad>> PpmImageReader::read(const char* name)
         {
             for (int i = 0; i < W; i++)
             {
+                
                 fin >> t_r >> t_g >> t_b;
 
                 result[i][j].r = t_r;
@@ -75,6 +79,7 @@ std::vector<std::vector<RGBAquad>> PpmImageReader::read(const char* name)
         }
     }
 
+    std::cout << "Done parsing" << std::endl;
     printMatrix(result);
     return result;
 }

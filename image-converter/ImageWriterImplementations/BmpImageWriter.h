@@ -1,7 +1,7 @@
 #pragma once
 #include <vector>;
-#include "rgbaquad.h";
-#include "BmpHeader.h";
+#include "../DataTypes/rgbaquad.h";
+#include "../DataTypes/BmpHeader.h";
 
 
 class BmpImageWriter {

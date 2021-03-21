@@ -1,6 +1,6 @@
 #pragma once
-#include "rgbaquad.h";
-#include "IImageReader.h";
+#include "../DataTypes/rgbaquad.h";
+#include "../ImageReaderInterface/IImageReader.h";
 class BmpImageReader :
 	public IImageReader {
     

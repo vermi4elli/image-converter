@@ -5,8 +5,8 @@
 #include <algorithm>
 #include <vector>
 #include "BmpImageReader.h";
-#include "BmpHeader.h";
-#include "BmpImageWriter.h";
+#include "../DataTypes/BmpHeader.h";
+#include "../ImageWriterImplementations/BmpImageWriter.h";
 void BmpImageReader::makeRGBAquad(RGBAquad& res, uint32_t data)
 {
     res.r = (data & 0xff0000) >> 16;
@@ -37,7 +37,7 @@ bool BmpImageReader::print(const char* error) {
 std::vector< std::vector <RGBAquad> > BmpImageReader::read (const char* name) {
     BmpHeader header;
 
-    std::ifstream fin("example2.bmp", std::ios::binary);
+    std::ifstream fin(name, std::ios::binary);
 
     char buffer[4];
 

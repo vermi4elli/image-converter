@@ -150,6 +150,7 @@
     <ClInclude Include="ImageReaderImplementations\PpmImageReader.h" />
     <ClInclude Include="ImageWriterImplementations\BmpImageWriter.h" />
     <ClInclude Include="ImageWriterImplementations\PpmImageWriter.h" />
+    <ClInclude Include="LZV.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ConsoleParser.cpp" />

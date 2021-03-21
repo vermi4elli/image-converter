@@ -48,6 +48,9 @@
     <ClInclude Include="ImageWriterImplementations\PpmImageWriter.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
+    <ClInclude Include="LZV.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ImageConverter.cpp">

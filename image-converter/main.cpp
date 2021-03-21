@@ -1,5 +1,6 @@
 #include "ConsoleParser.h"
 #include "ImageReaderImplementations/PpmImageReader.h"
+#include "ImageWriterImplementations/PpmImageWriter.h"
 
 int main(int argc, char* argv[]) {
 	try
@@ -10,17 +11,13 @@ int main(int argc, char* argv[]) {
 			";\nOutput path: " << consoleParser->pathOutput() << std::endl;*/
 
 		PpmImageReader reader;
-		reader.read("C:\\Users\\nikit\\OneDrive\\Рабочий стол\\pbmlib.ppm");
+		//auto res = reader.read("..\\images\\ppm\\pbmlib.ascii.ppm");
+		//auto res = reader.read("..\\images\\ppm\\bell_206.ppm");
+		//auto res = reader.read("..\\images\\ppm\\star_field.ascii.ppm");
+		auto res = reader.read("..\\images\\ppm\\pbmlib.ppm");
 
-		/*std::ofstream f("C:\\Users\\nikit\\OneDrive\\Рабочий стол\\text.txt");
-		if (f.fail()) return -1;
-
-		f << "P6\n" << 1 << " " << 1 << "\n" << "255\n";
-		f << uint8_t(255) << " " << uint8_t(0) << " " << uint8_t(0);
-
-		std::cout << ((int)'я') << std::endl;
-
-		f.close();*/
+		PpmImageWriter writer;
+		writer.write("..\\images\\ppm\\result.ppm", res);
 	}
 	catch (const std::exception& e)
 	{

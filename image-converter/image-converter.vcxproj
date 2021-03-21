@@ -149,6 +149,7 @@
     <ClInclude Include="ImageReaderImplementations\GifImageReader.h" />
     <ClInclude Include="ImageReaderImplementations\PpmImageReader.h" />
     <ClInclude Include="ImageWriterImplementations\BmpImageWriter.h" />
+    <ClInclude Include="ImageWriterImplementations\PpmImageWriter.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ConsoleParser.cpp" />
@@ -160,6 +161,7 @@
     <ClCompile Include="ImageReaderImplementations\PpmImageReader.cpp" />
     <ClCompile Include="ImageWriterImplementations\BmpImageWriter.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="ImageWriterImplementations\PpmImageWriter.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

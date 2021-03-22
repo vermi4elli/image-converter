@@ -4,9 +4,9 @@
 #include <iomanip>
 #include <algorithm>
 #include <vector>
-#include "BmpImageReader.h";
-#include "BmpHeader.h";
-#include "BmpImageWriter.h";
+#include "BmpImageReader.h"
+#include "../ImageWriterImplementations/BmpImageWriter.h"
+
 void BmpImageReader::makeRGBAquad(RGBAquad& res, uint32_t data)
 {
     res.r = (data & 0xff0000) >> 16;

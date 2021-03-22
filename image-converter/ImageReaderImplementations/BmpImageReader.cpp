@@ -4,14 +4,9 @@
 #include <iomanip>
 #include <algorithm>
 #include <vector>
-<<<<<<< HEAD
-#include "BmpImageReader.h"
-
-=======
 #include "BmpImageReader.h";
 #include "BmpHeader.h";
 #include "BmpImageWriter.h";
->>>>>>> bmpconverter
 void BmpImageReader::makeRGBAquad(RGBAquad& res, uint32_t data)
 {
     res.r = (data & 0xff0000) >> 16;
@@ -30,28 +25,16 @@ constexpr uint32_t BmpImageReader::get32bit(char buffer[])
     return
         static_cast<uint32_t>(static_cast<uint8_t>(buffer[0])) |
         static_cast<uint32_t>(static_cast<uint8_t>(buffer[1])) << 8 |
-<<<<<<< HEAD
         static_cast<uint32_t>(static_cast<uint8_t>(buffer[2])) << 16 |
-=======
-        static_cast<uint32_t>(static_cast<uint8_t>(buffer[2])) << 16| 
->>>>>>> bmpconverter
         static_cast<uint32_t>(static_cast<uint8_t>(buffer[3])) << 24;
 }
 
 bool BmpImageReader::print(const char* error) {
-<<<<<<< HEAD
     std::cout << "[Error]: " << error << std::endl;
     exit(1);
 }
 
 std::vector< std::vector <RGBAquad> > BmpImageReader::read () {
-=======
-    std::cout << error << std::endl;
-    exit(1);
-}
-
-std::vector< std::vector <RGBAquad> > BmpImageReader::read (const char* name) {
->>>>>>> bmpconverter
     BmpHeader header;
 
     std::ifstream fin(name, std::ios::binary);
@@ -88,12 +71,8 @@ std::vector< std::vector <RGBAquad> > BmpImageReader::read (const char* name) {
 
     fin.read(buffer, 2) || print("Can't read file");
     header.bits = get16bit(buffer);
-<<<<<<< HEAD
-    if (header.bits != 32) print("Bits not 32");
-=======
     if(header.bits!=32 && header.bits!=24) print("File not 24 or 32 bits.");
 
->>>>>>> bmpconverter
 
     fin.read(buffer, 4) || print("Can't read file");
     header.biCompression = get32bit(buffer);
@@ -125,29 +104,17 @@ std::vector< std::vector <RGBAquad> > BmpImageReader::read (const char* name) {
         currentOffset++;
     }
 
-<<<<<<< HEAD
-
-=======
     currentOffset = 0;
->>>>>>> bmpconverter
 
     for (auto& row : data) {
         row.resize(header.width);
         {
-<<<<<<< HEAD
-            auto nextOffset = (currentOffset * 4 + 3) / 4;
-            while (nextOffset > currentOffset && currentOffset < header.filesize)
-            {
-                fin.read(buffer, 1) || print("Can't read file");
-                ++currentOffset;
-=======
             auto nextOffset = currentOffset  % 4;
             while (nextOffset > 0 && currentOffset < (header.filesize - header.headersize))
             {
                 fin.read(buffer, 1) || print("Can't read file");
                 ++currentOffset;
                 nextOffset--;
->>>>>>> bmpconverter
             }
         }
         for (auto& pixel : row)
@@ -162,13 +129,10 @@ std::vector< std::vector <RGBAquad> > BmpImageReader::read (const char* name) {
 
     std::reverse(data.begin(), data.end());
 
-<<<<<<< HEAD
     fin.close();
 
     std::cout << "[Debug]: Done reading" << std::endl;
 
-=======
->>>>>>> bmpconverter
     return data;
 
 }

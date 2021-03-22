@@ -155,6 +155,7 @@
     <ClInclude Include="ImageReaderImplementations\png\PngImageReader.h" />
     <ClInclude Include="ImageReaderImplementations\png\PngStruct.h" />
     <ClInclude Include="ImageReaderInterface\IImageReader.h" />
+    <ClInclude Include="ImageWriterImplementations\PngImageWriter.h" />
     <ClInclude Include="ImageWriterInterface\IImageWriter.h" />
     <ClInclude Include="ImageConverter.h" />
     <ClInclude Include="ImageReaderImplementations\PpmImageReader.h" />
@@ -172,6 +173,7 @@
     <ClCompile Include="ImageReaderImplementations\PpmImageReader.cpp" />
     <ClCompile Include="ImageReaderInterface\IImageReader.cpp" />
     <ClCompile Include="ImageWriterImplementations\BmpImageWriter.cpp" />
+    <ClCompile Include="ImageWriterImplementations\PngImageWriter.cpp" />
     <ClCompile Include="ImageWriterInterface\IImageWriter.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="ImageWriterImplementations\PpmImageWriter.cpp" />

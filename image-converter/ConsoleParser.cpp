@@ -13,6 +13,7 @@ ConsoleParser::ConsoleParser(std::string pathSource, std::string sourceType, std
 
 	if (goalType == "ppm") goalImageType_ = imageType::PPM;
 	else if (goalType == "bmp") goalImageType_ = imageType::BMP;
+	else if (goalType == "png") goalImageType_ = imageType::PNG;
 	else goalImageType_ = imageType::UNKNOWN;
 	if (goalImageType_ == imageType::UNKNOWN) throw std::exception("[Error]: Enter a supported goal image type!");
 	

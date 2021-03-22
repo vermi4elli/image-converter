@@ -1,9 +1,10 @@
 #pragma once
-#include "RGBAquad.h"
-#include <boost/iostreams/filtering_streambuf.hpp>
-#include <vector>
+#include "../DataTypes/rgbaquad.h"
+#include "../ImageWriterInterface/IImageWriter.h"
+#include "../ImageReaderImplementations/png/Deflate.h"
 
-class PngImageWriter {
+class PngImageWriter :
+	public IImageWriter {
 	void set16bit(uint16_t data, char buffer[]);
 	void set32bit(uint32_t data, char buffer[]);
 	void set32bitrev(uint32_t data, char buffer[]);
@@ -14,5 +15,6 @@ class PngImageWriter {
 	void separateIDATs(std::ofstream& fout, std::vector< std::vector <RGBAquad> > data);
 	void setIEND(std::ofstream& fout, std::vector< std::vector <RGBAquad> > data);
 public:
-	void write(const char* name, std::vector< std::vector <RGBAquad> > data);
+	PngImageWriter(std::string name) : IImageWriter(name) {};
+	void write(std::vector< std::vector <RGBAquad> > data);
 };

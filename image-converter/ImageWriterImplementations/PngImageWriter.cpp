@@ -1,15 +1,9 @@
 #include "PngImageWriter.h"
 #include <fstream>
-#include <iostream>
 #include <iomanip>
 #include <algorithm>
-#include "rgbaquad.h"
-#include "Deflate.h"
-#include <sstream>
-#include "BmpImageWriter.h";
 #include <boost/iostreams/copy.hpp>
-#include <boost/iostreams/filtering_streambuf.hpp>
-#include "PngFilter.h"
+#include "../ImageReaderImplementations/png/PngFilter.h"
 
 void PngImageWriter::set16bit(uint16_t data, char buffer[]) {
 	buffer[1] = static_cast<char>(data);
@@ -38,7 +32,11 @@ uint32_t PngImageWriter::saveRGBAquad(const RGBAquad& pixel)
 		(static_cast<uint32_t>(pixel.b) << 0) |
 		(static_cast<uint32_t>(pixel.a) << 24);
 }
-int* crcTable;
+
+namespace {
+	int* crcTable;
+}
+
 uint32_t PngImageWriter::Crc32(char* stream, int offset, int length, uint32_t crc) {
 	int c;
 
@@ -189,7 +187,7 @@ void PngImageWriter::setIEND(std::ofstream& fout, std::vector< std::vector <RGBA
 	fout.write(buffer, 4);
 }
 
-void PngImageWriter::write(const char* name, std::vector< std::vector <RGBAquad> > data) {
+void PngImageWriter::write(std::vector< std::vector <RGBAquad> > data) {
 
 	std::ofstream fout(name, std::ios::binary);
 	char buffer[4];
@@ -215,4 +213,6 @@ void PngImageWriter::write(const char* name, std::vector< std::vector <RGBAquad>
 	separateIDATs(fout, data);
 
 	setIEND(fout, data);
+
+	std::cout << "[Debug]: Done writing" << std::endl;
 }

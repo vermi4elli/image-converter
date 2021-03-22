@@ -2,7 +2,7 @@
 An image converter for basic formats. Supports:
 - PPM (from/to)
 - BMP (from/to)
-- PNG (from)
+- PNG (from/to)
 
 ## Manual
 To use the converter put the source image meant for convertion into the same folder as the executable. It can be used from command line with the next arguments:

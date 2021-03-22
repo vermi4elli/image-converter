@@ -1,8 +1,8 @@
+#pragma once
 #include "PngStruct.h"
 #include "../../DataTypes/rgbaquad.h"
-#include <boost/iostreams/filtering_streambuf.hpp>
+#include "Deflate.h"
 #include "../../ImageReaderInterface/IImageReader.h"
-#include <vector>
 
 #pragma once
 class PngImageReader :

@@ -1,11 +1,7 @@
+#include "PngImageReader.h"
 #include <fstream>
-#include <iostream>
 #include <iomanip>
 #include <algorithm>
-#include "PngImageReader.h"
-#include "Deflate.h"
-#include <sstream>
-#include "../../ImageWriterImplementations/BmpImageWriter.h"
 #include "PngFilter.h"
 
 constexpr uint32_t PngImageReader::get32bit(char bits[]) {
@@ -281,6 +277,8 @@ std::vector<std::vector<RGBAquad> > PngImageReader::read() {
 		fin.read(buffer, 4);
 
 	}
+
+	std::cout << "[Debug]: Done reading" << std::endl;
 
 	return 	dataproccess(fin, png, idat_compressed_data);
 

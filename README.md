@@ -1,4 +1,5 @@
 # image-converter
+<<<<<<< HEAD
 An image converter for basic formats. Supports:
 - PPM (from/to)
 - BMP (from/to)
@@ -14,3 +15,7 @@ Example of the program executing:
 ```
 > image-converter.x64.exe --source=example.bmp --goal-format=png
 ```
+=======
+An image converter supporting basic formats
+
+>>>>>>> bmpconverter

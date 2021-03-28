@@ -3,12 +3,12 @@
 #include "../ImageWriterImplementations/PpmImageWriter.h"
 #include "../ImageWriterImplementations/PngImageWriter.h"
 
-IImageWriter::IImageWriter(std::string name)
+IImageWriter::IImageWriter(const std::string& name)
 {
 	this->name = name;
 }
 
-IImageWriter* IImageWriter::createImageWriter(imageType goalType, std::string name)
+IImageWriter* IImageWriter::createImageWriter(imageType goalType, const std::string& name)
 {
 	switch (goalType)
 	{

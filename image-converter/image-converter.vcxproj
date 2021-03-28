@@ -150,6 +150,7 @@
     <ClInclude Include="DataTypes\ImageType.h" />
     <ClInclude Include="DataTypes\rgbaquad.h" />
     <ClInclude Include="ImageReaderImplementations\BmpImageReader.h" />
+    <ClInclude Include="ImageReaderImplementations\GifImageReader.h" />
     <ClInclude Include="ImageReaderImplementations\png\Deflate.h" />
     <ClInclude Include="ImageReaderImplementations\png\PngFilter.h" />
     <ClInclude Include="ImageReaderImplementations\png\PngImageReader.h" />
@@ -167,6 +168,7 @@
     <ClCompile Include="ConsoleParser.cpp" />
     <ClCompile Include="ImageReaderImplementations\BmpImageReader.cpp" />
     <ClCompile Include="ImageConverter.cpp" />
+    <ClCompile Include="ImageReaderImplementations\GifImageReader.cpp" />
     <ClCompile Include="ImageReaderImplementations\png\Deflate.cpp" />
     <ClCompile Include="ImageReaderImplementations\png\PngFilter.cpp" />
     <ClCompile Include="ImageReaderImplementations\png\PngImageReader.cpp" />

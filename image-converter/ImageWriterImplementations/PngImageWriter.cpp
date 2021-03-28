@@ -60,7 +60,7 @@ uint32_t PngImageWriter::Crc32(char* stream, int offset, int length, uint32_t cr
 	}
 	return c ^ 0xffffffff;
 }
-void PngImageWriter::setIHDR(std::ofstream& fout,std::vector< std::vector <RGBAquad> > data) {
+void PngImageWriter::setIHDR(std::ofstream& fout, const std::vector< std::vector <RGBAquad> >& data) {
 	char buffer[4];
 	uint32_t crc = 0;
 
@@ -110,7 +110,7 @@ void PngImageWriter::setIHDR(std::ofstream& fout,std::vector< std::vector <RGBAq
 	set32bitrev(crc, buffer);
 	fout.write(buffer, 4);
 }
-void PngImageWriter::setIDAT(std::ofstream& fout, std::vector <char> segment,int len) {
+void PngImageWriter::setIDAT(std::ofstream& fout, const std::vector <char>& segment,int len) {
 	char buffer[4];
 	uint32_t crc = 0;
 	set32bitrev(len, buffer);
@@ -133,10 +133,10 @@ void PngImageWriter::setIDAT(std::ofstream& fout, std::vector <char> segment,int
 	fout.write(buffer, 4);
 }
 
-void PngImageWriter::separateIDATs(std::ofstream& fout, std::vector< std::vector <RGBAquad> > data) {
+void PngImageWriter::separateIDATs(std::ofstream& fout, const std::vector< std::vector <RGBAquad> >& data) {
 	std::stringbuf uncompressed;
 	for (auto row : data) {
-		uncompressed.sputc('0');
+		uncompressed.sputc(0x0);
 		for (auto pixel : row) {
 			uncompressed.sputc(pixel.r);
 			uncompressed.sputc(pixel.g);
@@ -168,7 +168,7 @@ void PngImageWriter::separateIDATs(std::ofstream& fout, std::vector< std::vector
 	}
 }
 
-void PngImageWriter::setIEND(std::ofstream& fout, std::vector< std::vector <RGBAquad> > data) {
+void PngImageWriter::setIEND(std::ofstream& fout, const std::vector< std::vector <RGBAquad> >& data) {
 	char buffer[4];
 	uint32_t crc = 0;
 
@@ -187,7 +187,7 @@ void PngImageWriter::setIEND(std::ofstream& fout, std::vector< std::vector <RGBA
 	fout.write(buffer, 4);
 }
 
-void PngImageWriter::write(std::vector< std::vector <RGBAquad> > data) {
+void PngImageWriter::write(const std::vector< std::vector <RGBAquad> >& data) {
 
 	std::ofstream fout(name, std::ios::binary);
 	char buffer[4];

@@ -2,8 +2,9 @@
 #include "../ImageReaderImplementations/PpmImageReader.h"
 #include "../ImageReaderImplementations/BmpImageReader.h"
 #include "../ImageReaderImplementations/png/PngImageReader.h"
+#include "../ImageReaderImplementations/GifImageReader.h"
 
-IImageReader::IImageReader(std::string name)
+IImageReader::IImageReader(const std::string& name)
 {
 	this->name = name;
 }
@@ -19,6 +20,9 @@ IImageReader* IImageReader::createImageReader(imageType sourceType, std::string 
 		return new BmpImageReader(name);
 		break;
 	case imageType::PNG:
+		return new PngImageReader(name);
+		break;
+	case imageType::GIF:
 		return new PngImageReader(name);
 		break;
 	default:

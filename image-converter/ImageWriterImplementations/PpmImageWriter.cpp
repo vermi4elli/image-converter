@@ -1,6 +1,6 @@
 #include "PpmImageWriter.h"
 
-void PpmImageWriter::write(const std::vector<std::vector<RGBAquad>>& data)
+void PpmImageWriter::write(std::vector<std::vector<RGBAquad>>& data)
 {
 	std::ofstream fout(name);
     int W = data.front().size(), H = data.size(), max = data.front().front().a;

@@ -187,7 +187,7 @@ void PngImageWriter::setIEND(std::ofstream& fout, const std::vector< std::vector
 	fout.write(buffer, 4);
 }
 
-void PngImageWriter::write(const std::vector< std::vector <RGBAquad> >& data) {
+void PngImageWriter::write(std::vector< std::vector <RGBAquad> >& data) {
 
 	std::ofstream fout(name, std::ios::binary);
 	char buffer[4];

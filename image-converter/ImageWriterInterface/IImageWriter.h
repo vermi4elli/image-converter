@@ -10,6 +10,6 @@ protected:
 	std::string name;
 public:
 	IImageWriter(const std::string& name);
-	virtual void write(const std::vector< std::vector <RGBAquad> >& data) = 0;
+	virtual void write(std::vector< std::vector <RGBAquad> >& data) = 0;
 	static IImageWriter* createImageWriter(imageType goalType, const std::string& name);
 };

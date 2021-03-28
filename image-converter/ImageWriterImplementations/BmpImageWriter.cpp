@@ -32,7 +32,7 @@ uint32_t BmpImageWriter::saveRGBAquad(const RGBAquad& pixel)
         (static_cast<uint32_t>(pixel.a) << 24);
 }
 
-void BmpImageWriter::write(const std::vector< std::vector <RGBAquad> >& data) {
+void BmpImageWriter::write(std::vector< std::vector <RGBAquad> >& data) {
 
     BmpHeader head;
     head.width = data[0].size();
@@ -90,6 +90,8 @@ void BmpImageWriter::write(const std::vector< std::vector <RGBAquad> >& data) {
 
     set32bit(head.biImClrUsed, buffer);
     fout.write(buffer, 4) || print("Can't write");
+
+    std::reverse(data.begin(), data.end());
 
     auto currentWriteOffset = head.headersize;
     for (auto& row : data)

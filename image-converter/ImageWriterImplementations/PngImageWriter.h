@@ -16,5 +16,5 @@ class PngImageWriter :
 	void setIEND(std::ofstream& fout, const std::vector< std::vector <RGBAquad> >& data);
 public:
 	PngImageWriter(const std::string& name) : IImageWriter(name) {};
-	void write(const std::vector< std::vector <RGBAquad> >& data);
+	void write(std::vector< std::vector <RGBAquad> >& data);
 };

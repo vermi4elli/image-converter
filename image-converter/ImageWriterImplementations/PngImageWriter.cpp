@@ -136,7 +136,7 @@ void PngImageWriter::setIDAT(std::ofstream& fout, std::vector <char> segment,int
 void PngImageWriter::separateIDATs(std::ofstream& fout, std::vector< std::vector <RGBAquad> > data) {
 	std::stringbuf uncompressed;
 	for (auto row : data) {
-		uncompressed.sputc('0');
+		uncompressed.sputc(0x0);
 		for (auto pixel : row) {
 			uncompressed.sputc(pixel.r);
 			uncompressed.sputc(pixel.g);

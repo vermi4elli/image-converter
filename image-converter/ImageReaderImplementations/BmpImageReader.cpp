@@ -5,7 +5,7 @@
 #include <algorithm>
 #include <vector>
 #include "BmpImageReader.h"
-#include "../ImageWriterImplementations/BmpImageWriter.h"
+
 
 void BmpImageReader::makeRGBAquad(RGBAquad& res, uint32_t data)
 {

@@ -91,7 +91,6 @@ std::vector<RGBAquad> GifImageReader::decodeimage(std::ifstream& fin, GifStruct&
 	//Image Descriptor [2C]
 	while (!fin.eof()) {
 		fin.read(buffer, 1);
-		std::cout << static_cast<uint8_t>(buffer[0]);
 		if (static_cast<uint8_t>(buffer[0]) == 0x2c) break;
 	}
 

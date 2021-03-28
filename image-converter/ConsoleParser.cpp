@@ -20,7 +20,7 @@ ConsoleParser::ConsoleParser(std::string pathSource, std::string sourceType, std
 	if (sourceType == "ppm") sourceImageType_ = imageType::PPM;
 	else if (sourceType == "bmp") sourceImageType_ = imageType::BMP;
 	else if (sourceType == "png") sourceImageType_ = imageType::PNG;
-	else if (goalType == "gif") goalImageType_ = imageType::GIF;
+	else if (sourceType == "gif") sourceImageType_ = imageType::GIF;
 	else sourceImageType_ = imageType::UNKNOWN;
 	if (sourceImageType_ == imageType::UNKNOWN) throw std::exception("[Error]: Enter a supported source image type!");
 }

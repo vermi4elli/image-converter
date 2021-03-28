@@ -275,7 +275,8 @@ std::vector<std::vector<RGBAquad> > GifImageReader::read() {
 	gif.correlation = get16bitrev(buffer);
 
 	std::vector<RGBAquad> colortable = buildcolortable(fin, gif);
-
+	
+	std::cout << "[Debug]: Done reading" << std::endl;
 
 	return 	arraytomatrix(gif,decodeimage(fin, gif, colortable));
 }

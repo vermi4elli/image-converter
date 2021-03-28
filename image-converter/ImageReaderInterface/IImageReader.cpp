@@ -23,7 +23,7 @@ IImageReader* IImageReader::createImageReader(imageType sourceType, std::string 
 		return new PngImageReader(name);
 		break;
 	case imageType::GIF:
-		return new PngImageReader(name);
+		return new GifImageReader(name);
 		break;
 	default:
 		throw std::exception("[Error]: Unknown or unsupported source image type!");

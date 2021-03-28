@@ -9,6 +9,6 @@ class BmpImageWriter :
 	uint32_t saveRGBAquad(const RGBAquad& pixel);
 	bool print(const char* error);
 public:
-	BmpImageWriter(std::string name) : IImageWriter(name) {};
-	void write(std::vector< std::vector <RGBAquad> > data);
+	BmpImageWriter(const std::string& name) : IImageWriter(name) {};
+	void write(const std::vector< std::vector <RGBAquad> >& data);
 };

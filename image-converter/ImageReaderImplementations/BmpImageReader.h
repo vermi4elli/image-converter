@@ -10,6 +10,6 @@ class BmpImageReader :
 	bool print(const char* error);
 	void makeRGBAquad(RGBAquad& res, uint32_t data);
 public:
-	BmpImageReader(std::string name) : IImageReader(name) {};
+	BmpImageReader(const std::string& name) : IImageReader(name) {};
 	std::vector< std::vector <RGBAquad> > read();
 };

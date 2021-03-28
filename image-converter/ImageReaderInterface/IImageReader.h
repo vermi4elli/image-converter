@@ -9,7 +9,7 @@ class IImageReader
 protected:
 	std::string name;
 public:
-	IImageReader(std::string name);
+	IImageReader(const std::string& name);
 	virtual std::vector< std::vector <RGBAquad> > read() = 0;
 	static IImageReader* createImageReader(imageType sourceType, std::string name);
 };

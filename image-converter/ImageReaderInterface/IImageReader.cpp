@@ -2,9 +2,9 @@
 #include "../ImageReaderImplementations/PpmImageReader.h"
 #include "../ImageReaderImplementations/BmpImageReader.h"
 #include "../ImageReaderImplementations/png/PngImageReader.h"
-#include "../ImageReaderImplementations/png/GifImageReader.h"
+#include "../ImageReaderImplementations/GifImageReader.h"
 
-IImageReader::IImageReader(std::string name)
+IImageReader::IImageReader(const std::string& name)
 {
 	this->name = name;
 }

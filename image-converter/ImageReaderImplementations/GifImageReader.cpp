@@ -1,6 +1,7 @@
 #include <fstream>
 #include <iostream>
 #include <iomanip>
+#include "GifImageReader.h"
 
 constexpr uint32_t GifImageReader::get16bit(char bits[]) {
 

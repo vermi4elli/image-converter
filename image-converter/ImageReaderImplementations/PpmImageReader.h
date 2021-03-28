@@ -8,6 +8,6 @@ class PpmImageReader :
 {
     void printMatrix(const std::vector<std::vector<RGBAquad>>& res);
 public:
-    PpmImageReader(std::string name) : IImageReader(name) {};
+    PpmImageReader(const std::string& name) : IImageReader(name) {};
     std::vector< std::vector <RGBAquad> > read();
 };

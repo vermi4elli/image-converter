@@ -1,12 +1,15 @@
 #pragma once
-#include "../Vector3D.h"
+#include "ILight.h"
 
-class PointLight {
+
+class PointLight : public ILight {
 public:
-	Vector3D color;
-	float intensity;
+
 	Vector3D position;
-	PointLight(Vector3D c, float i, Vector3D p) : color(c), intensity(i), position(p){};
+	PointLight(Vector3D c, float i, Vector3D p) : position(p){
+        color = c;
+        intensity = i;
+    };
     void illuminate(const Vector3D& P, Vector3D& lightDir, float& distance) const
     {
         lightDir = (P - position);

@@ -7,8 +7,8 @@
 int main(int argc, char* argv[]) {
     try
     {
-      ImageConverter* imageConverter = new ImageConverter(argc, argv);
-      imageConverter->convertImage();
+      std::unique_ptr<ImageConverter> imageConverter = std::make_unique<ImageConverter>(argc, argv);
+      imageConverter.get()->convertImage();
     }
     catch (const std::exception& e)
     {

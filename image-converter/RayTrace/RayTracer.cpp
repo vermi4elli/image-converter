@@ -1,7 +1,7 @@
 #include "RayTracer.h"
-#include "PngImageWriter.h";
-#include "PointLight.h"
-#include "PerspectiveRayProvider.h"
+#include "../ImageWriterImplementations/PngImageWriter.h";
+#include "./Light/PointLight.h"
+#include "./RayProvider/PerspectiveRayProvider.h"
 
 RGBAquad RayTracer::trace(Vector3D originray, Vector3D directionray, const std::vector<FigureI*>& figures, const std::vector<ILight*>& lights){
     
@@ -67,7 +67,7 @@ void RayTracer::render(const std::vector<FigureI*>& figures) {
         }
     }
 
-    PngImageWriter w;
+    PngImageWriter w("raytrace.png");
 
-    w.write("raytrace.png", image);
+    w.write(image);
 };

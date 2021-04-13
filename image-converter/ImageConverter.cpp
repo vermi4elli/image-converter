@@ -2,11 +2,11 @@
 
 ImageConverter::ImageConverter(int argc, char* argv[])
 {
-	this->consoleParser = ConsoleParser::GetInstance(argc, argv);
+	consoleParser.reset(std::move(ConsoleParser::GetInstance(argc, argv)));
 	consoleParser->PrintInfo();
 
-	this->imageReader = IImageReader::createImageReader(this->consoleParser->sourceImageType(), this->consoleParser->pathSource());
-	this->imageWriter = IImageWriter::createImageWriter(this->consoleParser->goalImageType(), this->consoleParser->pathOutput());
+	imageReader.reset(IImageReader::createImageReader(this->consoleParser->sourceImageType(), this->consoleParser->pathSource()));
+	imageWriter.reset(IImageWriter::createImageWriter(this->consoleParser->goalImageType(), this->consoleParser->pathOutput()));
 }
 
 void ImageConverter::convertImage()

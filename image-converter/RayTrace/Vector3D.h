@@ -1,4 +1,5 @@
 #pragma once
+#include <tuple>
 #include <cmath> 
 
 #define M_PI 3.141592653589793 
@@ -19,6 +20,9 @@ public:
     Vector3D operator + (const Vector3D& v) const;
     Vector3D& operator += (const Vector3D& v);
     Vector3D& operator *= (const Vector3D& v);
+    friend inline bool operator==(const Vector3D& lhs, const Vector3D& rhs) { return std::tie(lhs.x, lhs.y, lhs.z) == std::tie(rhs.x, rhs.y, rhs.z); };
+    friend inline bool operator!=(const Vector3D& lhs, const Vector3D& rhs) { return !(lhs == rhs); }
+    
     Vector3D operator - () const;
     float length2() const;
     float length() const;

@@ -163,6 +163,7 @@
     <ClInclude Include="ImageWriterImplementations\BmpImageWriter.h" />
     <ClInclude Include="ImageWriterImplementations\PpmImageWriter.h" />
     <ClInclude Include="LZV.h" />
+    <ClInclude Include="OBJParser.h" />
     <ClInclude Include="RayTrace\Camera\ICameraPositionProvider.h" />
     <ClInclude Include="RayTrace\Camera\StaticCameraPositionProvider.h" />
     <ClInclude Include="RayTrace\Figure\Cube.h" />
@@ -192,6 +193,7 @@
     <ClCompile Include="ImageWriterInterface\IImageWriter.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="ImageWriterImplementations\PpmImageWriter.cpp" />
+    <ClCompile Include="OBJParser.cpp" />
     <ClCompile Include="RayTrace\RayTracer.cpp" />
     <ClCompile Include="RayTrace\Vector3D.cpp" />
   </ItemGroup>

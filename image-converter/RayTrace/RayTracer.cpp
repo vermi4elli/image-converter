@@ -54,8 +54,9 @@ void RayTracer::render(const std::vector<FigureI*>& figures) {
     lights.push_back(new PointLight(Vector3D(1,1, 1),1, Vector3D(0, -10,-10)));
     lights.push_back(new PointLight(Vector3D(0, 1, 1), 1, Vector3D(0, 10, -10)));
     //lights.push_back(new PointLight(Vector3D(1, 1, 1), 0.25, Vector3D(0, 0, 1)));
+    //lights.push_back(new PointLight(Vector3D(0, 0, 3), 1, Vector3D(0, 0, 0)));
     std::vector < std::vector <RGBAquad> > image;
-    Vector3D camera(0, 0, 0);
+    Vector3D camera(0, 0, 2);
     PerspectiveRayProvider rays;
     int k = 0;
     image.resize(rays.height);
@@ -66,7 +67,7 @@ void RayTracer::render(const std::vector<FigureI*>& figures) {
             k++;
         }
     }
-
+    std::cout << "[Debug]: Done raytracing" << std::endl;
     PngImageWriter w("raytrace.png");
 
     w.write(image);

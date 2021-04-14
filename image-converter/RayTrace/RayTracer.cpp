@@ -1,7 +1,6 @@
 #include "RayTracer.h"
-#include "PngImageWriter.h";
-#include "PointLight.h"
-#include "PerspectiveRayProvider.h"
+#include "../ImageWriterImplementations/PngImageWriter.h";
+#include "RayProvider/PerspectiveRayProvider.h"
 
 RGBAquad RayTracer::trace(Vector3D originray, Vector3D directionray, const std::vector<FigureI*>& figures, const std::vector<ILight*>& lights){
     
@@ -48,26 +47,26 @@ RGBAquad RayTracer::trace(Vector3D originray, Vector3D directionray, const std::
     return RGBAquad(hitColor.x*255, hitColor.y * 255, hitColor.z * 255);
 };
 
-void RayTracer::render(const std::vector<FigureI*>& figures) {
+void RayTracer::render(ServiceContainer& DI) {
 
-    std::vector<ILight*> lights;
-    lights.push_back(new PointLight(Vector3D(1,1, 1),1, Vector3D(0, -10,-10)));
-    lights.push_back(new PointLight(Vector3D(0, 1, 1), 1, Vector3D(0, 10, -10)));
-    //lights.push_back(new PointLight(Vector3D(1, 1, 1), 0.25, Vector3D(0, 0, 1)));
+    
     std::vector < std::vector <RGBAquad> > image;
-    Vector3D camera(0, 0, 0);
-    PerspectiveRayProvider rays;
+    auto figures = DI.get<std::vector<FigureI*>>();
+    auto lights = DI.get<std::vector<ILight*>>();
+    auto camera = DI.get<ICameraPositionProvider*>();
+    auto rays = DI.get<IRayProvider*>();
+    auto originray = camera[0]->getCameraPos();
     int k = 0;
-    image.resize(rays.height);
-    for (unsigned y = 0; y < rays.height; ++y) {
-        image[y].resize(rays.width);
-        for (unsigned x = 0; x < rays.width; ++x) {
-            image[y][x] = trace(camera, rays.rays[k], figures, lights);
+    image.resize(rays[0]->height);
+    for (unsigned y = 0; y < rays[0]->height; ++y) {
+        image[y].resize(rays[0]->width);
+        for (unsigned x = 0; x < rays[0]->width; ++x) {
+            image[y][x] = trace(originray, rays[0]->rays[k], figures[0], lights[0]);
             k++;
         }
     }
 
-    PngImageWriter w;
+    PngImageWriter w("raytrace.png");
 
-    w.write("raytrace.png", image);
+    w.write(image);
 };

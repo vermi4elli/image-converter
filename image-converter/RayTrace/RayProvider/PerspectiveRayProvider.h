@@ -18,15 +18,16 @@ class PerspectiveRayProvider : public IRayProvider {
 		}
 	}
 public:
-	PerspectiveRayProvider(unsigned width = 1920,
-							unsigned height = 1280,
+	PerspectiveRayProvider(ICameraPositionProvider* camera,
+							int width = 1920,
+							int height = 1280,
 							float fov = 30,
-							float dist = -1, 
-							Vector3D camera = Vector3D(0)) {
+							float dist = 1
+							) {
 		this->width = width;
 		this->height = height;
 		this->fov = fov;
-		this->dist = dist;
+		this->dist = camera->getCameraPos().z - dist;
 		this->camera = camera;
 		computeRays();
 	}

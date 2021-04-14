@@ -51,17 +51,17 @@ void RayTracer::render(ServiceContainer& DI) {
 
     
     std::vector < std::vector <RGBAquad> > image;
-    auto figures = DI.get<std::vector<FigureI*>>();
-    auto lights = DI.get<std::vector<ILight*>>();
+    auto figures = DI.get<std::vector<FigureI*>>()[0];
+    auto lights = DI.get<std::vector<ILight*>>()[0];
     auto camera = DI.get<ICameraPositionProvider*>();
-    auto rays = DI.get<IRayProvider*>();
+    auto rays = DI.get<IRayProvider*>()[0];
     auto originray = camera[0]->getCameraPos();
     int k = 0;
-    image.resize(rays[0]->height);
-    for (unsigned y = 0; y < rays[0]->height; ++y) {
-        image[y].resize(rays[0]->width);
-        for (unsigned x = 0; x < rays[0]->width; ++x) {
-            image[y][x] = trace(originray, rays[0]->rays[k], figures[0], lights[0]);
+    image.resize(rays->height);
+    for (unsigned y = 0; y < rays->height; ++y) {
+        image[y].resize(rays->width);
+        for (unsigned x = 0; x < rays->width; ++x) {
+            image[y][x] = trace(originray, rays->rays[k], figures, lights);
             k++;
         }
     }

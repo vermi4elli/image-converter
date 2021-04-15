@@ -1,178 +1,61 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Исходные файлы">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="Файлы заголовков">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
-    </Filter>
-    <Filter Include="Файлы ресурсов">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
+    <ClCompile Include="ConsoleParser.cpp" />
+    <ClCompile Include="ImageReaderImplementations\BmpImageReader.cpp" />
+    <ClCompile Include="ImageConverter.cpp" />
+    <ClCompile Include="ImageReaderImplementations\GifImageReader.cpp" />
+    <ClCompile Include="ImageReaderImplementations\png\Deflate.cpp" />
+    <ClCompile Include="ImageReaderImplementations\png\PngFilter.cpp" />
+    <ClCompile Include="ImageReaderImplementations\png\PngImageReader.cpp" />
+    <ClCompile Include="ImageReaderImplementations\PpmImageReader.cpp" />
+    <ClCompile Include="ImageReaderInterface\IImageReader.cpp" />
+    <ClCompile Include="ImageWriterImplementations\BmpImageWriter.cpp" />
+    <ClCompile Include="ImageWriterImplementations\PngImageWriter.cpp" />
+    <ClCompile Include="ImageWriterInterface\IImageWriter.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="ImageWriterImplementations\PpmImageWriter.cpp" />
+    <ClCompile Include="RayTrace\Matrix4x4.cpp" />
+    <ClCompile Include="OBJParser.cpp" />
+    <ClCompile Include="RayTrace\RayTracer.cpp" />
+    <ClCompile Include="RayTrace\Vector3D.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ImageConverter.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="ConsoleParser.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="ImageWriterImplementations\BmpImageWriter.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="ImageReaderImplementations\PpmImageReader.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="DataTypes\BmpHeader.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="DataTypes\rgbaquad.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="ImageReaderInterface\IImageReader.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="ImageWriterInterface\IImageWriter.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="ImageReaderImplementations\BmpImageReader.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="ImageWriterImplementations\PpmImageWriter.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="LZV.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="DataTypes\ImageType.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="ImageReaderImplementations\png\PngFilter.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="ImageReaderImplementations\png\PngImageReader.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="ImageReaderImplementations\png\PngStruct.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="ImageReaderImplementations\png\Deflate.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="ImageWriterImplementations\PngImageWriter.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="ImageReaderImplementations\GifImageReader.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="RayTrace\Light\ILight.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="RayTrace\Light\PointLight.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="RayTrace\RayTracer.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="RayTrace\Vector3D.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="RayTrace\Camera\ICameraPositionProvider.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="RayTrace\Camera\StaticCameraPositionProvider.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="RayTrace\Figure\Cube.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="RayTrace\Figure\FigureI.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="RayTrace\Figure\MatrixTRS.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="RayTrace\Figure\Sphere.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="RayTrace\Figure\Triangle.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="RayTrace\RayProvider\IRayProvider.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="RayTrace\RayProvider\PerspectiveRayProvider.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="RayTrace\DI\IContainer.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="RayTrace\DI\ServiceContainer.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="RayTrace\DI\SimpleContainer.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="RayTrace\Matrix4x4.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="ImageConverter.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="ConsoleParser.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="ImageWriterImplementations\BmpImageWriter.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="ImageReaderImplementations\PpmImageReader.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="main.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="ImageReaderImplementations\BmpImageReader.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="ImageWriterImplementations\PpmImageWriter.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="ImageReaderInterface\IImageReader.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="ImageWriterInterface\IImageWriter.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="ImageReaderImplementations\png\PngImageReader.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="ImageReaderImplementations\png\PngFilter.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="ImageReaderImplementations\png\Deflate.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="ImageWriterImplementations\PngImageWriter.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="ImageReaderImplementations\GifImageReader.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="RayTrace\RayTracer.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="RayTrace\Vector3D.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="RayTrace\Matrix4x4.cpp">
-    <ClCompile Include="OBJParser.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
+    <ClInclude Include="ConsoleParser.h" />
+    <ClInclude Include="DataTypes\BmpHeader.h" />
+    <ClInclude Include="DataTypes\ImageType.h" />
+    <ClInclude Include="DataTypes\rgbaquad.h" />
+    <ClInclude Include="ImageReaderImplementations\BmpImageReader.h" />
+    <ClInclude Include="ImageReaderImplementations\GifImageReader.h" />
+    <ClInclude Include="ImageReaderImplementations\png\Deflate.h" />
+    <ClInclude Include="ImageReaderImplementations\png\PngFilter.h" />
+    <ClInclude Include="ImageReaderImplementations\png\PngImageReader.h" />
+    <ClInclude Include="ImageReaderImplementations\png\PngStruct.h" />
+    <ClInclude Include="ImageReaderInterface\IImageReader.h" />
+    <ClInclude Include="ImageWriterImplementations\PngImageWriter.h" />
+    <ClInclude Include="ImageWriterInterface\IImageWriter.h" />
+    <ClInclude Include="ImageConverter.h" />
+    <ClInclude Include="ImageReaderImplementations\PpmImageReader.h" />
+    <ClInclude Include="ImageWriterImplementations\BmpImageWriter.h" />
+    <ClInclude Include="ImageWriterImplementations\PpmImageWriter.h" />
+    <ClInclude Include="LZV.h" />
+    <ClInclude Include="RayTrace\Camera\ICameraPositionProvider.h" />
+    <ClInclude Include="RayTrace\Camera\StaticCameraPositionProvider.h" />
+    <ClInclude Include="RayTrace\DI\IContainer.h" />
+    <ClInclude Include="RayTrace\DI\ServiceContainer.h" />
+    <ClInclude Include="RayTrace\DI\SimpleContainer.h" />
+    <ClInclude Include="OBJParser.h" />
+    <ClInclude Include="RayTrace\Figure\Cube.h" />
+    <ClInclude Include="RayTrace\Figure\FigureI.h" />
+    <ClInclude Include="RayTrace\Figure\MatrixTRS.h" />
+    <ClInclude Include="RayTrace\Figure\Sphere.h" />
+    <ClInclude Include="RayTrace\Figure\Triangle.h" />
+    <ClInclude Include="RayTrace\Light\ILight.h" />
+    <ClInclude Include="RayTrace\Light\PointLight.h" />
+    <ClInclude Include="RayTrace\Matrix4x4.h" />
+    <ClInclude Include="RayTrace\RayProvider\IRayProvider.h" />
+    <ClInclude Include="RayTrace\RayProvider\PerspectiveRayProvider.h" />
+    <ClInclude Include="RayTrace\RayTracer.h" />
+    <ClInclude Include="RayTrace\Vector3D.h" />
   </ItemGroup>
 </Project>

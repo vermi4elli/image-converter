@@ -9,7 +9,7 @@ private:
 	std::string pathSource_, pathOutput_;
 	imageType goalImageType_, sourceImageType_;
 
-	ConsoleParser(std::string pathSource, std::string sourceType, std::string goalType, std::string pathOutput);
+	ConsoleParser(std::string& pathSource, std::string& sourceType, std::string& goalType, std::string& pathOutput);
 
 	static ConsoleParser* consoleParser_;
 

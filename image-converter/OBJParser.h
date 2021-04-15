@@ -1,3 +1,4 @@
+#pragma once
 #include <vector>
 #include <string>
 #include "RayTrace/Figure/Triangle.h"
@@ -13,6 +14,7 @@ private:
 	std::vector<Triangle*> faces;
 public:
 	OBJParser(OBJParser& other) = delete;
+	OBJParser(OBJParser&& other) = default;
 	void operator=(const OBJParser&) = delete;
 
 	static OBJParser* GetInstance(const std::string& inputPath);

@@ -1,6 +1,6 @@
 #include "ConsoleParser.h"
 
-ConsoleParser::ConsoleParser(std::string pathSource, std::string sourceType, std::string goalType, std::string pathOutput)
+ConsoleParser::ConsoleParser(std::string& pathSource, std::string& sourceType, std::string& goalType, std::string& pathOutput)
 {
 	pathSource_ = pathSource;
 	
@@ -10,6 +10,13 @@ ConsoleParser::ConsoleParser(std::string pathSource, std::string sourceType, std
 		else throw std::exception("[Error]: Enter a valid source image name!");
 	}
 	else pathOutput_ = pathOutput;
+
+	if (goalType.empty())
+	{
+		int lastDotIndex = pathOutput.find_last_of('.');
+		if (lastDotIndex != std::string::npos && lastDotIndex != pathOutput.length() - 1) goalType = pathOutput.substr(lastDotIndex + 1);
+		else throw std::exception("[Error]: Enter a valid goal image type!");
+	}
 
 	if (goalType == "ppm") goalImageType_ = imageType::PPM;
 	else if (goalType == "bmp") goalImageType_ = imageType::BMP;
@@ -21,6 +28,7 @@ ConsoleParser::ConsoleParser(std::string pathSource, std::string sourceType, std
 	else if (sourceType == "bmp") sourceImageType_ = imageType::BMP;
 	else if (sourceType == "png") sourceImageType_ = imageType::PNG;
 	else if (sourceType == "gif") sourceImageType_ = imageType::GIF;
+	else if (sourceType == "obj") sourceImageType_ = imageType::OBJ;
 	else sourceImageType_ = imageType::UNKNOWN;
 	if (sourceImageType_ == imageType::UNKNOWN) throw std::exception("[Error]: Enter a supported source image type!");
 }
@@ -39,7 +47,7 @@ ConsoleParser* ConsoleParser::GetInstance(const int argc, char* argv[])
 		}
 
 		if (pathSource.empty()) {
-			throw std::exception("[Error]: Enter a source image value!");
+			throw std::exception("[Error]: Enter a valid source value!");
 		}
 		else {
 			std::string sourceType = pathSource.substr(pathSource.find_last_of('.') + 1);

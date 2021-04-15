@@ -13,53 +13,48 @@
 #include "RayTrace/RayTracer.h"
 
 int main(int argc, char* argv[]) {
-	/*try
+	try
 	{
-		ImageConverter* imageConverter = new ImageConverter(argc, argv);
-		imageConverter->convertImage();
+		/*ImageConverter* imageConverter = new ImageConverter(argc, argv);
+		imageConverter->convertImage();*/
+
+		ServiceContainer DI;
+		DI.set<RayTracer>();
+
+		ConsoleParser* consoleParser = ConsoleParser::GetInstance(argc, argv);
+		DI.set<ConsoleParser*>(consoleParser);
+
+		OBJParser* objParser = OBJParser::GetInstance("cow.obj");
+		DI.set<OBJParser*>(objParser);
+		DI.set<std::vector<FigureI*>>((*(DI.get<OBJParser*>()))->GetFaces().begin(), (*(DI.get<OBJParser*>()))->GetFaces().end());
+
+		std::vector<ILight*> lights;
+		lights.push_back(new PointLight(Vector3D(1, 1, 1), 1, Vector3D(0, -10, -10)));
+		lights.push_back(new PointLight(Vector3D(0, 1, 1), 1, Vector3D(0, 10, -10)));
+		lights.push_back(new PointLight(Vector3D(1, 1, 1), 1, Vector3D(-1, 0, 1)));
+		DI.set<std::vector<ILight*>>(lights);
+
+		ICameraPositionProvider* camera = new StaticCameraPositionProvider();
+		DI.set<ICameraPositionProvider*>(camera);
+
+		Vector3D from(0, 7, -2) // From where camera look
+			, to(0, 0, 0); // To where camera look
+
+		Matrix4x4 camToWorld;
+		camToWorld = camToWorld.lookAt(from, to);
+
+		DI.set<Matrix4x4>(camToWorld);
+		DI.set<IRayProvider*>(new PerspectiveRayProvider(DI.get<ICameraPositionProvider*>()[0]));
+
+		DI.get<RayTracer>()->render(DI);
 	}
 	catch (const std::exception& e)
 	{
-		std::cout << e.what() << std::endl;
+		std::cerr << e.what() << std::endl;
 		return -1;
-	}*/
+	}
 
-	ServiceContainer DI;
-	DI.set<RayTracer>();
-
-	//figures.push_back(new Sphere(Vector3D(1, 2, -20), 2, Vector3D(1, 0.32, 0.32)));
-	//figures.push_back(new Sphere(Vector3D(0, 2, -10), 0.5, Vector3D(1.00, 1, 1)));
-	////Vector3D v1(-1, -1, -5), v2(-3, -1, -10), v3(1, 5, -20);
-	//Vector3D v1(-1, -1, -10), v2(-3, -1, -10), v3(1, 5, -20);
-	//figures.push_back(new Triangle(v1, v2, v3, Vector3D(0.32, 1, 0.32)));
-	////figures.push_back(new Triangle(v2, v3,v1 , Vector3D(0, 1, 1)));
-	////figures.push_back(new Cube(Vector3D(0.5, -1, -5), Vector3D(1.5,-2, -4), Vector3D(1, 0.32, 0.32)));
-	////figures.push_back(new Triangle(Vector3D(-1, -1, -5), Vector3D(1, -1, -5), Vector3D(0, 1, -5), Vector3D(1, 0.32, 1)));
 	
-	OBJParser *objParser = OBJParser::GetInstance("cow.obj");
-	std::vector<FigureI*> figures(objParser->GetFaces().begin(), objParser->GetFaces().end());
-	DI.set<std::vector<FigureI*>>(figures);
-
-	std::vector<ILight*> lights;
-	lights.push_back(new PointLight(Vector3D(1, 1, 1), 1, Vector3D(0, -10, -10)));
-	lights.push_back(new PointLight(Vector3D(0, 1, 1), 1, Vector3D(0, 10, -10)));
-	lights.push_back(new PointLight(Vector3D(1, 1, 1), 1, Vector3D(-1, 0, 1)));
-	DI.set<std::vector<ILight*>>(lights);
-
-	ICameraPositionProvider* camera = new StaticCameraPositionProvider();
-	DI.set<ICameraPositionProvider*>(camera);
-
-	Vector3D from(0, 5, -2) // From where camera look
-		, to(0, 0, 0); // To where camera look
-
-	Matrix4x4 camToWorld;
-	camToWorld = camToWorld.lookAt(from, to);
-
-	DI.set<Matrix4x4>(camToWorld);
-	IRayProvider* prov = new PerspectiveRayProvider(DI.get<ICameraPositionProvider*>()[0]);
-	DI.set<IRayProvider*>(prov);
-
-	DI.get<RayTracer>()->render(DI);
 
 	return 0;
 }

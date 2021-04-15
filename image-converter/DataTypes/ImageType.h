@@ -8,6 +8,7 @@ enum class imageType
 	GIF,
 	PNG,
 	JPEG,
+	OBJ,
 	UNKNOWN
 };
 

@@ -19,6 +19,7 @@
     <ClCompile Include="OBJParser.cpp" />
     <ClCompile Include="RayTrace\RayTracer.cpp" />
     <ClCompile Include="RayTrace\Vector3D.cpp" />
+    <ClCompile Include="RayTrace\KDTree\KDTree.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ConsoleParser.h" />
@@ -57,5 +58,6 @@
     <ClInclude Include="RayTrace\RayProvider\PerspectiveRayProvider.h" />
     <ClInclude Include="RayTrace\RayTracer.h" />
     <ClInclude Include="RayTrace\Vector3D.h" />
+    <ClInclude Include="RayTrace\KDTree\KDTree.h" />
   </ItemGroup>
 </Project>

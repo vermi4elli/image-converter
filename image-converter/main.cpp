@@ -11,6 +11,7 @@
 #include "RayTrace/RayProvider/PerspectiveRayProvider.h"
 #include "RayTrace/Matrix4x4.h"
 #include "RayTrace/RayTracer.h"
+#include "RayTrace/KDTree/KDTree.h"
 
 int main(int argc, char* argv[]) {
 	try
@@ -24,8 +25,11 @@ int main(int argc, char* argv[]) {
 		ConsoleParser* consoleParser = ConsoleParser::GetInstance(argc, argv);
 		DI.set<ConsoleParser*>(consoleParser);
 
-		OBJParser* objParser = OBJParser::GetInstance("simplecow.obj");
+		OBJParser* objParser = OBJParser::GetInstance("cow.obj");
 		DI.set<OBJParser*>(objParser);
+		
+		KDTree* tree = new KDTree({ (*(DI.get<OBJParser*>()))->GetFaces().begin(), (*(DI.get<OBJParser*>()))->GetFaces().end() });
+
 		DI.set<std::vector<FigureI*>>((*(DI.get<OBJParser*>()))->GetFaces().begin(), (*(DI.get<OBJParser*>()))->GetFaces().end());
 
 		std::vector<ILight*> lights;

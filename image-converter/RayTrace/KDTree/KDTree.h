@@ -5,8 +5,8 @@
 
 struct Node
 {
-	Node(const std::vector<Triangle*>& figures, Node* left, Node* right);
-	Node* left, * right;
+	Node(const std::vector<Triangle*>& figures);
+	Node* left, * middle, * right;
 
 	std::vector<Triangle*> figures;
 };
@@ -16,10 +16,12 @@ class KDTree
 private:
 	Node* root;
 
-	std::tuple<int, int> GetMinMax(Node* node, axis axis);
-
+	float GetMedian(Node* node, axis axis);
+	axis GetAxis(int level);
+	Node* BuildTree(const std::vector<Triangle*>& figures, int level);
+	Node* SplitNode(Node* node, int level);
+	std::tuple<std::vector<Triangle*>, std::vector<Triangle*>, std::vector<Triangle*>> GetBoundingGroups(Node* node, axis axis, float split);
 public:
-	void SplitNode(Node* node);
 	KDTree(const std::vector<Triangle*>& figures);
 };
 

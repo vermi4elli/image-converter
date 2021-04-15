@@ -53,6 +53,7 @@ public:
         return *this;
     }
     Vector3D getnormal(Vector3D& hitpoint) const {
+
         return edge1.crossprod(edge2);
     }
 };

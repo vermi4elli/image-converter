@@ -4,6 +4,6 @@
 class StaticCameraPositionProvider: public ICameraPositionProvider{
 public:
 	Vector3D getCameraPos() const {
-		return Vector3D(0);
+		return Vector3D(0,0,0);
 	};
 };

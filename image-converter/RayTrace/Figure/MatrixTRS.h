@@ -1,6 +1,7 @@
 #pragma once
 #include "../Vector3D.h"
 
+
 class MatrixTRS {
 	float matrix[4][4];
 public:

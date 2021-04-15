@@ -28,4 +28,6 @@ public:
         if (y > 1) y = 1;
         if (z > 1) z = 1;
     }
+    const float& operator [] (int i) const { return (&x)[i]; }
+    float& operator [] (int i) { return (&x)[i]; }
 };

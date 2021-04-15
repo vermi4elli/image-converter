@@ -177,6 +177,7 @@
     <ClInclude Include="RayTrace\Figure\Triangle.h" />
     <ClInclude Include="RayTrace\Light\ILight.h" />
     <ClInclude Include="RayTrace\Light\PointLight.h" />
+    <ClInclude Include="RayTrace\Matrix4x4.h" />
     <ClInclude Include="RayTrace\RayProvider\IRayProvider.h" />
     <ClInclude Include="RayTrace\RayProvider\PerspectiveRayProvider.h" />
     <ClInclude Include="RayTrace\RayTracer.h" />
@@ -197,6 +198,7 @@
     <ClCompile Include="ImageWriterInterface\IImageWriter.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="ImageWriterImplementations\PpmImageWriter.cpp" />
+    <ClCompile Include="RayTrace\Matrix4x4.cpp" />
     <ClCompile Include="RayTrace\RayTracer.cpp" />
     <ClCompile Include="RayTrace\Vector3D.cpp" />
   </ItemGroup>

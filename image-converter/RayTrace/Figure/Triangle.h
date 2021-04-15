@@ -2,6 +2,7 @@
 
 #include <cmath> 
 #include "../Vector3D.h"
+#include "FigureI.h"
 
 constexpr float kEpsilon = 1e-8;
 
@@ -9,11 +10,12 @@ class Triangle : public FigureI {
 public:
 	Vector3D a, b, c;
     Vector3D edge1, edge2;
-    Vector3D normal; 
-	Triangle(Vector3D a, Vector3D b, Vector3D c, Vector3D sc = Vector3D(0)) : a(a), b(b), c(c){
+    Vector3D normal;
+	Triangle(Vector3D a, Vector3D b, Vector3D c, Vector3D sc = Vector3D(0), Vector3D normal_ = Vector3D(0)) : a(a), b(b), c(c){
         edge1 = b - a;
         edge2 = c - a;
-        normal = edge1.crossprod(edge2);
+        if (normal_ != Vector3D(0)) normal = normal_;
+        else normal = edge1.crossprod(edge2);
         surfaceColor = sc;
     };
     bool intersect(Vector3D& originray, Vector3D& directionray, float& t0, float& t1) const

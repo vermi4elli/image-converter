@@ -1,3 +1,4 @@
+#include "OBJParser.h"
 #include "ImageConverter.h"
 #include "RayTrace/Figure/Cube.h"
 #include "RayTrace/RayTracer.h"

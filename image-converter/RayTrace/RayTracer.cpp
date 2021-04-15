@@ -73,7 +73,7 @@ void RayTracer::render(ServiceContainer& DI) {
             k++;
         }
     }
-
+    std::cout << "[Debug]: Done raytracing" << std::endl;
     PngImageWriter w("raytrace.png");
 
     w.write(image);

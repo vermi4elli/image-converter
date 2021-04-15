@@ -170,6 +170,7 @@
     <ClInclude Include="RayTrace\DI\IContainer.h" />
     <ClInclude Include="RayTrace\DI\ServiceContainer.h" />
     <ClInclude Include="RayTrace\DI\SimpleContainer.h" />
+    <ClInclude Include="OBJParser.h" />
     <ClInclude Include="RayTrace\Figure\Cube.h" />
     <ClInclude Include="RayTrace\Figure\FigureI.h" />
     <ClInclude Include="RayTrace\Figure\MatrixTRS.h" />
@@ -199,6 +200,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="ImageWriterImplementations\PpmImageWriter.cpp" />
     <ClCompile Include="RayTrace\Matrix4x4.cpp" />
+    <ClCompile Include="OBJParser.cpp" />
     <ClCompile Include="RayTrace\RayTracer.cpp" />
     <ClCompile Include="RayTrace\Vector3D.cpp" />
   </ItemGroup>

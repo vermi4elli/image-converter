@@ -171,6 +171,7 @@
       <Filter>Исходные файлы</Filter>
     </ClCompile>
     <ClCompile Include="RayTrace\Matrix4x4.cpp">
+    <ClCompile Include="OBJParser.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
   </ItemGroup>

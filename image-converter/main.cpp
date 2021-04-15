@@ -10,6 +10,7 @@
 #include "RayTrace/Camera/StaticCameraPositionProvider.h"
 #include "RayTrace/RayProvider/PerspectiveRayProvider.h"
 #include "RayTrace/Matrix4x4.h"
+#include "RayTrace/RayTracer.h"
 
 int main(int argc, char* argv[]) {
 	/*try
@@ -26,15 +27,17 @@ int main(int argc, char* argv[]) {
 	ServiceContainer DI;
 	DI.set<RayTracer>();
 
-	std::vector<FigureI*> figures;
-	figures.push_back(new Sphere(Vector3D(1, 2, -20), 2, Vector3D(1, 0.32, 0.32)));
-	figures.push_back(new Sphere(Vector3D(0, 2, -10), 0.5, Vector3D(1.00, 1, 1)));
-	//Vector3D v1(-1, -1, -5), v2(-3, -1, -10), v3(1, 5, -20);
-	Vector3D v1(-1, -1, -10), v2(-3, -1, -10), v3(1, 5, -20);
-	figures.push_back(new Triangle(v1, v2, v3, Vector3D(0.32, 1, 0.32)));
-	//figures.push_back(new Triangle(v2, v3,v1 , Vector3D(0, 1, 1)));
-	//figures.push_back(new Cube(Vector3D(0.5, -1, -5), Vector3D(1.5,-2, -4), Vector3D(1, 0.32, 0.32)));
-	//figures.push_back(new Triangle(Vector3D(-1, -1, -5), Vector3D(1, -1, -5), Vector3D(0, 1, -5), Vector3D(1, 0.32, 1)));
+	//figures.push_back(new Sphere(Vector3D(1, 2, -20), 2, Vector3D(1, 0.32, 0.32)));
+	//figures.push_back(new Sphere(Vector3D(0, 2, -10), 0.5, Vector3D(1.00, 1, 1)));
+	////Vector3D v1(-1, -1, -5), v2(-3, -1, -10), v3(1, 5, -20);
+	//Vector3D v1(-1, -1, -10), v2(-3, -1, -10), v3(1, 5, -20);
+	//figures.push_back(new Triangle(v1, v2, v3, Vector3D(0.32, 1, 0.32)));
+	////figures.push_back(new Triangle(v2, v3,v1 , Vector3D(0, 1, 1)));
+	////figures.push_back(new Cube(Vector3D(0.5, -1, -5), Vector3D(1.5,-2, -4), Vector3D(1, 0.32, 0.32)));
+	////figures.push_back(new Triangle(Vector3D(-1, -1, -5), Vector3D(1, -1, -5), Vector3D(0, 1, -5), Vector3D(1, 0.32, 1)));
+	
+	OBJParser *objParser = OBJParser::GetInstance("cow.obj");
+	std::vector<FigureI*> figures(objParser->GetFaces().begin(), objParser->GetFaces().end());
 	DI.set<std::vector<FigureI*>>(figures);
 
 	std::vector<ILight*> lights;
@@ -43,12 +46,11 @@ int main(int argc, char* argv[]) {
 	lights.push_back(new PointLight(Vector3D(1, 1, 1), 1, Vector3D(-1, 0, 1)));
 	DI.set<std::vector<ILight*>>(lights);
 
-
 	ICameraPositionProvider* camera = new StaticCameraPositionProvider();
 	DI.set<ICameraPositionProvider*>(camera);
 
-	Vector3D from(10, 10, -20) // From where camera look
-		, to(0, 2, -10); // To where camera look
+	Vector3D from(0, 5, -2) // From where camera look
+		, to(0, 0, 0); // To where camera look
 
 	Matrix4x4 camToWorld;
 	camToWorld = camToWorld.lookAt(from, to);

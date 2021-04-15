@@ -18,3 +18,18 @@ Example of the program executing:
 ```
 # 1.3.0
 ## renderer
+An image converter for OBJ format. Supports rendering into:
+- PPM
+- BMP
+- PNG
+
+### Manual
+To use the renderer put the source .obj model meant for rendering into the same folder as the executable. It can be used from command line with the next arguments:
+- `--source` - the source .obj file
+- `--goal-format` - the goal image format (e.g. png or bmp)
+- `--output` - the resulting file
+
+Example of the program executing:
+```
+> renderer.x64.exe --source=cow.obj --output=render.png
+```

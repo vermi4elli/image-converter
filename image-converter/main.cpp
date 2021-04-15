@@ -20,15 +20,6 @@ int main(int argc, char* argv[]) {
 
     OBJParser* objParser = OBJParser::GetInstance("cow.obj");
 
-    /*std::vector<FigureI*> figures;
-    std::vector<Vector3D> triangleVertices;
-
-
-    for (auto x: loader.LoadedVertices)
-    {
-        std::cout << x.Position.X << " : " << x.Position.Y << " : " << x.Position.Z << std::endl;
-    }*/
-
     std::vector<FigureI*> figures(objParser->GetFaces().begin(), objParser->GetFaces().end());
     RayTracer tracer;
     tracer.render(figures);

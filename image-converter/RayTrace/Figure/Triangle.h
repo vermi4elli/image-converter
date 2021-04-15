@@ -4,6 +4,13 @@
 #include "../Vector3D.h"
 #include "FigureI.h"
 
+enum class axis
+{
+    X,
+    Y,
+    Z
+};
+
 constexpr float kEpsilon = 1e-8;
 
 class Triangle : public FigureI {
@@ -11,12 +18,14 @@ public:
 	Vector3D a, b, c;
     Vector3D edge1, edge2;
     Vector3D normal;
+    Vector3D median;
 	Triangle(Vector3D a, Vector3D b, Vector3D c, Vector3D sc = Vector3D(0), Vector3D normal_ = Vector3D(0)) : a(a), b(b), c(c){
         edge1 = b - a;
         edge2 = c - a;
         if (normal_ != Vector3D(0)) normal = normal_;
         else normal = edge1.crossprod(edge2);
         surfaceColor = sc;
+        median = Vector3D((a.x + b.x + c.x) / 3, (a.y + b.y + c.y) / 3, (a.z + b.z + c.z) / 3);
     };
     bool intersect(Vector3D& originray, Vector3D& directionray, float& t0, float& t1) const
     {
@@ -58,4 +67,18 @@ public:
 
         return edge1.crossprod(edge2);
     }
+    float getMedianByAxis(axis axis) {
+        switch (axis)
+        {
+        case axis::X:
+            return this->median.x;
+            break;
+        case axis::Y:
+            return this->median.y;
+            break;
+        case axis::Z:
+            return this->median.z;
+            break;
+        }
+    };
 };

@@ -163,6 +163,20 @@
     <ClInclude Include="ImageWriterImplementations\BmpImageWriter.h" />
     <ClInclude Include="ImageWriterImplementations\PpmImageWriter.h" />
     <ClInclude Include="LZV.h" />
+    <ClInclude Include="OBJParser.h" />
+    <ClInclude Include="RayTrace\Camera\ICameraPositionProvider.h" />
+    <ClInclude Include="RayTrace\Camera\StaticCameraPositionProvider.h" />
+    <ClInclude Include="RayTrace\Figure\Cube.h" />
+    <ClInclude Include="RayTrace\Figure\FigureI.h" />
+    <ClInclude Include="RayTrace\Figure\MatrixTRS.h" />
+    <ClInclude Include="RayTrace\Figure\Sphere.h" />
+    <ClInclude Include="RayTrace\Figure\Triangle.h" />
+    <ClInclude Include="RayTrace\Light\ILight.h" />
+    <ClInclude Include="RayTrace\Light\PointLight.h" />
+    <ClInclude Include="RayTrace\RayProvider\IRayProvider.h" />
+    <ClInclude Include="RayTrace\RayProvider\PerspectiveRayProvider.h" />
+    <ClInclude Include="RayTrace\RayTracer.h" />
+    <ClInclude Include="RayTrace\Vector3D.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ConsoleParser.cpp" />
@@ -179,6 +193,9 @@
     <ClCompile Include="ImageWriterInterface\IImageWriter.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="ImageWriterImplementations\PpmImageWriter.cpp" />
+    <ClCompile Include="OBJParser.cpp" />
+    <ClCompile Include="RayTrace\RayTracer.cpp" />
+    <ClCompile Include="RayTrace\Vector3D.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

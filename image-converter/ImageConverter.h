@@ -1,4 +1,5 @@
 #pragma once
+#include <memory>
 #include "ConsoleParser.h"
 #include "ImageReaderImplementations/PpmImageReader.h"
 #include "ImageWriterImplementations/PpmImageWriter.h"
@@ -8,9 +9,9 @@
 
 class ImageConverter
 {
-	ConsoleParser* consoleParser;
-	IImageReader* imageReader;
-	IImageWriter* imageWriter;
+	std::unique_ptr<ConsoleParser> consoleParser;
+	std::unique_ptr<IImageReader> imageReader;
+	std::unique_ptr<IImageWriter> imageWriter;
 public:
 	ImageConverter(int argc, char* argv[]);
 	void convertImage();

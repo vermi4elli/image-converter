@@ -24,7 +24,7 @@ int main(int argc, char* argv[]) {
 		ConsoleParser* consoleParser = ConsoleParser::GetInstance(argc, argv);
 		DI.set<ConsoleParser*>(consoleParser);
 
-		OBJParser* objParser = OBJParser::GetInstance("cow.obj");
+		OBJParser* objParser = OBJParser::GetInstance("simplecow.obj");
 		DI.set<OBJParser*>(objParser);
 		DI.set<std::vector<FigureI*>>((*(DI.get<OBJParser*>()))->GetFaces().begin(), (*(DI.get<OBJParser*>()))->GetFaces().end());
 

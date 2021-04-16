@@ -1,5 +1,6 @@
 #include <algorithm>
 #include <iterator>
+#include <iostream>
 #include "KDTree.h"
 
 constexpr int MaxLevel = 32;
@@ -27,6 +28,7 @@ Node* Node::SetFigures(const std::vector<Triangle*>& figures)
 KDTree::KDTree(const std::vector<Triangle*>& figures)
 {
 	root = BuildTree(figures, 0);
+	std::cout << "[Debug]: Done building KD-tree" << std::endl;
 }
 
 std::vector<Triangle*> KDTree::Intersection(Node* node, Vector3D originray, Vector3D directionray)

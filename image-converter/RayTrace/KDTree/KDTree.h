@@ -31,5 +31,7 @@ private:
 	std::tuple<std::vector<Triangle*>, std::vector<Triangle*>, std::vector<Triangle*>> GetBoundingGroups(const std::vector<Triangle*>& figures, axis axis, float split);
 public:
 	KDTree(const std::vector<Triangle*>& figures);
+	std::vector<Triangle*> Intersection(Node* node, Vector3D originray, Vector3D directionray);
+	inline Node* GetRoot() { return root; };
 };
 

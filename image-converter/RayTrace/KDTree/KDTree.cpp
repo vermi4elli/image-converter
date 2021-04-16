@@ -29,6 +29,25 @@ KDTree::KDTree(const std::vector<Triangle*>& figures)
 	root = BuildTree(figures, 0);
 }
 
+std::vector<Triangle*> KDTree::Intersection(Node* node, Vector3D originray, Vector3D directionray)
+{
+	if (node->left == nullptr && node->middle == nullptr && node->right == nullptr)
+	{
+		return node->figures;
+	}
+
+	float t0 = INFINITY, t1 = INFINITY;
+	if (node->boundingBox->intersect(originray, directionray, t0, t1))
+	{
+		auto leftIntersects = Intersection(node->left, originray, directionray);
+		auto rightIntersects = Intersection(node->right, originray, directionray);
+		//auto middleIntersects = Intersection(node->middle, originray, directionray);
+		leftIntersects.insert(leftIntersects.end(), rightIntersects.begin(), rightIntersects.end());
+		return leftIntersects;
+	}
+	return node->figures;
+}
+
 Node* KDTree::BuildTree(const std::vector<Triangle*>& figures, int level)
 {
 	Node* node = new Node(GetFiguresBorders(figures));

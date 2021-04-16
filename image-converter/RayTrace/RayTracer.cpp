@@ -3,12 +3,12 @@
 #include "RayProvider/PerspectiveRayProvider.h"
 #include "Matrix4x4.h"
 #include "../ConsoleParser.h"
-#include "KDTree/KDTree.h"
 
-RGBAquad RayTracer::trace(Vector3D originray, Vector3D directionray, const std::vector<FigureI*>& figures, const std::vector<ILight*>& lights){
+RGBAquad RayTracer::trace(Vector3D originray, Vector3D directionray, KDTree* tree, const std::vector<ILight*>& lights){
     
     float tNear = INFINITY;
     const FigureI* figure = NULL;
+    std::vector<Triangle*> figures = tree->Intersection(tree->GetRoot(), originray, directionray);
 
     for (int i = 0; i < figures.size();i++) {
         float t0 = INFINITY, t1 = INFINITY;
@@ -72,7 +72,7 @@ void RayTracer::render(ServiceContainer& DI) {
             Vector3D dir;
             camToWorld->multDirMatrix(Vector3D(rays->rays[k].x, rays->rays[k].y, rays->rays[k].z), dir);
             dir.normalize();
-            image[y][x] = trace(originray, dir, figures, lights);
+            image[y][x] = trace(originray, dir, tree, lights);
             k++;
         }
     }

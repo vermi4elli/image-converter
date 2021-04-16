@@ -1,6 +1,6 @@
 #pragma once
 
-#include <cmath> 
+#include <cmath>
 #include "../Vector3D.h"
 #include "FigureI.h"
 
@@ -81,4 +81,31 @@ public:
             break;
         }
     };
+    std::pair<float, float> getMinMaxByAxis(axis axis) {
+        float v1, v2, v3, min, max;
+        
+        switch (axis)
+        {
+        case axis::X:
+            v1 = this->a.x;
+            v2 = this->b.x;
+            v3 = this->c.x;
+            break;
+        case axis::Y:
+            v1 = this->a.y;
+            v2 = this->b.y;
+            v3 = this->c.y;
+            break;
+        case axis::Z:
+            v1 = this->a.z;
+            v2 = this->b.z;
+            v3 = this->c.z;
+            break;
+        }
+
+        min = std::min({ v1, v2, v3 });
+        max = std::max({ v1, v2, v3 });
+
+        return std::pair<float, float>(min, max);
+    }
 };

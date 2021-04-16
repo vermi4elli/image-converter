@@ -20,6 +20,7 @@
     <ClCompile Include="RayTrace\RayTracer.cpp" />
     <ClCompile Include="RayTrace\Vector3D.cpp" />
     <ClCompile Include="RayTrace\KDTree\KDTree.cpp" />
+    <ClCompile Include="RayTrace\Figure\Triangle.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ConsoleParser.h" />

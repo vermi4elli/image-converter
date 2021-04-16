@@ -26,7 +26,7 @@ int main(int argc, char* argv[]) {
 		DI.set<ConsoleParser*>(consoleParser);
 
 		OBJParser* objParser = OBJParser::GetInstance("simplecow.obj");
-		DI.set<OBJParser*>(objParser);
+		DI.set<OBJParser*>(std::move(objParser));
 		
 		KDTree* tree = new KDTree({ (*(DI.get<OBJParser*>()))->GetFaces().begin(), (*(DI.get<OBJParser*>()))->GetFaces().end() });
 		DI.set<KDTree*>(std::move(tree));

@@ -200,6 +200,7 @@
     <ClCompile Include="ImageWriterInterface\IImageWriter.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="ImageWriterImplementations\PpmImageWriter.cpp" />
+    <ClCompile Include="RayTrace\Figure\Triangle.cpp" />
     <ClCompile Include="RayTrace\KDTree\KDTree.cpp" />
     <ClCompile Include="RayTrace\Matrix4x4.cpp" />
     <ClCompile Include="OBJParser.cpp" />

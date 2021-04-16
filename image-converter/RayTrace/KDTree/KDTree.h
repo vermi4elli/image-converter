@@ -1,13 +1,17 @@
 #pragma once
 #include <vector>
+#include <tuple>
+
 #include "../Vector3D.h"
 #include "../Figure/Triangle.h"
+#include "../Figure/Cube.h"
 
 struct Node
 {
-	Node();
+	Node(std::tuple<std::pair<float, float>, std::pair<float, float>, std::pair<float, float>> borders);
 	Node* left, * middle, * right;
 	Node* SetFigures(const std::vector<Triangle*>& figures);
+	Cube* boundingBox;
 
 	std::vector<Triangle*> figures;
 };
@@ -17,6 +21,9 @@ class KDTree
 private:
 	Node* root;
 
+	std::tuple<std::pair<float, float>, std::pair<float, float>, std::pair<float, float>> GetFiguresBorders(const std::vector<Triangle*>& figures);
+	void CompareValuesByAxis(std::pair<float, float>& axisMinMax, const std::pair<float, float>& triangleMinMax);
+	
 	float GetMedian(const std::vector<Triangle*>& figures, axis axis);
 	axis GetAxis(int level);
 	Node* BuildTree(const std::vector<Triangle*>& figures, int level);

@@ -1,16 +1,21 @@
 #include <algorithm>
-#include <tuple>
 #include <iterator>
 #include "KDTree.h"
 
 constexpr int MaxLevel = 32;
 constexpr int MinTrianglesAmount = 8;
 
-Node::Node()
+Node::Node(std::tuple<std::pair<float, float>, std::pair<float, float>, std::pair<float, float>> borders)
 {
 	this->left = nullptr;
 	this->middle = nullptr;
 	this->right = nullptr;
+
+	auto xMinMax = std::get<0>(borders);
+	auto yMinMax = std::get<1>(borders);
+	auto zMinMax = std::get<2>(borders);
+
+	this->boundingBox = new Cube(Vector3D(xMinMax.first, yMinMax.first, zMinMax.first), Vector3D(xMinMax.second, yMinMax.second, zMinMax.second));
 }
 
 Node* Node::SetFigures(const std::vector<Triangle*>& figures)
@@ -26,8 +31,32 @@ KDTree::KDTree(const std::vector<Triangle*>& figures)
 
 Node* KDTree::BuildTree(const std::vector<Triangle*>& figures, int level)
 {
-	Node* node = new Node();
+	Node* node = new Node(GetFiguresBorders(figures));
 	return (level >= MaxLevel || figures.size() <= MinTrianglesAmount) ? node->SetFigures(figures) : SplitNode(node, figures, level);
+}
+
+std::tuple<std::pair<float, float>, std::pair<float, float>, std::pair<float, float>> KDTree::GetFiguresBorders(const std::vector<Triangle*>& figures)
+{
+	if (figures.empty()) return std::make_tuple(std::pair<float, float>(), std::pair<float, float>(), std::pair<float, float>());
+
+	std::pair<float, float> xMinMax{ figures[0]->a.x, figures[0]->a.x };
+	std::pair<float, float> yMinMax{ figures[0]->a.y, figures[0]->a.y };
+	std::pair<float, float> zMinMax{ figures[0]->a.z, figures[0]->a.z };
+
+	for (auto& element : figures)
+	{
+		CompareValuesByAxis(xMinMax, element->getMinMaxByAxis(axis::X));
+		CompareValuesByAxis(yMinMax, element->getMinMaxByAxis(axis::Y));
+		CompareValuesByAxis(zMinMax, element->getMinMaxByAxis(axis::Z));
+	}
+
+	return std::make_tuple(xMinMax, yMinMax, zMinMax);
+}
+
+void KDTree::CompareValuesByAxis(std::pair<float, float>& axisMinMax, const std::pair<float, float>& triangleMinMax)
+{
+	if (axisMinMax.first > triangleMinMax.first) axisMinMax.first = triangleMinMax.first;
+	if (axisMinMax.second < triangleMinMax.second) axisMinMax.second = triangleMinMax.second;
 }
 
 Node* KDTree::SplitNode(Node* node, const std::vector<Triangle*>& figures, int level)

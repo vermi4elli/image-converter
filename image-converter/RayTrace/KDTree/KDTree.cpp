@@ -4,6 +4,7 @@
 #include "KDTree.h"
 
 constexpr int MaxLevel = 32;
+constexpr int MinTrianglesAmount = 8;
 
 KDTree::KDTree(const std::vector<Triangle*>& figures)
 {
@@ -37,8 +38,8 @@ axis KDTree::GetAxis(int level)
 
 Node* KDTree::BuildTree(const std::vector<Triangle*>& figures, int level)
 {
-	Node* node = new Node({ figures.begin(), figures.end() });
-	return level >= MaxLevel ? node : SplitNode(node, level);
+	Node* node = new Node(figures);
+	return (level >= MaxLevel || figures.size() <= MinTrianglesAmount) ? node : SplitNode(node, level);
 }
 
 Node* KDTree::SplitNode(Node* node, int level)
@@ -64,15 +65,15 @@ std::tuple<std::vector<Triangle*>, std::vector<Triangle*>, std::vector<Triangle*
 {
 	std::vector<Triangle*> left, right, middle;
 
-	std::copy_if(node->figures.begin(), node->figures.end(), std::back_inserter(left), [axis, split](Triangle* i) {
-		return i->getMedianByAxis(axis) <= split;
+	std::copy_if(node->figures.begin(), node->figures.end(), std::back_inserter(left), [axis, split](auto i) {
+		return i->getMedianByAxis(axis) < split;
 		}
 	);
-	std::copy_if(node->figures.begin(), node->figures.end(), std::back_inserter(right), [axis, split](Triangle* i) {
+	std::copy_if(node->figures.begin(), node->figures.end(), std::back_inserter(right), [axis, split](auto i) {
 		return i->getMedianByAxis(axis) >= split;
 		}
 	);
-	std::copy_if(node->figures.begin(), node->figures.end(), std::back_inserter(middle), [left, right](Triangle* i) {
+	std::copy_if(node->figures.begin(), node->figures.end(), std::back_inserter(middle), [left, right](auto i) {
 		return std::find(left.begin(), left.end(), i) == left.end() && std::find(right.begin(), right.end(), i) == right.end();
 		}
 	);

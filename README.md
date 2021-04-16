@@ -16,7 +16,7 @@ Example of the program executing:
 ```
 > image-converter.x64.exe --source=example.bmp --goal-format=png
 ```
-# 1.3.0
+# 2.0.0
 ## renderer
 An image converter for OBJ format. Supports rendering into:
 - PPM
@@ -24,7 +24,7 @@ An image converter for OBJ format. Supports rendering into:
 - PNG
 
 ### Manual
-To use the renderer put the source .obj model meant for rendering into the same folder as the executable. It can be used from command line with the next arguments:
+To use the renderer put the source .obj model meant for rendering into the same folder as the executable. The raytracing is implemented using the KD-tree. It can be used from command line with the next arguments:
 - `--source` - the source .obj file
 - `--goal-format` - the goal image format (e.g. png or bmp)
 - `--output` - the resulting file

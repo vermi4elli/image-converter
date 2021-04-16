@@ -42,7 +42,7 @@ std::vector<Triangle*> KDTree::Intersection(Node* node, Vector3D originray, Vect
 		auto leftIntersects = Intersection(node->left, originray, directionray);
 		auto rightIntersects = Intersection(node->right, originray, directionray);
 		//auto middleIntersects = Intersection(node->middle, originray, directionray);
-		leftIntersects.insert(leftIntersects.end(), rightIntersects.begin(), rightIntersects.end());
+		leftIntersects.insert(leftIntersects.end(), std::make_move_iterator(rightIntersects.begin()), std::make_move_iterator(rightIntersects.end()));
 		return leftIntersects;
 	}
 	return node->figures;

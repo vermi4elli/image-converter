@@ -22,8 +22,7 @@ RGBAquad RayTracer::trace(Vector3D originray, Vector3D directionray, KDTree* tre
         }
     }
 
-    if(!figure)
-    return RGBAquad();
+    if(!figure) return RGBAquad();
     Vector3D hitColor;
     Vector3D phit = originray + directionray * tNear;
     Vector3D hitNormal = figure->getnormal(phit);

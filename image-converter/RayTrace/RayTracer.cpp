@@ -4,10 +4,11 @@
 #include "Matrix4x4.h"
 #include "../ConsoleParser.h"
 
-RGBAquad RayTracer::trace(Vector3D originray, Vector3D directionray, const std::vector<FigureI*>& figures, const std::vector<ILight*>& lights){
+RGBAquad RayTracer::trace(Vector3D originray, Vector3D directionray, KDTree* tree, const std::vector<ILight*>& lights){
     
     float tNear = INFINITY;
     const FigureI* figure = NULL;
+    std::vector<Triangle*> figures = tree->Intersection(tree->GetRoot(), originray, directionray);
 
     for (int i = 0; i < figures.size();i++) {
         float t0 = INFINITY, t1 = INFINITY;
@@ -21,8 +22,7 @@ RGBAquad RayTracer::trace(Vector3D originray, Vector3D directionray, const std::
         }
     }
 
-    if(!figure)
-    return RGBAquad();
+    if(!figure) return RGBAquad();
     Vector3D hitColor;
     Vector3D phit = originray + directionray * tNear;
     Vector3D hitNormal = figure->getnormal(phit);
@@ -52,9 +52,10 @@ RGBAquad RayTracer::trace(Vector3D originray, Vector3D directionray, const std::
 
 void RayTracer::render(ServiceContainer& DI) {
 
-    
+
     std::vector < std::vector <RGBAquad> > image;
     auto figures = DI.get<std::vector<FigureI*>>()[0];
+    auto tree = DI.get<KDTree*>()[0];
     auto lights = DI.get<std::vector<ILight*>>()[0];
     auto camera = DI.get<ICameraPositionProvider*>()[0];
     auto rays = DI.get<IRayProvider*>()[0];
@@ -70,7 +71,7 @@ void RayTracer::render(ServiceContainer& DI) {
             Vector3D dir;
             camToWorld->multDirMatrix(Vector3D(rays->rays[k].x, rays->rays[k].y, rays->rays[k].z), dir);
             dir.normalize();
-            image[y][x] = trace(originray, dir, figures, lights);
+            image[y][x] = trace(originray, dir, tree, lights);
             k++;
         }
     }

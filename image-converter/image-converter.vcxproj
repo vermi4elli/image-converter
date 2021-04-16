@@ -176,6 +176,7 @@
     <ClInclude Include="RayTrace\Figure\MatrixTRS.h" />
     <ClInclude Include="RayTrace\Figure\Sphere.h" />
     <ClInclude Include="RayTrace\Figure\Triangle.h" />
+    <ClInclude Include="RayTrace\KDTree\KDTree.h" />
     <ClInclude Include="RayTrace\Light\ILight.h" />
     <ClInclude Include="RayTrace\Light\PointLight.h" />
     <ClInclude Include="RayTrace\Matrix4x4.h" />
@@ -199,6 +200,8 @@
     <ClCompile Include="ImageWriterInterface\IImageWriter.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="ImageWriterImplementations\PpmImageWriter.cpp" />
+    <ClCompile Include="RayTrace\Figure\Triangle.cpp" />
+    <ClCompile Include="RayTrace\KDTree\KDTree.cpp" />
     <ClCompile Include="RayTrace\Matrix4x4.cpp" />
     <ClCompile Include="OBJParser.cpp" />
     <ClCompile Include="RayTrace\RayTracer.cpp" />

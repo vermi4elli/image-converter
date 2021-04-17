@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <filesystem>
 #include "boost/algorithm/string/classification.hpp"
 #include "boost/algorithm/string/split.hpp"
 #include "OBJParser.h"
@@ -9,7 +10,9 @@ OBJParser* OBJParser::objParser_;
 
 OBJParser::OBJParser(const std::string& inputPath)
 {
-	std::ifstream file(inputPath);
+	if (!std::filesystem::exists(inputPath)) throw std::exception("[Error]: The given file does not exist!");;
+	std::ifstream fin(inputPath);
+	
 	std::string line;
 	float x, y, z;
 	std::vector<int> vs, ns;
@@ -18,7 +21,7 @@ OBJParser::OBJParser(const std::string& inputPath)
 	vertices.push_back(new Vector3D(0, 0, 0));
 	normals.push_back(new Vector3D(0, 0, 0));
 	
-	while (std::getline(file, line))
+	while (std::getline(fin, line))
 	{
 		if (line[0] == 'v')
 		{

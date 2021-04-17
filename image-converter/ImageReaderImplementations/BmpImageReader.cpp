@@ -4,6 +4,7 @@
 #include <iomanip>
 #include <algorithm>
 #include <vector>
+#include <filesystem>
 #include "BmpImageReader.h"
 
 
@@ -37,8 +38,9 @@ bool BmpImageReader::print(const char* error) {
 std::vector< std::vector <RGBAquad> > BmpImageReader::read () {
     BmpHeader header;
 
+    if (!std::filesystem::exists(name)) throw std::exception("[Error]: The given file does not exist!");
     std::ifstream fin(name, std::ios::binary);
-
+    
     char buffer[4];
 
     // BITMAP HEADER

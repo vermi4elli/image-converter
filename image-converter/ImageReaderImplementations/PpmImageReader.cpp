@@ -6,6 +6,7 @@
 #include <iomanip>
 #include <algorithm>
 #include <vector>
+#include <filesystem>
 
 void PpmImageReader::printMatrix(const std::vector<std::vector<RGBAquad>>& res)
 {
@@ -22,8 +23,8 @@ void PpmImageReader::printMatrix(const std::vector<std::vector<RGBAquad>>& res)
 
 std::vector<std::vector<RGBAquad>> PpmImageReader::read()
 {
+    if (!std::filesystem::exists(name)) throw std::exception("[Error]: The given file does not exist!");
     std::ifstream fin(name);
-    if (!fin.is_open()) throw std::exception("[Error]: Failed to open the given file!");
 
     // basic vars
     std::string header;

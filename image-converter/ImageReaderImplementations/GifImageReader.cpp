@@ -1,6 +1,7 @@
 #include <fstream>
 #include <iostream>
 #include <iomanip>
+#include <filesystem>
 #include "GifImageReader.h"
 
 constexpr uint32_t GifImageReader::get16bit(char bits[]) {
@@ -231,6 +232,7 @@ std::vector<std::vector<RGBAquad> > GifImageReader::read() {
 
 	GifStruct gif;
 
+	if (!std::filesystem::exists(name)) throw std::exception("[Error]: The given file does not exist!");
 	std::ifstream fin(name, std::ios::binary);
 
 	char buffer[4];

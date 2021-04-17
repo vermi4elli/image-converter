@@ -42,8 +42,11 @@ int main(int argc, char* argv[]) {
 		ICameraPositionProvider* camera = new StaticCameraPositionProvider();
 		DI.set<ICameraPositionProvider*>(camera);
 
-		Vector3D from(0, 7, -2) // From where camera look
-			, to(0, 0, 0); // To where camera look
+
+		Vector3D min = DI.get<KDTree*>()[0]->GetRoot()->boundingBox->bounds[0];
+		Vector3D max = DI.get<KDTree*>()[0]->GetRoot()->boundingBox->bounds[1];
+		Vector3D from(0, ((max.y - min.y) >= 1) ? ((max.y + min.y) / 2 + (max.y - min.y) * 4) : 6, (max.z - min.z) >= 1 ? ((max.z + min.z) / 2 - (max.z - min.z) * 4) : -2) // From where camera look
+			, to((max.x + min.x) / 2, (max.y + min.y) / 2, (max.z + min.z) / 2); // To where camera look
 
 		Matrix4x4 camToWorld;
 		camToWorld = camToWorld.lookAt(from, to);

@@ -31,6 +31,7 @@ RGBAquad RayTracer::trace(Vector3D originray, Vector3D directionray, KDTree* tre
         Vector3D lightdir;
         lights[i]->illuminate(phit, lightdir, tNear);
         lightdir = -lightdir;
+        figures = tree->Intersection(tree->GetRoot(), phit, lightdir);
         bool shadowed = false;
         for (int j = 0; j < figures.size();j++) {
             float t0 = INFINITY, t1 = INFINITY;

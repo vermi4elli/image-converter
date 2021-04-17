@@ -36,7 +36,6 @@ int main(int argc, char* argv[]) {
 		std::vector<ILight*> lights;
 		lights.push_back(new PointLight(Vector3D(1, 1, 1), 1, Vector3D(0, -10, -10)));
 		lights.push_back(new PointLight(Vector3D(0, 1, 1), 1, Vector3D(0, 10, -10)));
-		lights.push_back(new PointLight(Vector3D(1, 1, 1), 1, Vector3D(-1, 0, 1)));
 		DI.set<std::vector<ILight*>>(lights);
 
 		ICameraPositionProvider* camera = new StaticCameraPositionProvider();
@@ -47,6 +46,8 @@ int main(int argc, char* argv[]) {
 		Vector3D max = DI.get<KDTree*>()[0]->GetRoot()->boundingBox->bounds[1];
 		Vector3D from(0, ((max.y - min.y) >= 1) ? ((max.y + min.y) / 2 + (max.y - min.y) * 4) : 6, (max.z - min.z) >= 1 ? ((max.z + min.z) / 2 - (max.z - min.z) * 4) : -2) // From where camera look
 			, to((max.x + min.x) / 2, (max.y + min.y) / 2, (max.z + min.z) / 2); // To where camera look
+
+		//lights.push_back(new PointLight(to, 1, from + 1));
 
 		Matrix4x4 camToWorld;
 		camToWorld = camToWorld.lookAt(from, to);

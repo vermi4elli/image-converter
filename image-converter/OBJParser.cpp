@@ -43,12 +43,12 @@ OBJParser::OBJParser(const std::string& inputPath)
 			boost::split(splitVertVec, line.substr(2), boost::is_any_of(" "), boost::token_compress_on);
 			for (auto& i : splitVertVec)
 			{
-				if (i.find('//') != std::string::npos)
+				if (i.find('/') != std::string::npos)
 				{
 					boost::split(splitVertNormVec, i, boost::is_any_of("/"), boost::token_compress_on);
 
 					vs.push_back(atoi(splitVertNormVec[0].c_str()));
-					ns.push_back(atoi(splitVertNormVec[1].c_str()));
+					if (normals.size() > 1) ns.push_back(atoi(splitVertNormVec[1].c_str()));
 
 					splitVertNormVec.clear();
 				}
@@ -58,8 +58,10 @@ OBJParser::OBJParser(const std::string& inputPath)
 				}
 			}
 
-			faces.push_back(new Triangle(*vertices[vs[0]], *vertices[vs[1]], *vertices[vs[2]],
+			if (normals.size() > 1) faces.push_back(new Triangle(*vertices[vs[0]], *vertices[vs[1]], *vertices[vs[2]],
 				Vector3D(0.32, 1, 0.32), *normals[ns[0]]));
+			else faces.push_back(new Triangle(*vertices[vs[0]], *vertices[vs[1]], *vertices[vs[2]],
+				Vector3D(0.32, 1, 0.32)));
 
 			splitVertVec.clear();
 			vs.clear();

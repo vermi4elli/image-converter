@@ -1,8 +1,8 @@
 #include "RayTracer.h"
+#include "../ConsoleParser.h"
 #include "../ImageWriterInterface/IImageWriter.h";
 #include "RayProvider/PerspectiveRayProvider.h"
 #include "Matrix4x4.h"
-#include "../ConsoleParser.h"
 
 RGBAquad RayTracer::trace(Vector3D originray, Vector3D directionray, KDTree* tree, const std::vector<ILight*>& lights){
     
@@ -80,6 +80,6 @@ void RayTracer::render(ServiceContainer& DI) {
     std::cout << "[Debug]: Done raytracing" << std::endl;
     
     std::unique_ptr<IImageWriter> w;
-    w.reset(std::move(IImageWriter::createImageWriter((*(DI.get<ConsoleParser*>()))->goalImageType(), (*(DI.get<ConsoleParser*>()))->pathOutput())));
+    w.reset(std::move(IImageWriter::createImageWriter(DI.get<ConsoleParser*>()[0]->goalImageType(), DI.get<ConsoleParser*>()[0]->pathOutput())));
     w.get()->write(image);
 };

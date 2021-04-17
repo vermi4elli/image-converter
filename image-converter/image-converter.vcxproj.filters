@@ -60,5 +60,7 @@
     <ClInclude Include="RayTrace\RayTracer.h" />
     <ClInclude Include="RayTrace\Vector3D.h" />
     <ClInclude Include="RayTrace\KDTree\KDTree.h" />
+    <ClInclude Include="DataTypes\ModelSide.h" />
+    <ClInclude Include="DataTypes\GifStruct.h" />
   </ItemGroup>
 </Project>

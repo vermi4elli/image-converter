@@ -149,7 +149,9 @@
   <ItemGroup>
     <ClInclude Include="ConsoleParser.h" />
     <ClInclude Include="DataTypes\BmpHeader.h" />
+    <ClInclude Include="DataTypes\GifStruct.h" />
     <ClInclude Include="DataTypes\ImageType.h" />
+    <ClInclude Include="DataTypes\ModelSide.h" />
     <ClInclude Include="DataTypes\rgbaquad.h" />
     <ClInclude Include="ImageReaderImplementations\BmpImageReader.h" />
     <ClInclude Include="ImageReaderImplementations\GifImageReader.h" />

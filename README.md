@@ -28,8 +28,9 @@ To use the renderer put the source .obj model meant for rendering into the same 
 - `--source` - the source .obj file
 - `--goal-format` - the goal image format (e.g. png or bmp)
 - `--output` - the resulting file
+- `--side` - the side of the model the camera should see (e.g. front, back, left or right)
 
 Example of the program executing:
 ```
-> renderer.x64.exe --source=cow.obj --output=render.png
+> renderer.x64.exe --source=dragon3.obj --output=render.png --side=front
 ```

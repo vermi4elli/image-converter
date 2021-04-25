@@ -34,3 +34,5 @@ Example of the program executing:
 ```
 > renderer.x64.exe --source=dragon3.obj --output=render.png --side=front
 ```
+
+![example 1](/images/render.png)

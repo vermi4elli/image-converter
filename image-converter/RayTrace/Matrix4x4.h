@@ -3,7 +3,7 @@
 #include <iostream>
 
 class Matrix4x4 {
-	float x[4][4] = { {1,0,0,0},{0,1,0,0},{0,0,1,0},{0,0,0,1} };
+	float matrix[4][4] = { {1,0,0,0},{0,1,0,0},{0,0,1,0},{0,0,0,1} };
 public:
 	Matrix4x4();
 	Matrix4x4(float a, float b, float c, float d, float e, float f, float g, float h,

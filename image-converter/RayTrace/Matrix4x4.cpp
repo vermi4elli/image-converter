@@ -6,25 +6,25 @@ Matrix4x4::Matrix4x4() {};
 Matrix4x4::Matrix4x4(float a, float b, float c, float d, float e, float f, float g, float h,
     float i, float j, float k, float l, float m, float n, float o, float p)
 {
-    x[0][0] = a;
-    x[0][1] = b;
-    x[0][2] = c;
-    x[0][3] = d;
-    x[1][0] = e;
-    x[1][1] = f;
-    x[1][2] = g;
-    x[1][3] = h;
-    x[2][0] = i;
-    x[2][1] = j;
-    x[2][2] = k;
-    x[2][3] = l;
-    x[3][0] = m;
-    x[3][1] = n;
-    x[3][2] = o;
-    x[3][3] = p;
+    matrix[0][0] = a;
+    matrix[0][1] = b;
+    matrix[0][2] = c;
+    matrix[0][3] = d;
+    matrix[1][0] = e;
+    matrix[1][1] = f;
+    matrix[1][2] = g;
+    matrix[1][3] = h;
+    matrix[2][0] = i;
+    matrix[2][1] = j;
+    matrix[2][2] = k;
+    matrix[2][3] = l;
+    matrix[3][0] = m;
+    matrix[3][1] = n;
+    matrix[3][2] = o;
+    matrix[3][3] = p;
 };
-    const float* Matrix4x4::operator [] (uint8_t i) const { return x[i]; };
-    float* Matrix4x4::operator [] (uint8_t i) { return x[i]; };
+    const float* Matrix4x4::operator [] (uint8_t i) const { return matrix[i]; };
+    float* Matrix4x4::operator [] (uint8_t i) { return matrix[i]; };
     Matrix4x4 Matrix4x4::operator * (const Matrix4x4& v) const
     {
         Matrix4x4 tmp;
@@ -47,29 +47,29 @@ Matrix4x4::Matrix4x4(float a, float b, float c, float d, float e, float f, float
         Matrix4x4 t;
         for (uint8_t i = 0; i < 4; ++i) {
             for (uint8_t j = 0; j < 4; ++j) {
-                t[i][j] = x[j][i];
+                t[i][j] = matrix[j][i];
             }
         }
         return t;
     };
     Matrix4x4& Matrix4x4::transpose()
     {
-        Matrix4x4 tmp(x[0][0],
-            x[1][0],
-            x[2][0],
-            x[3][0],
-            x[0][1],
-            x[1][1],
-            x[2][1],
-            x[3][1],
-            x[0][2],
-            x[1][2],
-            x[2][2],
-            x[3][2],
-            x[0][3],
-            x[1][3],
-            x[2][3],
-            x[3][3]);
+        Matrix4x4 tmp(matrix[0][0],
+            matrix[1][0],
+            matrix[2][0],
+            matrix[3][0],
+            matrix[0][1],
+            matrix[1][1],
+            matrix[2][1],
+            matrix[3][1],
+            matrix[0][2],
+            matrix[1][2],
+            matrix[2][2],
+            matrix[3][2],
+            matrix[0][3],
+            matrix[1][3],
+            matrix[2][3],
+            matrix[3][3]);
         *this = tmp;
         return *this;
     };
@@ -78,10 +78,10 @@ Matrix4x4::Matrix4x4(float a, float b, float c, float d, float e, float f, float
     {
         float a, b, c, w;
 
-        a = src[0] * x[0][0] + src[1] * x[1][0] + src[2] * x[2][0] + x[3][0];
-        b = src[0] * x[0][1] + src[1] * x[1][1] + src[2] * x[2][1] + x[3][1];
-        c = src[0] * x[0][2] + src[1] * x[1][2] + src[2] * x[2][2] + x[3][2];
-        w = src[0] * x[0][3] + src[1] * x[1][3] + src[2] * x[2][3] + x[3][3];
+        a = src[0] * matrix[0][0] + src[1] * matrix[1][0] + src[2] * matrix[2][0] + matrix[3][0];
+        b = src[0] * matrix[0][1] + src[1] * matrix[1][1] + src[2] * matrix[2][1] + matrix[3][1];
+        c = src[0] * matrix[0][2] + src[1] * matrix[1][2] + src[2] * matrix[2][2] + matrix[3][2];
+        w = src[0] * matrix[0][3] + src[1] * matrix[1][3] + src[2] * matrix[2][3] + matrix[3][3];
 
         dst.x = a / w;
         dst.y = b / w;
@@ -92,9 +92,9 @@ Matrix4x4::Matrix4x4(float a, float b, float c, float d, float e, float f, float
     {
         float a, b, c;
 
-        a = src[0] * x[0][0] + src[1] * x[1][0] + src[2] * x[2][0];
-        b = src[0] * x[0][1] + src[1] * x[1][1] + src[2] * x[2][1];
-        c = src[0] * x[0][2] + src[1] * x[1][2] + src[2] * x[2][2];
+        a = src[0] * matrix[0][0] + src[1] * matrix[1][0] + src[2] * matrix[2][0];
+        b = src[0] * matrix[0][1] + src[1] * matrix[1][1] + src[2] * matrix[2][1];
+        c = src[0] * matrix[0][2] + src[1] * matrix[1][2] + src[2] * matrix[2][2];
 
         dst.x = a;
         dst.y = b;

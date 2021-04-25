@@ -35,21 +35,22 @@ Example of the program executing:
 > renderer.x64.exe --source=dragon3.obj --output=render.png --side=front
 ```
 Examples of render:
-renderer.x64.exe --source=dragon3.obj --output=render1.bmp --side=front
-![example 1](/images/render1.bmp)
+
+renderer.x64.exe --source=dragon3.obj --output=render1.png --side=front
+![example 1](/images/render1.png)
 
 Examples of render:
-renderer.x64.exe --source=dragon3.obj --output=render2.bmp --side=back
-![example 2](/images/render2.bmp)
+renderer.x64.exe --source=dragon3.obj --output=render2.png --side=back
+![example 2](/images/render2.png)
 
 Examples of render:
-renderer.x64.exe --source=cow.obj --output=render3.bmp --side=front
-![example 3](/images/render3.bmp)
+renderer.x64.exe --source=cow.obj --output=render3.png --side=front
+![example 3](/images/render3.png)
 
 Examples of render:
-renderer.x64.exe --source=deer.obj --output=render4.bmp --side=back
-![example 4](/images/render4.bmp)
+renderer.x64.exe --source=deer.obj --output=render4.png --side=back
+![example 4](/images/render4.png)
 
 Examples of render:
-renderer.x64.exe --source=deer.obj --output=render5.bmp --side=right
-![example 5](/images/render5.bmp)
+renderer.x64.exe --source=deer.obj --output=render5.png --side=right
+![example 5](/images/render5.png)

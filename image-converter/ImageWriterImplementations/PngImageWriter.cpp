@@ -35,9 +35,9 @@ uint32_t PngImageWriter::saveRGBAquad(const RGBAquad& pixel)
 
 namespace {
 	int* crcTable;
-}
+};
 
-uint32_t PngImageWriter::Crc32(char* stream, int offset, int length, uint32_t crc) {
+void PngImageWriter::Crc32(char* stream, int offset, int length, uint32_t& crc) {
 	int c;
 
 	if (crcTable == nullptr) {
@@ -58,54 +58,53 @@ uint32_t PngImageWriter::Crc32(char* stream, int offset, int length, uint32_t cr
 	for (auto i = offset; i < endOffset; i++) {
 		c = crcTable[(c ^ stream[i]) & 255] ^ ((c >> 8) & 0xFFFFFF);
 	}
-	return c ^ 0xffffffff;
+	crc = c ^ 0xffffffff;
 }
 void PngImageWriter::setIHDR(std::ofstream& fout, const std::vector< std::vector <RGBAquad> >& data) {
 	char buffer[4];
 	uint32_t crc = 0;
 
 	set32bitrev(13, buffer);
-	crc = Crc32(buffer, 0, 4, crc);
 	fout.write(buffer, 4);
 
 	buffer[0] = 'I';
 	buffer[1] = 'H';
 	buffer[2] = 'D';
 	buffer[3] = 'R';
-	crc = Crc32(buffer, 0, 4, crc);
+	Crc32(buffer, 0, 4, crc);
 	fout.write(buffer, 4);
 
 	
 	//set width
 	set32bitrev(data[0].size(), buffer);
 	fout.write(buffer, 4);
-	crc = Crc32(buffer, 0, 4, crc);
+	Crc32(buffer, 0, 4, crc);
 
 	//set height
 	set32bitrev(data.size(), buffer);
 	fout.write(buffer, 4);
-	crc = Crc32(buffer, 0, 4, crc);
+	Crc32(buffer, 0, 4, crc);
 	
 	//set bitdepth
 	buffer[0] = 8;
 	fout.write(buffer, 1);
-	crc = Crc32(buffer, 0, 1, crc);
+	Crc32(buffer, 0, 1, crc);
 	//set color type
 	buffer[0] = 2;
 	fout.write(buffer, 1);
-	crc = Crc32(buffer, 0, 1, crc);
+	Crc32(buffer, 0, 1, crc);
 	//set compression method
 	buffer[0] = 0;
 	fout.write(buffer, 1);
-	crc = Crc32(buffer, 0, 1, crc);
+	Crc32(buffer, 0, 1, crc);
 	//set filter method
 	buffer[0] = 0;
 	fout.write(buffer, 1);
-	crc = Crc32(buffer, 0, 1, crc);
+	Crc32(buffer, 0, 1, crc);
 	//set interlace method
 	buffer[0] = 0;
 	fout.write(buffer, 1);
-	crc = Crc32(buffer, 0, 1, crc);
+	Crc32(buffer, 0, 1, crc);
 
 	set32bitrev(crc, buffer);
 	fout.write(buffer, 4);
@@ -121,13 +120,14 @@ void PngImageWriter::setIDAT(std::ofstream& fout, const std::vector <char>& segm
 	buffer[1] = 'D';
 	buffer[2] = 'A';
 	buffer[3] = 'T';
+	Crc32(buffer, 0, 4, crc);
 	fout.write(buffer, 4);
-	crc = Crc32(buffer, 0, 4, crc);
+
 
 	for (auto ch : segment) {
 		buffer[0] = ch;
 		fout.write(buffer, 1);
-		crc = Crc32(buffer, 0, 1, crc);
+		Crc32(buffer, 0, 1, crc);
 	}
 	set32bitrev(crc, buffer);
 	fout.write(buffer, 4);
@@ -173,16 +173,15 @@ void PngImageWriter::setIEND(std::ofstream& fout, const std::vector< std::vector
 	uint32_t crc = 0;
 
 	set32bitrev(0, buffer);
-
 	fout.write(buffer, 4);
 
 	buffer[0] = 'I';
 	buffer[1] = 'E';
 	buffer[2] = 'N';
 	buffer[3] = 'D';
-	crc = Crc32(buffer, 0, 4, crc);
-	fout.write(buffer, 4);
 
+	fout.write(buffer, 4);
+	Crc32(buffer, 0, 4, crc);
 	set32bitrev(crc, buffer);
 	fout.write(buffer, 4);
 }

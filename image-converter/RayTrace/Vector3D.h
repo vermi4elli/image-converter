@@ -13,6 +13,7 @@ public:
     Vector3D(float x, float y, float z) : x(float(x)), y(float(y)), z(float(z)) {};
     Vector3D& normalize();
     Vector3D operator * (const float& f) const;
+    Vector3D operator / (const float& f) const;
     Vector3D operator * (const Vector3D& v) const;
     float dot(const Vector3D& v) const;
     Vector3D crossprod(const Vector3D& v) const;
@@ -22,7 +23,6 @@ public:
     Vector3D& operator *= (const Vector3D& v);
     friend inline bool operator==(const Vector3D& lhs, const Vector3D& rhs) { return std::tie(lhs.x, lhs.y, lhs.z) == std::tie(rhs.x, rhs.y, rhs.z); };
     friend inline bool operator!=(const Vector3D& lhs, const Vector3D& rhs) { return !(lhs == rhs); }
-    
     Vector3D operator - () const;
     float length2() const;
     float length() const;

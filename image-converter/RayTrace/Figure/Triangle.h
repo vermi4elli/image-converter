@@ -11,24 +11,32 @@ enum class axis
     Z
 };
 
-constexpr float kEpsilon = 1e-8;
+
 
 class Triangle : public FigureI {
 public:
 	Vector3D a, b, c;
-    Vector3D edge1, edge2;
+    Vector3D a_norm, b_norm, c_norm;
     Vector3D normal;
+    bool dotNormals = false;
     Vector3D median;
 	Triangle(Vector3D a, Vector3D b, Vector3D c, Vector3D sc = Vector3D(0), Vector3D normal_ = Vector3D(0)) : a(a), b(b), c(c){
-        edge1 = b - a;
-        edge2 = c - a;
-        if (normal_ != Vector3D(0)) normal = normal_;
-        else normal = edge1.crossprod(edge2);
+        if (normal_ == Vector3D(0)) {
+            Vector3D edge1 = b - a;
+            Vector3D edge2 = c - a;
+            normal = edge1.crossprod(edge2);
+        }
+        else
+        {
+            normal = normal_;
+        }
         surfaceColor = sc;
         median = Vector3D((a.x + b.x + c.x) / 3, (a.y + b.y + c.y) / 3, (a.z + b.z + c.z) / 3);
     };
-    bool intersect(Vector3D& originray, Vector3D& directionray, float& t0, float& t1) const
+    bool intersect(Vector3D& originray, Vector3D& directionray, intersectParams& param, float& t0, float& t1) const
     {
+        Vector3D edge1 = b - a;
+        Vector3D edge2 = c - a;
         Vector3D h = directionray.crossprod(edge2);
         auto dotprod_a = edge1.dot(h);
 
@@ -53,19 +61,32 @@ public:
         float t = f * edge2.dot(q);
         t0 = t;
         t1 = t;
+        param = intersectParams(
+            (originray + directionray * t),
+            getnormal(Vector3D(u,v,0))
+            );
         return true;
     }
     Triangle& operator +(Vector3D v) {
         a += v;
         b += v;
         c += v;
-        edge1 = b - a;
-        edge2 = c - a;
         return *this;
     }
-    Vector3D getnormal(Vector3D& hitpoint) const {
+    void setDotNormals(Vector3D norm1, Vector3D norm2, Vector3D norm3) {
+        a_norm = norm1;
+        b_norm = norm2;
+        c_norm = norm3;
+        dotNormals = true;
 
-        return edge1.crossprod(edge2);
+    }
+    Vector3D getnormal(Vector3D uv) const {
+        if (dotNormals) {
+            return a_norm * (1 - uv.x - uv.y) + b_norm * uv.x + c_norm * uv.y ;
+        }
+        else {
+            return normal;
+        }
     }
     float getMedianByAxis(axis axis) {
         switch (axis)

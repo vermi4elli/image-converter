@@ -13,6 +13,7 @@
 #include "RayTrace/Matrix4x4.h"
 #include "RayTrace/RayTracer.h"
 #include "RayTrace/KDTree/KDTree.h"
+#include "RayTrace/Light/DirectionalLight.h"
 
 constexpr int multZ = 3;
 constexpr int multX = multZ * 3;
@@ -88,7 +89,7 @@ int main(int argc, char* argv[]) {
 		DI.set<Matrix4x4>(camToWorld);
 
 		std::vector<ILight*> lights;
-		lights.push_back(new PointLight(Vector3D(1, 1, 1), 0.8, from + Vector3D(1, 1, 1)));
+		lights.push_back(new PointLight(Vector3D(1, 1, 1), 170, (from + Vector3D(1,1,1))));
 		DI.set<std::vector<ILight*>>(lights);
 
 		DI.set<IRayProvider*>(new PerspectiveRayProvider(DI.get<ICameraPositionProvider*>()[0]));

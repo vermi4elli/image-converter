@@ -8,15 +8,17 @@ RGBAquad RayTracer::trace(Vector3D originray, Vector3D directionray, KDTree* tre
     
     float tNear = INFINITY;
     const FigureI* figure = NULL;
+    intersectParams Params;
     std::vector<Triangle*> figures = tree->Intersection(tree->GetRoot(), originray, directionray);
-
     for (int i = 0; i < figures.size();i++) {
         float t0 = INFINITY, t1 = INFINITY;
-        if (figures[i]->intersect(originray, directionray, t0, t1)) {
+        intersectParams temp;
+        if (figures[i]->intersect(originray, directionray, temp, t0, t1)) {
             if (t0 < 0) t0 = t1;
             if (t0 < 0) continue;
             if (t0 < tNear) {
                 tNear = t0;
+                Params = temp;
                 figure = figures[i];
             }
         }
@@ -24,26 +26,25 @@ RGBAquad RayTracer::trace(Vector3D originray, Vector3D directionray, KDTree* tre
 
     if(!figure) return RGBAquad();
     Vector3D hitColor;
-    Vector3D phit = originray + directionray * tNear;
-    Vector3D hitNormal = figure->getnormal(phit);
-    hitNormal.normalize();
     for (int i = 0; i < lights.size(); i++) {
         Vector3D lightdir;
-        lights[i]->illuminate(phit, lightdir, tNear);
+        Vector3D lightIntens;
+        lights[i]->illuminate(Params.pHit, lightdir, lightIntens, tNear);
         lightdir = -lightdir;
-        figures = tree->Intersection(tree->GetRoot(), phit, lightdir);
+        figures = tree->Intersection(tree->GetRoot(), Params.pHit, lightdir);
         bool shadowed = false;
+        intersectParams temp;
         for (int j = 0; j < figures.size();j++) {
             float t0 = INFINITY, t1 = INFINITY;
             if (figure == figures[j]) continue;
-            if (figures[j]->intersect(phit, lightdir, t0, t1)) {
+            if (figures[j]->intersect(Params.pHit, lightdir, temp, t0, t1)) {
                 if (t0 < 0) t0 = t1;
                 if (t0 < 0) continue;
                 shadowed = true;
                 break;
             }
         }
-        if(!shadowed) hitColor += (lights[i]->color * std::max(0.f, hitNormal.dot(lightdir))) * lights[i]->intensity;
+        if(!shadowed) hitColor += (lightIntens * std::max(0.f, Params.hitNormal.dot(lightdir)));
     }
     hitColor = hitColor + 0.1;
     hitColor.one();

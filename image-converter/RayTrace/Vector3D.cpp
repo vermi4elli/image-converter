@@ -10,6 +10,7 @@ Vector3D& Vector3D::normalize()
     return *this;
 };
 Vector3D Vector3D::operator * (const float& f) const { return Vector3D(x * f, y * f, z * f); };
+Vector3D Vector3D::operator / (const float& f) const { return Vector3D(x / f, y / f, z / f); };
 Vector3D Vector3D::operator * (const Vector3D& v) const { return Vector3D(x * v.x, y * v.y, z * v.z); };
 float Vector3D::dot(const Vector3D& v) const { return x * v.x + y * v.y + z * v.z; };
 Vector3D Vector3D::crossprod(const Vector3D& v) const {
@@ -26,7 +27,6 @@ Vector3D& Vector3D::operator *= (const Vector3D& v) { x *= v.x, y *= v.y, z *= v
 Vector3D Vector3D::operator - () const { return Vector3D(-x, -y, -z); };
 float Vector3D::length2() const { return x * x + y * y + z * z; };
 float Vector3D::length() const { return sqrt(length2()); };
-
 Vector3D& Vector3D::rotate(float fi) {
     float sn = sin(fi* M_PI/180);
     float cs = cos(fi * M_PI / 180);

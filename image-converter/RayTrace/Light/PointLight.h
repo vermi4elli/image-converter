@@ -10,12 +10,13 @@ public:
         color = c;
         intensity = i;
     };
-    void illuminate(const Vector3D& P, Vector3D& lightDir, float& distance) const
+    void illuminate(const Vector3D& P, Vector3D& lightDir, Vector3D& lightIntensity, float& distance) const
     {
         lightDir = (P - position);
         float r2 = lightDir.length2();
         distance = sqrt(r2);
         lightDir.x /= distance, lightDir.y /= distance, lightDir.z /= distance;
+        lightIntensity = color * intensity/ (4 * M_PI * r2);
     }
 
 };

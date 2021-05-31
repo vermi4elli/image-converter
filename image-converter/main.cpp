@@ -14,7 +14,7 @@
 #include "RayTrace/RayTracer.h"
 #include "RayTrace/KDTree/KDTree.h"
 #include "RayTrace/Light/DirectionalLight.h"
-
+#include "RayTrace/Figure/Plane.h"
 constexpr int multZ = 3;
 constexpr int multX = multZ * 3;
 constexpr int multY = 0.5;
@@ -27,7 +27,7 @@ int main(int argc, char* argv[]) {
 
 		ServiceContainer DI;
 		DI.set<RayTracer>();
-
+		/*
 		ConsoleParser* consoleParser = ConsoleParser::GetInstance(argc, argv);
 		DI.set<ConsoleParser*>(consoleParser);
 
@@ -87,9 +87,28 @@ int main(int argc, char* argv[]) {
 		Matrix4x4 camToWorld;
 		camToWorld = camToWorld.lookAt(from, to);
 		DI.set<Matrix4x4>(camToWorld);
-
+		*/
+		std::vector<FigureI*> figures;
+		figures.push_back(new Sphere(Vector3D(2.5, 0, -10), 1, Vector3D(1, 0.1, 0.1)));
+		figures.push_back(new Sphere(Vector3D(-5, 0, -50), 5, Vector3D(1, 0.1, 0.1)));
+		//Triangle* sp = new Triangle(Vector3D(0, 2, -10), Vector3D(-2.5, -2, -10), Vector3D(2.5, -2, -10), Vector3D(1, 1, 1));
+		//figures.push_back(new Triangle(Vector3D(2.5, 0, -10), Vector3D(2.5, 0, -10), Vector3D(2.5, 0, -10), Vector3D(1, 0.1, 0.1)));
+		Sphere* sp = new Sphere(Vector3D(-2.5, 0, -10), 1, Vector3D(1, 1,1));
+		sp->surfType = surfaceType::DIFFUSSE;
+		sp->ior = 10;
+		figures.push_back(sp);
+		//Sphere* sp1 = new Sphere(Vector3D(0, 0, -5), 1, Vector3D(0.1, 1, 0.1));
+		//sp1->surfType = surfaceType::REFLECT_AND_REFRACT;
+		//sp1->ior = 1.5;
+		//figures.push_back(sp1);
+		figures.push_back(new Plane());
+		DI.set<std::vector<FigureI*>>(figures);
+		ICameraPositionProvider* camera = new StaticCameraPositionProvider();
+		DI.set<ICameraPositionProvider*>(camera);
 		std::vector<ILight*> lights;
-		lights.push_back(new PointLight(Vector3D(1, 1, 1), 170, (from + Vector3D(1,1,1))));
+		//lights.push_back(new PointLight(Vector3D(1, 1, 1),800,  Vector3D(0,10,-10)));
+		//lights.push_back(new PointLight(Vector3D(1, 1, 1), 800, Vector3D(-10, 10, -10)));
+		lights.push_back(new DirectionalLight(Vector3D(1, 1, 1),0.5,Vector3D(0, 1, 0)));
 		DI.set<std::vector<ILight*>>(lights);
 
 		DI.set<IRayProvider*>(new PerspectiveRayProvider(DI.get<ICameraPositionProvider*>()[0]));

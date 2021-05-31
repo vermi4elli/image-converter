@@ -6,20 +6,23 @@
 
 class Plane : public FigureI {
 public:
-    Vector3D normal = Vector3D(0,-1,0);
-    Vector3D pos = Vector3D(0);
-    Plane() {};
-    bool intersect(Vector3D& originray, Vector3D& directionray, intersectParams& param, float& t0, float& t1) const
+    Vector3D normal = Vector3D(0,1,0);
+    Vector3D pos = Vector3D(0,-2,0);
+    Plane() {
+        surfaceColor = Vector3D(0, 0, 1);
+    };
+    bool intersect(Vector3D& originray, Vector3D& directionray, intersectParameters& param, float& t0, float& t1) const
     {
-        float dot = normal.dot(directionray);
+        float dot = -normal.dot(directionray);
         if (dot > kEpsilon)
         {
             Vector3D dir = pos - originray;
-            float t = dir.dot(normal) / dot;
+            float t = -dir.dot(normal) / dot;
             if (t >= 0)
             {
                 t0 = t;
-                param = intersectParams(
+                param = intersectParameters(
+                    t,
                     originray + directionray * t,
                     normal
                 );

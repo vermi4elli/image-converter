@@ -13,11 +13,13 @@ public:
 		bounds[1] = b;
         surfaceColor = cs;
 	}
-    bool intersect(Vector3D& originray, Vector3D& directionray, intersectParams& param, float& t0, float& t1) const
+    bool intersect(Vector3D& originray, Vector3D& directionray, intersectParameters& param, float& t0, float& t1) const
     {
         if (intersectCube(originray, directionray,t0,t1)) {
-            Vector3D pHit = originray + directionray * (t0 < 0 ? t1 : t0);
-            param = intersectParams(
+            float tNear = t0 < 0 ? t1 : t0;
+            Vector3D pHit = originray + directionray * tNear;
+            param = intersectParameters(
+                tNear,
                 pHit,
                 getnormal(pHit)
             );

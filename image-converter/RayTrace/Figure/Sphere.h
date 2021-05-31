@@ -17,7 +17,7 @@ public:
         surfaceColor = sc;
     };
 
-    bool intersect(Vector3D& originray, Vector3D& directionray, intersectParams& param, float& t0, float& t1) const
+    bool intersect(Vector3D& originray, Vector3D& directionray, intersectParameters& param, float& t0, float& t1) const
     {
         Vector3D l = center - originray;
         float tca = l.dot(directionray);
@@ -27,8 +27,10 @@ public:
         float thc = sqrt(radius2 - d2);
         t0 = tca - thc;
         t1 = tca + thc;
-        Vector3D phit = originray + directionray * (t0 < 0 ? t1 : t0);
-        param = intersectParams(
+        float tNear = t0 < 0 ? t1 : t0;
+        Vector3D phit = originray + directionray * tNear;
+        param = intersectParameters(
+                tNear,
                 phit,
                 getnormal(phit)
             );

@@ -81,11 +81,10 @@ Matrix4x4::Matrix4x4(float a, float b, float c, float d, float e, float f, float
         a = src[0] * matrix[0][0] + src[1] * matrix[1][0] + src[2] * matrix[2][0] + matrix[3][0];
         b = src[0] * matrix[0][1] + src[1] * matrix[1][1] + src[2] * matrix[2][1] + matrix[3][1];
         c = src[0] * matrix[0][2] + src[1] * matrix[1][2] + src[2] * matrix[2][2] + matrix[3][2];
-        w = src[0] * matrix[0][3] + src[1] * matrix[1][3] + src[2] * matrix[2][3] + matrix[3][3];
-
-        dst.x = a / w;
-        dst.y = b / w;
-        dst.z = c / w;
+        w = 1 / (src[0] * matrix[0][3] + src[1] * matrix[1][3] + src[2] * matrix[2][3] + matrix[3][3]);
+        dst.x = a * w;
+        dst.y = b * w;
+        dst.z = c * w;
     };
 
     void Matrix4x4::multDirMatrix(const Vector3D& src, Vector3D& dst) const

@@ -1,7 +1,7 @@
 #pragma once
 #include <tuple>
 #include <cmath> 
-
+#include <iostream>
 #define M_PI 3.141592653589793 
 #define INFINITY 1e8 
 

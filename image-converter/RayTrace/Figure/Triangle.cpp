@@ -70,3 +70,21 @@ float Triangle::getMedianByAxis(axis axis) {
         break;
     }
 };
+
+void Triangle::transform(MatrixTRS m) {
+    a = m.mult(a);
+
+    //std::cout << a.x << " " << a.y << " " << a.z << std::endl;
+    b = m.mult(b);
+    //std::cout << b.x << " " << b.y << " " << b.z << std::endl;
+    c = m.mult(c);
+    //std::cout << c.x << " " << c.y << " " << c.z << std::endl;
+    if (dotNormals) {
+        a_norm = m.torotate(a_norm);
+
+        b_norm = m.torotate(b_norm);
+
+        c_norm = m.torotate(c_norm);
+    }
+    normal = (b - a).crossprod(c - a);
+}

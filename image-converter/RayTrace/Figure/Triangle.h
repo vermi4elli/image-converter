@@ -34,6 +34,7 @@ public:
         median = Vector3D((a.x + b.x + c.x) / 3, (a.y + b.y + c.y) / 3, (a.z + b.z + c.z) / 3);
     };
     bool intersect(Vector3D& originray, Vector3D& directionray, intersectParameters& param, float& t0, float& t1) const;
+    void transform(MatrixTRS m);
     Triangle& operator +(Vector3D v);
     void setDotNormals(Vector3D norm1, Vector3D norm2, Vector3D norm3);
     Vector3D getnormal(Vector3D uv) const;

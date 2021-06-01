@@ -28,7 +28,10 @@ public:
         return false;
     }
 
-
+    void transform(MatrixTRS m) {
+        bounds[0] = m.mult(bounds[0]);
+        bounds[1] = m.mult(bounds[1]);
+    };
     bool intersect(Vector3D& originray, Vector3D& directionray, float& t0, float& t1) const
     {
         if (intersectCube(originray, directionray, t0, t1)) {

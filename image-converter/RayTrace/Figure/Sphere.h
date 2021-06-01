@@ -16,7 +16,16 @@ public:
         center(c), radius(r), radius2(r* r){
         surfaceColor = sc;
     };
+    void transform(MatrixTRS m) {
+        center = m.totranslate(center);
+        Vector3D v(1);
+        v = m.toscale(v);
 
+        radius *= v.x;
+
+        radius2 = radius* radius;
+
+    };
     bool intersect(Vector3D& originray, Vector3D& directionray, intersectParameters& param, float& t0, float& t1) const
     {
         Vector3D l = center - originray;

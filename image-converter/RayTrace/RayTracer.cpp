@@ -185,22 +185,21 @@ Vector3D RayTracer::whiteTrace(Vector3D originray, Vector3D directionray, std::v
         return hitColor;
     }
     else if (intersect.figure->surfType == surfaceType::DIFFUSSE) {
-        srand(time(NULL));
+
+        srand((unsigned)time(0));
         Vector3D hitColor;
         hitColor += shadowed(intersect, figures, lights);
         Vector3D colorFromAnotherObj;
-        int numOfRays = 32;
+        int numOfRays = 64;
         for (int i = 0; i < numOfRays; i++) {
             Vector3D dir = Vector3D((rand() % 201 - 100), (rand() % 201 - 100), (rand() % 201 - 100));
             dir.normalize();
             if (dir.dot(intersect.Params.hitNormal) < 0) dir.x = -dir.x;
             if (dir.dot(intersect.Params.hitNormal) < 0) dir.y = -dir.y;
             if (dir.dot(intersect.Params.hitNormal) < 0) dir.z = -dir.z;
-
             colorFromAnotherObj += whiteTrace(intersect.Params.pHit, dir, figures, lights, 5);
         }
-        hitColor += (colorFromAnotherObj / numOfRays) * 0.4;
-
+        hitColor += (colorFromAnotherObj / numOfRays)*0.2;
         hitColor.one();
         return intersect.figure->surfaceColor * hitColor ;
 
@@ -226,7 +225,26 @@ Vector3D RayTracer::whiteTrace(Vector3D originray, Vector3D directionray, std::v
         hitColor.one();
         return intersect.figure->surfaceColor*hitColor;
     }
-    else {
+    else if (intersect.figure->surfType == surfaceType::SP) {
+        Vector3D hitColor;
+        for (uint32_t i = 0; i < lights.size(); ++i) {
+            Vector3D lightDir;
+            Vector3D lightIntens;
+            lights[i]->illuminate(intersect.Params.pHit, lightDir, lightIntens, intersect.Params.tNear);
+            Vector3D vis = shadowed(intersect, figures, std::vector<ILight*>{lights[i]});
+            float angle = (45 * M_PI / 180);
+            float x = ((1 + atan2(intersect.Params.hitNormal.z, intersect.Params.hitNormal.x) / M_PI) * 0.5) * cos(angle);
+            float y = (acosf(intersect.Params.hitNormal.y) / M_PI) * sin(angle);
+            float s = x - y;
+            float t = y + x;
+            float scaleS = 20, scaleT = 20;
+            float pattern = (s * scaleS - std::floor(s * scaleS)) < 0.5;
+            hitColor += vis * pattern * std::max(0.f, intersect.Params.hitNormal.dot(-lightDir));
+        }
+        hitColor.one();
+        return intersect.figure->surfaceColor * hitColor;
+         }
+        else {
         Vector3D hitColor = (shadowed(intersect, figures, lights) + 0.1);
         hitColor.one();
         return intersect.figure->surfaceColor * hitColor;
@@ -255,8 +273,9 @@ void RayTracer::render(ServiceContainer& DI) {
             Vector3D dir(rays->rays[k].x, rays->rays[k].y, rays->rays[k].z);
             //camToWorld->multDirMatrix(Vector3D(rays->rays[k].x, rays->rays[k].y, rays->rays[k].z), dir);
             dir.normalize();
-            Vector3D pixel = whiteTrace(originray, dir, figures, lights,MAXDEPTH);
-            image[y][x] = RGBAquad(pixel.x*255, pixel.y * 255, pixel.z * 255);
+            Vector3D pixel= whiteTrace(originray, dir, figures, lights,MAXDEPTH);
+
+            image[y][x] = RGBAquad(pixel.x*255, pixel.y * 255 , pixel.z * 255 );
             k++;
         }
     }

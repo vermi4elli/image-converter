@@ -80,11 +80,11 @@ void Triangle::transform(MatrixTRS m) {
     c = m.mult(c);
     //std::cout << c.x << " " << c.y << " " << c.z << std::endl;
     if (dotNormals) {
-        a_norm = m.torotate(a_norm);
+        a_norm = m.mult(a_norm).normalize();
 
-        b_norm = m.torotate(b_norm);
+        b_norm = m.mult(b_norm).normalize();
 
-        c_norm = m.torotate(c_norm);
+        c_norm = m.mult(c_norm).normalize();
     }
     normal = (b - a).crossprod(c - a);
 }

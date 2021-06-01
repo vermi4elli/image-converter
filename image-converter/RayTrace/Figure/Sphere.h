@@ -6,8 +6,8 @@
 
 class Sphere : public FigureI{
 public:
-    Vector3D center;                           /// position of the sphere 
-    float radius, radius2;                  /// sphere radius and radius^2 
+    Vector3D center;                        
+    float radius, radius2;                  
 
     Sphere(
         const Vector3D& c,
@@ -17,12 +17,10 @@ public:
         surfaceColor = sc;
     };
     void transform(MatrixTRS m) {
-        center = m.totranslate(center);
+        center = m.mult(center);
         Vector3D v(1);
         v = m.toscale(v);
-
         radius *= v.x;
-
         radius2 = radius* radius;
 
     };

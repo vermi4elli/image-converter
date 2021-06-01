@@ -12,7 +12,9 @@ public:
         surfaceColor = Vector3D(0, 1, 1);
     };
     void transform(MatrixTRS m) {
-        pos = m.totranslate(pos);
+        pos = m.mult(pos);
+        normal = m.multV(normal);
+        normal.normalize();
     };
     bool intersect(Vector3D& originray, Vector3D& directionray, intersectParameters& param, float& t0, float& t1) const
     {

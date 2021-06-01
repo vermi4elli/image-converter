@@ -32,4 +32,5 @@ struct Intersection {
 	Intersection(FigureI* figure, intersectParameters Params) :figure(figure), Params(Params){};
 	intersectParameters Params;
 	FigureI* figure;
+	Vector3D hitColor;
 };

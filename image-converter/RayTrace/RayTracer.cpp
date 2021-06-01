@@ -171,7 +171,7 @@ Vector3D RayTracer::whiteTrace(Vector3D originray, Vector3D directionray, std::v
         Vector3D reflectionColor = whiteTrace(reflectionRayOrig, reflectionDirection, figures, lights, depth - 1);
         Vector3D refractionColor = whiteTrace(refractionRayOrig, refractionDirection, figures, lights, depth - 1);
         Vector3D hitColor = reflectionColor * kr + refractionColor * (1 - kr);
-        hitColor.one();
+
         return hitColor;
     } else
     if (intersect.figure->surfType == surfaceType::REFLECT) {
@@ -186,22 +186,24 @@ Vector3D RayTracer::whiteTrace(Vector3D originray, Vector3D directionray, std::v
     }
     else if (intersect.figure->surfType == surfaceType::DIFFUSSE) {
 
-        srand((unsigned)time(0));
+
         Vector3D hitColor;
-        hitColor += shadowed(intersect, figures, lights);
+        hitColor += shadowed(intersect, figures, lights)* intersect.figure->surfaceColor / M_PI;
         Vector3D colorFromAnotherObj;
-        int numOfRays = 64;
+        int numOfRays = 8;
         for (int i = 0; i < numOfRays; i++) {
             Vector3D dir = Vector3D((rand() % 201 - 100), (rand() % 201 - 100), (rand() % 201 - 100));
             dir.normalize();
             if (dir.dot(intersect.Params.hitNormal) < 0) dir.x = -dir.x;
             if (dir.dot(intersect.Params.hitNormal) < 0) dir.y = -dir.y;
             if (dir.dot(intersect.Params.hitNormal) < 0) dir.z = -dir.z;
-            colorFromAnotherObj += whiteTrace(intersect.Params.pHit, dir, figures, lights, 5);
+            float cos = std::max(0.f, intersect.Params.hitNormal.dot(dir));
+            Vector3D c = whiteTrace(intersect.Params.pHit, dir, figures, lights, depth-1) * cos/ M_PI;
+            colorFromAnotherObj += c;
         }
-        hitColor += (colorFromAnotherObj / numOfRays)*0.2;
-        hitColor.one();
-        return intersect.figure->surfaceColor * hitColor ;
+        hitColor += (colorFromAnotherObj / numOfRays);
+
+        return hitColor;
 
     }
     else if (intersect.figure->surfType == surfaceType::DIFFUSSE_ADN_GLOSSY) {
@@ -222,7 +224,7 @@ Vector3D RayTracer::whiteTrace(Vector3D originray, Vector3D directionray, std::v
                 specularColor += powf(std::max(0.f, reflectionDirection.dot(directionray)),25);
             }
         hitColor = lightAmt*0.8 + specularColor*0.2;
-        hitColor.one();
+
         return intersect.figure->surfaceColor*hitColor;
     }
     else if (intersect.figure->surfType == surfaceType::SP) {
@@ -232,7 +234,7 @@ Vector3D RayTracer::whiteTrace(Vector3D originray, Vector3D directionray, std::v
             Vector3D lightIntens;
             lights[i]->illuminate(intersect.Params.pHit, lightDir, lightIntens, intersect.Params.tNear);
             Vector3D vis = shadowed(intersect, figures, std::vector<ILight*>{lights[i]});
-            float angle = (45 * M_PI / 180);
+            float angle = (90 * M_PI / 180);
             float x = ((1 + atan2(intersect.Params.hitNormal.z, intersect.Params.hitNormal.x) / M_PI) * 0.5) * cos(angle);
             float y = (acosf(intersect.Params.hitNormal.y) / M_PI) * sin(angle);
             float s = x - y;
@@ -241,12 +243,11 @@ Vector3D RayTracer::whiteTrace(Vector3D originray, Vector3D directionray, std::v
             float pattern = (s * scaleS - std::floor(s * scaleS)) < 0.5;
             hitColor += vis * pattern * std::max(0.f, intersect.Params.hitNormal.dot(-lightDir));
         }
-        hitColor.one();
+
         return intersect.figure->surfaceColor * hitColor;
-         }
-        else {
+    } else {
         Vector3D hitColor = (shadowed(intersect, figures, lights) + 0.1);
-        hitColor.one();
+
         return intersect.figure->surfaceColor * hitColor;
     }
     
@@ -274,7 +275,7 @@ void RayTracer::render(ServiceContainer& DI) {
             //camToWorld->multDirMatrix(Vector3D(rays->rays[k].x, rays->rays[k].y, rays->rays[k].z), dir);
             dir.normalize();
             Vector3D pixel= whiteTrace(originray, dir, figures, lights,MAXDEPTH);
-
+            pixel.one();
             image[y][x] = RGBAquad(pixel.x*255, pixel.y * 255 , pixel.z * 255 );
             k++;
         }

@@ -1,9 +1,9 @@
 #pragma once
 #include "../Vector3D.h"
-
+#include <boost/qvm/mat_operations.hpp>
 
 class MatrixTRS {
-	float matrix[4][4];
+	float matrix[4][4], matrix_inv[4][4];
 	Vector3D translate;
 	Vector3D scale;
 	float rotation[3][3] = { {1,0,0 }, {0, 1, 0 }, {0, 0, 1} };
@@ -43,6 +43,15 @@ public:
 		temp.x = v.x * matrix[0][0] + v.y * matrix[0][1] + v.z * matrix[0][2] + matrix[0][3];
 		temp.y = v.x * matrix[1][0] + v.y * matrix[1][1] + v.z * matrix[1][2] + matrix[1][3];
 		temp.z = v.x * matrix[2][0] + v.y * matrix[2][1] + v.z * matrix[2][2] + matrix[2][3];
+
+		return temp;
+	};
+	Vector3D& multV(Vector3D v) {
+		Vector3D temp;
+
+		temp.x = v.x * matrix[0][0] + v.y * matrix[0][1] + v.z * matrix[0][2];
+		temp.y = v.x * matrix[1][0] + v.y * matrix[1][1] + v.z * matrix[1][2];
+		temp.z = v.x * matrix[2][0] + v.y * matrix[2][1] + v.z * matrix[2][2];
 
 		return temp;
 	};

@@ -7,7 +7,7 @@
 #include "KDTree/KDTree.h"
 
 class RayTracer {
-	int MAXDEPTH = 2;
+	int MAXDEPTH = 4;
 public:
 	Intersection trace(Vector3D originray, Vector3D directionray, std::vector<FigureI*> figures);
 	Intersection trace(Vector3D originray, Vector3D directionray, std::vector<Triangle*> figures);
@@ -15,6 +15,7 @@ public:
 	Vector3D shadowed(Intersection intersec, KDTree* tree, const std::vector<ILight*>& lights);
 	Vector3D traceWithTree(Vector3D originray, Vector3D directionray, KDTree* tree, const std::vector<ILight*>& lights);
 	Vector3D traceWithoutTree(Vector3D originray, Vector3D directionray, std::vector<FigureI*> figures, const std::vector<ILight*>& lights);
-	Vector3D whiteTrace(Vector3D originray, Vector3D directionray, std::vector<FigureI*> figures, const std::vector<ILight*>& lights, int depth);
+	Vector3D whittedTrace(Vector3D originray, Vector3D directionray, std::vector<FigureI*> figures, const std::vector<ILight*>& lights, int depth);
+	Vector3D whittedTraceWithTree(Vector3D originray, Vector3D directionray, KDTree* tree, const std::vector<ILight*>& lights, int depth);
 	void render(ServiceContainer& DI);
 };

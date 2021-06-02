@@ -64,5 +64,6 @@
     <ClInclude Include="DataTypes\GifStruct.h" />
     <ClInclude Include="RayTrace\Light\DirectionalLight.h" />
     <ClInclude Include="RayTrace\Figure\Plane.h" />
+    <ClInclude Include="RayTrace\SceneFormat\SceneReader.h" />
   </ItemGroup>
 </Project>

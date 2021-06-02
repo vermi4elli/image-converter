@@ -1,6 +1,5 @@
 #pragma once
 #include "../Vector3D.h"
-#include <boost/qvm/mat_operations.hpp>
 
 class MatrixTRS {
 	float matrix[4][4], matrix_inv[4][4];
@@ -8,7 +7,8 @@ class MatrixTRS {
 	Vector3D scale;
 	float rotation[3][3] = { {1,0,0 }, {0, 1, 0 }, {0, 0, 1} };
 public:
-	MatrixTRS( float rotation_[3][3], Vector3D translate = Vector3D(0), Vector3D scale = Vector3D(1)): translate(translate), scale(scale){
+
+	MatrixTRS(float rotation_[3][3], Vector3D translate = Vector3D(0), Vector3D scale = Vector3D(1)) : translate(translate), scale(scale) {
 		rotation[0][0] = rotation_[0][0];
 		rotation[0][1] = rotation_[0][1];
 		rotation[0][2] = rotation_[0][2];
@@ -34,7 +34,6 @@ public:
 		matrix[3][1] = 0;
 		matrix[3][2] = 0;
 		matrix[3][3] = 1;
-
 	};
 
 	Vector3D& mult(Vector3D v) {

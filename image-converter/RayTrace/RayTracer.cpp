@@ -128,7 +128,7 @@ Vector3D refract(const Vector3D& I, const Vector3D& N, const float& ior)
     else { std::swap(etai, etat); n = -N; }
     float eta = etai / etat;
     float k = 1 - eta * eta * (1 - cosi * cosi);
-    return k < 0 ? 0 : I*eta + n*(eta * cosi - sqrtf(k));
+    return k < 0 ? 0 : I * eta + n * (eta * cosi - sqrtf(k));
 }
 void fresnel(const Vector3D& I, const Vector3D& N, const float& ior, float& kr)
 {
@@ -151,7 +151,7 @@ void fresnel(const Vector3D& I, const Vector3D& N, const float& ior, float& kr)
 
 }
 
-Vector3D RayTracer::whiteTrace(Vector3D originray, Vector3D directionray, std::vector<FigureI*> figures, const std::vector<ILight*>& lights, int depth) {
+Vector3D RayTracer::whittedTrace(Vector3D originray, Vector3D directionray, std::vector<FigureI*> figures, const std::vector<ILight*>& lights, int depth) {
     if(depth == 0)  return Vector3D(0);
     Intersection intersect = trace(originray, directionray, figures);
     if (!intersect.figure) return Vector3D(0);
@@ -163,27 +163,40 @@ Vector3D RayTracer::whiteTrace(Vector3D originray, Vector3D directionray, std::v
         Vector3D refractionDirection = refract(directionray, intersect.Params.hitNormal, intersect.figure->ior);
         refractionDirection.normalize();
         Vector3D reflectionRayOrig = (intersect.Params.hitNormal.dot(reflectionDirection) < 0) ?
-            intersect.Params.pHit + intersect.Params.hitNormal * 0.00001 :
-            intersect.Params.pHit - intersect.Params.hitNormal * 0.00001;
-        Vector3D refractionRayOrig = (intersect.Params.hitNormal.dot(reflectionDirection) < 0) ?
-        intersect.Params.pHit + intersect.Params.hitNormal * 0.00001 :
-            intersect.Params.pHit - intersect.Params.hitNormal * 0.00001;
-        Vector3D reflectionColor = whiteTrace(reflectionRayOrig, reflectionDirection, figures, lights, depth - 1);
-        Vector3D refractionColor = whiteTrace(refractionRayOrig, refractionDirection, figures, lights, depth - 1);
+            intersect.Params.pHit - intersect.Params.hitNormal * 0.00001 :
+            intersect.Params.pHit + intersect.Params.hitNormal * 0.00001;
+        Vector3D refractionRayOrig = (intersect.Params.hitNormal.dot(refractionDirection) < 0) ?
+            intersect.Params.pHit - intersect.Params.hitNormal * 0.00001 :
+            intersect.Params.pHit + intersect.Params.hitNormal * 0.00001;
+        Vector3D reflectionColor = whittedTrace(reflectionRayOrig, reflectionDirection, figures, lights, depth - 1);
+        Vector3D refractionColor = whittedTrace(refractionRayOrig, refractionDirection, figures, lights, depth - 1);
         Vector3D hitColor = reflectionColor * kr + refractionColor * (1 - kr);
-
-        return hitColor;
+        return hitColor * intersect.figure->surfaceColor;
     } else
     if (intersect.figure->surfType == surfaceType::REFLECT) {
         float kr;
         fresnel(directionray, intersect.Params.hitNormal, intersect.figure->ior, kr);
         Vector3D reflectionDirection = reflect(directionray, intersect.Params.hitNormal);
         Vector3D reflectionRayOrig = (intersect.Params.hitNormal.dot(reflectionDirection) < 0) ?
-            intersect.Params.pHit + intersect.Params.hitNormal * 0.00001 :
-            intersect.Params.pHit - intersect.Params.hitNormal * 0.00001;
-        Vector3D hitColor = whiteTrace(reflectionRayOrig, reflectionDirection, figures, lights,depth - 1)* kr;
-        return hitColor;
+            intersect.Params.pHit - intersect.Params.hitNormal * 0.00001 :
+            intersect.Params.pHit + intersect.Params.hitNormal * 0.00001;
+        Vector3D hitColor = whittedTrace(reflectionRayOrig, reflectionDirection, figures, lights,depth - 1)* kr;
+        return hitColor * intersect.figure->surfaceColor;
     }
+    else
+        if (intersect.figure->surfType == surfaceType::REFRACT) {
+
+             float kr;
+             fresnel(directionray, intersect.Params.hitNormal, intersect.figure->ior, kr);
+             Vector3D refractionDirection = refract(directionray, intersect.Params.hitNormal, intersect.figure->ior);
+             refractionDirection.normalize();
+             Vector3D refractionRayOrig = (intersect.Params.hitNormal.dot(refractionDirection) < 0) ?
+                 intersect.Params.pHit - intersect.Params.hitNormal * 0.00001 :
+                 intersect.Params.pHit + intersect.Params.hitNormal * 0.00001;
+             Vector3D hitColor = whittedTrace(refractionRayOrig, refractionDirection, figures, lights, depth - 1) * (1 - kr);
+             return hitColor * intersect.figure->surfaceColor;
+
+        }
     else if (intersect.figure->surfType == surfaceType::DIFFUSSE) {
 
 
@@ -198,7 +211,7 @@ Vector3D RayTracer::whiteTrace(Vector3D originray, Vector3D directionray, std::v
             if (dir.dot(intersect.Params.hitNormal) < 0) dir.y = -dir.y;
             if (dir.dot(intersect.Params.hitNormal) < 0) dir.z = -dir.z;
             float cos = std::max(0.f, intersect.Params.hitNormal.dot(dir));
-            Vector3D c = whiteTrace(intersect.Params.pHit, dir, figures, lights, depth-1) * cos/ M_PI;
+            Vector3D c = whittedTrace(intersect.Params.pHit, dir, figures, lights, depth-1) * cos/ M_PI;
             colorFromAnotherObj += c;
         }
         hitColor += (colorFromAnotherObj / numOfRays);
@@ -247,12 +260,127 @@ Vector3D RayTracer::whiteTrace(Vector3D originray, Vector3D directionray, std::v
         return intersect.figure->surfaceColor * hitColor;
     } else {
         Vector3D hitColor = (shadowed(intersect, figures, lights) + 0.1);
-
+        hitColor.one();
         return intersect.figure->surfaceColor * hitColor;
     }
     
-}
+};
+Vector3D RayTracer::whittedTraceWithTree(Vector3D originray, Vector3D directionray, KDTree* tree, const std::vector<ILight*>& lights, int depth) {
+    std::vector<Triangle*> figures = tree->Intersection(tree->GetRoot(), originray, directionray);
+    Intersection intersect = trace(originray, directionray, figures);
+    if (depth == 0)  return Vector3D(0);
+    if (!intersect.figure) return Vector3D(0);
+    if (intersect.figure->surfType == surfaceType::REFLECT_AND_REFRACT) {
+        float kr;
+        fresnel(directionray, intersect.Params.hitNormal, intersect.figure->ior, kr);
+        Vector3D reflectionDirection = reflect(directionray, intersect.Params.hitNormal);
+        reflectionDirection.normalize();
+        Vector3D refractionDirection = refract(directionray, intersect.Params.hitNormal, intersect.figure->ior);
+        refractionDirection.normalize();
+        Vector3D reflectionRayOrig = (intersect.Params.hitNormal.dot(reflectionDirection) < 0) ?
+            intersect.Params.pHit - intersect.Params.hitNormal * 0.00001 :
+            intersect.Params.pHit + intersect.Params.hitNormal * 0.00001;
+        Vector3D refractionRayOrig = (intersect.Params.hitNormal.dot(refractionDirection) < 0) ?
+            intersect.Params.pHit - intersect.Params.hitNormal * 0.00001 :
+            intersect.Params.pHit + intersect.Params.hitNormal * 0.00001;
+        Vector3D reflectionColor = whittedTraceWithTree(reflectionRayOrig, reflectionDirection, tree, lights, depth - 1);
+        Vector3D refractionColor = whittedTraceWithTree(refractionRayOrig, refractionDirection, tree, lights, depth - 1);
+        Vector3D hitColor = reflectionColor * kr + refractionColor * (1 - kr);
+        return hitColor * intersect.figure->surfaceColor;
+    }
+    else
+        if (intersect.figure->surfType == surfaceType::REFLECT) {
+            float kr;
+            fresnel(directionray, intersect.Params.hitNormal, intersect.figure->ior, kr);
+            Vector3D reflectionDirection = reflect(directionray, intersect.Params.hitNormal);
+            Vector3D reflectionRayOrig = (intersect.Params.hitNormal.dot(reflectionDirection) < 0) ?
+                intersect.Params.pHit - intersect.Params.hitNormal * 0.00001 :
+                intersect.Params.pHit + intersect.Params.hitNormal * 0.00001;
+            Vector3D hitColor = whittedTraceWithTree(reflectionRayOrig, reflectionDirection, tree, lights, depth - 1) * kr;
+            return hitColor * intersect.figure->surfaceColor;
+        }
+        else
+            if (intersect.figure->surfType == surfaceType::REFRACT) {
 
+                float kr;
+                fresnel(directionray, intersect.Params.hitNormal, intersect.figure->ior, kr);
+                Vector3D refractionDirection = refract(directionray, intersect.Params.hitNormal, intersect.figure->ior);
+                refractionDirection.normalize();
+                Vector3D refractionRayOrig = (intersect.Params.hitNormal.dot(refractionDirection) < 0) ?
+                    intersect.Params.pHit - intersect.Params.hitNormal * 0.00001 :
+                    intersect.Params.pHit + intersect.Params.hitNormal * 0.00001;
+                Vector3D hitColor = whittedTraceWithTree(refractionRayOrig, refractionDirection, tree, lights, depth - 1) * (1 - kr);
+                return hitColor * intersect.figure->surfaceColor;
+
+            }
+            else if (intersect.figure->surfType == surfaceType::DIFFUSSE) {
+
+
+                Vector3D hitColor;
+                hitColor += shadowed(intersect, tree, lights) * intersect.figure->surfaceColor / M_PI;
+                Vector3D colorFromAnotherObj;
+                int numOfRays = 8;
+                for (int i = 0; i < numOfRays; i++) {
+                    Vector3D dir = Vector3D((rand() % 201 - 100), (rand() % 201 - 100), (rand() % 201 - 100));
+                    dir.normalize();
+                    if (dir.dot(intersect.Params.hitNormal) < 0) dir.x = -dir.x;
+                    if (dir.dot(intersect.Params.hitNormal) < 0) dir.y = -dir.y;
+                    if (dir.dot(intersect.Params.hitNormal) < 0) dir.z = -dir.z;
+                    float cos = std::max(0.f, intersect.Params.hitNormal.dot(dir));
+                    Vector3D c = whittedTraceWithTree(intersect.Params.pHit, dir, tree, lights, depth - 1) * cos / M_PI;
+                    colorFromAnotherObj += c;
+                }
+                hitColor += (colorFromAnotherObj / numOfRays);
+
+                return hitColor;
+
+            }
+            else if (intersect.figure->surfType == surfaceType::DIFFUSSE_ADN_GLOSSY) {
+                Vector3D hitColor;
+                Vector3D lightAmt = 0, specularColor = 0;
+                Vector3D shadowPointOrig = (intersect.Params.hitNormal.dot(directionray) < 0) ?
+                    intersect.Params.pHit + intersect.Params.hitNormal * 0.00001 :
+                    intersect.Params.pHit - intersect.Params.hitNormal * 0.00001;
+                for (uint32_t i = 0; i < lights.size(); ++i) {
+                    Vector3D lightDir;
+                    Vector3D lightIntens;
+                    lights[i]->illuminate(intersect.Params.pHit, lightDir, lightIntens, intersect.Params.tNear);
+                    float lightDistance2 = lightDir.dot(lightDir);
+                    lightDir.normalize();
+                    float LdotN = std::max(0.f, lightDir.dot(intersect.Params.hitNormal));
+                    lightAmt = shadowed(intersect, tree, std::vector<ILight*>{lights[i]});
+                    Vector3D reflectionDirection = reflect(-lightDir, intersect.Params.hitNormal);
+                    specularColor += powf(std::max(0.f, reflectionDirection.dot(directionray)), 25);
+                }
+                hitColor = lightAmt * 0.8 + specularColor * 0.2;
+
+                return intersect.figure->surfaceColor * hitColor;
+            }
+            else if (intersect.figure->surfType == surfaceType::SP) {
+                Vector3D hitColor;
+                for (uint32_t i = 0; i < lights.size(); ++i) {
+                    Vector3D lightDir;
+                    Vector3D lightIntens;
+                    lights[i]->illuminate(intersect.Params.pHit, lightDir, lightIntens, intersect.Params.tNear);
+                    Vector3D vis = shadowed(intersect, tree, std::vector<ILight*>{lights[i]});
+                    float angle = (90 * M_PI / 180);
+                    float x = ((1 + atan2(intersect.Params.hitNormal.z, intersect.Params.hitNormal.x) / M_PI) * 0.5) * cos(angle);
+                    float y = (acosf(intersect.Params.hitNormal.y) / M_PI) * sin(angle);
+                    float s = x - y;
+                    float t = y + x;
+                    float scaleS = 20, scaleT = 20;
+                    float pattern = (s * scaleS - std::floor(s * scaleS)) < 0.5;
+                    hitColor += vis * pattern * std::max(0.f, intersect.Params.hitNormal.dot(-lightDir));
+                }
+
+                return intersect.figure->surfaceColor * hitColor;
+            }
+            else {
+                Vector3D hitColor = (shadowed(intersect, tree, lights) + 0.1);
+                hitColor.one();
+                return intersect.figure->surfaceColor * hitColor;
+            }
+};
 void RayTracer::render(ServiceContainer& DI) {
 
 
@@ -268,13 +396,15 @@ void RayTracer::render(ServiceContainer& DI) {
     //camToWorld->multVecMatrix(Vector3D(0), originray);
     int k = 0;
     image.resize(rays->height);
+    int percent = rays->height / 10;
     for (unsigned y = 0; y < rays->height; ++y) {
         image[y].resize(rays->width);
+        if(y % percent == 0) std::cout << "[Debug]: Raytracing ready for :" << ((float)y/ (float)rays->height) * 100 << "%"<< std::endl;
         for (unsigned x = 0; x < rays->width; ++x) {
             Vector3D dir(rays->rays[k].x, rays->rays[k].y, rays->rays[k].z);
             //camToWorld->multDirMatrix(Vector3D(rays->rays[k].x, rays->rays[k].y, rays->rays[k].z), dir);
             dir.normalize();
-            Vector3D pixel= whiteTrace(originray, dir, figures, lights,MAXDEPTH);
+            Vector3D pixel= whittedTrace(originray, dir, figures, lights,MAXDEPTH);
             pixel.one();
             image[y][x] = RGBAquad(pixel.x*255, pixel.y * 255 , pixel.z * 255 );
             k++;

@@ -189,6 +189,7 @@
     <ClInclude Include="RayTrace\RayProvider\IRayProvider.h" />
     <ClInclude Include="RayTrace\RayProvider\PerspectiveRayProvider.h" />
     <ClInclude Include="RayTrace\RayTracer.h" />
+    <ClInclude Include="RayTrace\SceneFormat\SceneReader.h" />
     <ClInclude Include="RayTrace\Vector3D.h" />
   </ItemGroup>
   <ItemGroup>

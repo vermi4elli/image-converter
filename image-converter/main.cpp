@@ -95,17 +95,17 @@ int main(int argc, char* argv[]) {
 		//sp1->surfType = surfaceType::REFLECT;
 		//sp1->ior = 5;
 		//figures.push_back(sp1);
-		figures.push_back(new Sphere(Vector3D(0, 0, -50), 3, Vector3D(1, 0.1, 0.1)));
-		//Triangle* trig = new Triangle(Vector3D(0, 2, 1), Vector3D(-2.5, -2, 1), Vector3D(2.5, -2, 1), Vector3D(1, 1, 1));
-		////trig->setDotNormals(Vector3D(0,-1 ,0).normalize(), Vector3D(0, 1, -0.5).normalize(), Vector3D(1, 1, -0.5).normalize());
+		//figures.push_back(new Sphere(Vector3D(0, 0, -50), 3, Vector3D(1, 0.1, 0.1)));
+		Triangle* trig = new Triangle(Vector3D(0, 2, 1), Vector3D(-2.5, -2, 1), Vector3D(2.5, -2, 1), Vector3D(1, 0.32, 0.32));
+		trig->setDotNormals(Vector3D(0,-1 ,1).normalize(), Vector3D(0, 0.5, -1).normalize(), Vector3D(1, 1, -1).normalize());
 		//trig->surfType = surfaceType::REFLECT_AND_REFRACT;
-		//float mat[3][3] = {
-		//	{ 0.86602540378, 0,-0.5 },
-		//	{0, 1,0 },
-		//	{ 0.5, 0, 0.86602540378} };
-		//MatrixTRS trs = MatrixTRS(mat,Vector3D(0,0,-10), Vector3D(1, 1,1));
-		//trig->transform(trs);
-		//figures.push_back(trig);
+		float mat[3][3] = {
+			{ 0.86602540378, 0,-0.5 },
+			{0, 1,0 },
+			{ 0.5, 0, 0.86602540378} };
+		MatrixTRS trs = MatrixTRS(mat,Vector3D(0,0,-10), Vector3D(1, 1,1));
+		trig->transform(trs);
+		figures.push_back(trig);
 		//figures.push_back(new Triangle(Vector3D(2.5, 0, -10), Vector3D(2.5, 0, -10), Vector3D(2.5, 0, -10), Vector3D(1, 0.1, 0.1)));
 		//Sphere* sp2 = new Sphere(Vector3D(2.5, 0, -10), 1, Vector3D(1, 1, 1));
 		//sp2->surfType = surfaceType::REFLECT_AND_REFRACT;
@@ -115,33 +115,33 @@ int main(int argc, char* argv[]) {
 		//sp->surfType = surfaceType::DIFFUSSE;
 		////sp->transform(trs);
 		//figures.push_back(sp);
-		Sphere* sp1 = new Sphere(Vector3D(2, 0, -10), 1, Vector3D(1, 0.32, 0.32));
-		sp1->surfType = surfaceType::DIFFUSSE;
-		sp1->ior = 5;
-		for (int i = 6; i < 14; i++) {
-			std::cout << "![example " << i << "](/images/render" << i << ".png)" << std::endl;
-		}
-		figures.push_back(sp1);
-		Sphere* sp4 = new Sphere(Vector3D(-2, 0, -10), 1, Vector3D(0.32, 0.32, 1));
-		sp4->surfType = surfaceType::SP;
-		sp4->ior = 1.5;
-		figures.push_back(sp4);
-		Sphere* sp3 = new Sphere(Vector3D(0, 0, -10), 1, Vector3D(1, 1, 1));
-		sp3->surfType = surfaceType::REFLECT;
-		sp3->ior = 5;
-		//figures.push_back(sp3);
-		Sphere* sp2 = new Sphere(Vector3D(0, 0, -10), 1, Vector3D(1, 1, 1));
-		sp2->surfType = surfaceType::REFLECT_AND_REFRACT;
-		sp2->ior = 2.4;
-		figures.push_back(sp2);
-		figures.push_back(new Plane());
+		//Sphere* sp1 = new Sphere(Vector3D(2, 0, -10), 1, Vector3D(1, 0.32, 0.32));
+		//sp1->surfType = surfaceType::DIFFUSSE;
+		//sp1->ior = 5;
+		//for (int i = 6; i < 14; i++) {
+		//	std::cout << "![example " << i << "](/images/render" << i << ".png)" << std::endl;
+		//}
+		//figures.push_back(sp1);
+		//Sphere* sp4 = new Sphere(Vector3D(-2, 0, -10), 1, Vector3D(0.32, 0.32, 1));
+		//sp4->surfType = surfaceType::SP;
+		//sp4->ior = 1.5;
+		//figures.push_back(sp4);
+		//Sphere* sp3 = new Sphere(Vector3D(0, 0, -10), 1, Vector3D(1, 1, 1));
+		//sp3->surfType = surfaceType::REFLECT;
+		//sp3->ior = 5;
+		////figures.push_back(sp3);
+		//Sphere* sp2 = new Sphere(Vector3D(0, 0, -10), 1, Vector3D(1, 1, 1));
+		//sp2->surfType = surfaceType::REFLECT_AND_REFRACT;
+		//sp2->ior = 2.4;
+		//figures.push_back(sp2);
+		//figures.push_back(new Plane());
 		DI.set<std::vector<FigureI*>>(figures);
 		ICameraPositionProvider* camera = new StaticCameraPositionProvider();
 		DI.set<ICameraPositionProvider*>(camera);
 		std::vector<ILight*> lights;
 		//lights.push_back(new PointLight(Vector3D(1, 1, 1),800,  Vector3D(0,10,-10)));
 		//lights.push_back(new PointLight(Vector3D(1, 1, 1), 800, Vector3D(-10, 10, -10)));
-		lights.push_back(new DirectionalLight(Vector3D(1, 1, 1),0.5,Vector3D(0, 1, 0)));
+		lights.push_back(new DirectionalLight(Vector3D(1, 1, 1),1,Vector3D(1, 1, 1)));
 		DI.set<std::vector<ILight*>>(lights);
 		DI.set<IRayProvider*>(new PerspectiveRayProvider(DI.get<ICameraPositionProvider*>()[0]));
 		DI.get<RayTracer>()->render(DI);

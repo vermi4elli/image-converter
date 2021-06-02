@@ -94,3 +94,8 @@ Middle sphere is mirror and absorbs some luminence. Spheres around from diffuse 
 Examples of render:
 Middle sphere is from material which reflect and refract with ior 2.4(diamond). Spheres around from diffuse and with spirall(angle 0). Directional light.
 ![example 14](/images/render14.png)
+
+
+Examples of render:
+Example of interpolation. Every dot of this triangle has own normal which has it`s own direction. Directional light.
+![example 15](/images/render15.png)

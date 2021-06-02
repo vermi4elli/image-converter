@@ -7,7 +7,7 @@
 #include "KDTree/KDTree.h"
 
 class RayTracer {
-	int MAXDEPTH = 4;
+	int MAXDEPTH = 10;
 public:
 	Intersection trace(Vector3D originray, Vector3D directionray, std::vector<FigureI*> figures);
 	Intersection trace(Vector3D originray, Vector3D directionray, std::vector<Triangle*> figures);

@@ -54,3 +54,43 @@ renderer.x64.exe --source=deer.obj --output=render4.png --side=back
 Examples of render:
 renderer.x64.exe --source=deer.obj --output=render5.png --side=right
 ![example 5](/images/render5.png)
+
+## Whitted tracer and different materials
+
+Examples of render:
+Purple sphere in midle and glass sphere to the left, also red sphere far. Point light.
+![example 6](/images/render6.png)
+
+Examples of render:
+Three diffuse sphere and point light.
+![example 7](/images/render7.png)
+
+Examples of render:
+3 sphere in one line, first 2 from glass and last without material. Depth of traced incresed up to 10. Point light.
+![example 8](/images/render8.png)
+
+Examples of render:
+3 sphere in one line. There is sphere in another shpere, both from glass and last without material. Depth of traced incresed up to 10. Point light.
+![example 9](/images/render9.png)
+
+Examples of render:
+Sphere in middle has reflect material. Both anothere sphere with spirals. Directional light.
+
+![example 10](/images/render10.png)
+
+Examples of render:
+Sphere in middle has diffuse material. Both anothere sphere with diffuse and glossy material. Directional light.
+![example 11](/images/render11.png)
+
+Examples of render:
+Closest sphere from glass. Middle sphere also from glass but absorbs blue color. Spheres around from diffuse, and the last one default. Directional light.
+![example 12](/images/render12.png)
+
+Examples of render:
+Middle sphere is mirror and absorbs some luminence. Spheres around from diffuse and with spirall(angle 0). Directional light.
+![example 13](/images/render13.png)
+
+
+Examples of render:
+Middle sphere is from material which reflect and refract with ior 2.4(diamond). Spheres around from diffuse and with spirall(angle 0). Directional light.
+![example 14](/images/render14.png)

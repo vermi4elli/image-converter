@@ -247,7 +247,7 @@ Vector3D RayTracer::whittedTrace(Vector3D originray, Vector3D directionray, std:
             Vector3D lightIntens;
             lights[i]->illuminate(intersect.Params.pHit, lightDir, lightIntens, intersect.Params.tNear);
             Vector3D vis = shadowed(intersect, figures, std::vector<ILight*>{lights[i]});
-            float angle = (90 * M_PI / 180);
+            float angle = (45 * M_PI / 180);
             float x = ((1 + atan2(intersect.Params.hitNormal.z, intersect.Params.hitNormal.x) / M_PI) * 0.5) * cos(angle);
             float y = (acosf(intersect.Params.hitNormal.y) / M_PI) * sin(angle);
             float s = x - y;
@@ -363,7 +363,7 @@ Vector3D RayTracer::whittedTraceWithTree(Vector3D originray, Vector3D directionr
                     Vector3D lightIntens;
                     lights[i]->illuminate(intersect.Params.pHit, lightDir, lightIntens, intersect.Params.tNear);
                     Vector3D vis = shadowed(intersect, tree, std::vector<ILight*>{lights[i]});
-                    float angle = (90 * M_PI / 180);
+                    float angle = (45 * M_PI / 180);
                     float x = ((1 + atan2(intersect.Params.hitNormal.z, intersect.Params.hitNormal.x) / M_PI) * 0.5) * cos(angle);
                     float y = (acosf(intersect.Params.hitNormal.y) / M_PI) * sin(angle);
                     float s = x - y;

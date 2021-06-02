@@ -97,5 +97,9 @@ Middle sphere is from material which reflect and refract with ior 2.4(diamond). 
 
 
 Examples of render:
-Example of interpolation. Every dot of this triangle has own normal which has it`s own direction. Directional light.
+Example of interpolation. Every dot of this triangles has own normal which has it`s own direction. Directional light.
 ![example 15](/images/render15.png)
+
+Examples of render:
+Same triangles but without interpolation. Directional light.
+![example 16](/images/render16.png)

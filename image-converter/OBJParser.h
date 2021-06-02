@@ -11,6 +11,7 @@ private:
 
 	std::vector<Vector3D*> vertices;
 	std::vector<Vector3D*> normals;
+	std::vector<Vector3D*> vertice_normals;
 	std::vector<Triangle*> faces;
 public:
 	OBJParser(OBJParser& other) = delete;

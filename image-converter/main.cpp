@@ -15,113 +15,158 @@
 #include "RayTrace/KDTree/KDTree.h"
 #include "RayTrace/Light/DirectionalLight.h"
 #include "RayTrace/Figure/Plane.h"
+//#include "../sceneio/sceneio.h"
 constexpr int multZ = 3;
 constexpr int multX = multZ * 3;
 constexpr int multY = 0.5;
 
+//using namespace scene_format;
+
 int main(int argc, char* argv[]) {
 	try
 	{
-		/*ImageConverter* imageConverter = new ImageConverter(argc, argv);
-		imageConverter->convertImage();*/
+		/*scene_format::Scene scene;
+		scene.set_version(1);
 
-		ServiceContainer DI;
-		DI.set<RayTracer>();
-		/*
-		ConsoleParser* consoleParser = ConsoleParser::GetInstance(argc, argv);
-		DI.set<ConsoleParser*>(consoleParser);
+		auto scene_object = scene.add_scene_objects();
+		scene_object->set_id(0);
 
-		OBJParser* objParser = OBJParser::GetInstance((*(DI.get<ConsoleParser*>()))->pathSource());
-		DI.set<OBJParser*>(std::move(objParser));
-		
-		KDTree* tree = new KDTree({ (*(DI.get<OBJParser*>()))->GetFaces().begin(), (*(DI.get<OBJParser*>()))->GetFaces().end() });
-		DI.set<KDTree*>(std::move(tree));
+		scene_object->mutable_transform()->mutable_position()->set_x(1.0);
+		scene_object->mutable_transform()->mutable_position()->set_y(1.0);
+		scene_object->mutable_transform()->mutable_position()->set_z(1.0);
 
-		DI.set<std::vector<FigureI*>>((*(DI.get<OBJParser*>()))->GetFaces().begin(), (*(DI.get<OBJParser*>()))->GetFaces().end());
+		scene_object->mutable_material()->mutable_specular_reflection();
 
-		ICameraPositionProvider* camera = new StaticCameraPositionProvider();
-		DI.set<ICameraPositionProvider*>(camera);
+		*scene_object->mutable_meshed_object()->mutable_reference() = "cow.obj";
 
-		Vector3D min = DI.get<KDTree*>()[0]->GetRoot()->boundingBox->bounds[0];
-		Vector3D max = DI.get<KDTree*>()[0]->GetRoot()->boundingBox->bounds[1];
-		Vector3D from;
-		switch (DI.get<ConsoleParser*>()[0]->modelSide())
+		auto camera = scene.add_cameras();
+		camera->set_id(0);
+
+		camera->mutable_transform()->mutable_position()->set_x(1.01);
+		camera->mutable_transform()->mutable_position()->set_y(2.76);
+		camera->mutable_transform()->mutable_position()->set_z(3);
+
+		camera->mutable_perspective()->set_fov(60);
+
+		scene_format::SceneIO* io = new scene_format::SceneFormatIO();
+		io->save(scene, "example_binary.cowscene");
+		io->save_as_json(scene, "example_json.cowscene");
+
+		auto read_result_binary = io->read("example_binary.cowscene");
+		std::cout << "Camera X is " << read_result_binary.cameras(0).transform().position().x() << " when reading binary" << std::endl;
+
+		auto read_result_json = io->read("example_json.cowscene");
+		std::cout << "Camera X is " << read_result_json.cameras(0).transform().position().x() << " when reading json" << std::endl;*/
+
+		if (1)
 		{
-		case modelSide::FRONT:
-			from = Vector3D(
-				0,																					// x
-				((max.y - min.y) < 1) ? 9 : ((max.y + min.y) / 2 + (max.y - min.y) * multY),		// y
-				((max.z - min.z) < 1) ? -2 : -((max.z - min.z) * multZ)								// z
+			/*ImageConverter* imageConverter = new ImageConverter(argc, argv);
+			imageConverter->convertImage();*/
+
+			ServiceContainer DI;
+			DI.set<RayTracer>();
+
+			ConsoleParser* consoleParser = ConsoleParser::GetInstance(argc, argv);
+			DI.set<ConsoleParser*>(consoleParser);
+
+			OBJParser* objParser = OBJParser::GetInstance((*(DI.get<ConsoleParser*>()))->pathSource());
+			DI.set<OBJParser*>(std::move(objParser));
+			/*
+			ConsoleParser* consoleParser = ConsoleParser::GetInstance(argc, argv);
+			DI.set<ConsoleParser*>(consoleParser);
+
+			OBJParser* objParser = OBJParser::GetInstance((*(DI.get<ConsoleParser*>()))->pathSource());
+			DI.set<OBJParser*>(std::move(objParser));
+
+			KDTree* tree = new KDTree({ (*(DI.get<OBJParser*>()))->GetFaces().begin(), (*(DI.get<OBJParser*>()))->GetFaces().end() });
+			DI.set<KDTree*>(std::move(tree));
+
+			DI.set<std::vector<FigureI*>>((*(DI.get<OBJParser*>()))->GetFaces().begin(), (*(DI.get<OBJParser*>()))->GetFaces().end());
+
+			ICameraPositionProvider* camera = new StaticCameraPositionProvider();
+			DI.set<ICameraPositionProvider*>(camera);
+
+			Vector3D min = DI.get<KDTree*>()[0]->GetRoot()->boundingBox->bounds[0];
+			Vector3D max = DI.get<KDTree*>()[0]->GetRoot()->boundingBox->bounds[1];
+			Vector3D from;
+			switch (DI.get<ConsoleParser*>()[0]->modelSide())
+			{
+			case modelSide::FRONT:
+				from = Vector3D(
+					0,																					// x
+					((max.y - min.y) < 1) ? 9 : ((max.y + min.y) / 2 + (max.y - min.y) * multY),		// y
+					((max.z - min.z) < 1) ? -2 : -((max.z - min.z) * multZ)								// z
+				);
+				break;
+			case modelSide::BACK:
+				from = Vector3D(
+					0,																					// x
+					((max.y - min.y) < 1) ? 9 : ((max.y + min.y) / 2 + (max.y - min.y) * multY),		// y
+					((max.z - min.z) < 1) ? 2 : ((max.z - min.z) * multZ)								// z
+				);
+				break;
+			case modelSide::LEFT:
+				from = Vector3D(
+					((max.x - min.x) < 1) ? -2 : -((max.x - min.x) * multX),							// x
+					((max.y - min.y) < 1) ? 9 : ((max.y + min.y) / 2 + (max.y - min.y) * multY),		// y
+					0																					// z
+				);
+				break;
+			case modelSide::RIGHT:
+				from = Vector3D(
+					((max.x - min.x) < 1) ? 2 : ((max.x - min.x) * multX),								// x
+					((max.y - min.y) < 1) ? 9 : ((max.y + min.y) / 2 + (max.y - min.y) * multY),		// y
+					0																					// z
+				);
+				break;
+			default:
+				break;
+			}
+			Vector3D to(
+					(max.x + min.x) / 2,
+					(max.y + min.y) / 2,
+					(max.z + min.z) / 2
 			);
-			break;
-		case modelSide::BACK:
-			from = Vector3D(
-				0,																					// x
-				((max.y - min.y) < 1) ? 9 : ((max.y + min.y) / 2 + (max.y - min.y) * multY),		// y
-				((max.z - min.z) < 1) ? 2 : ((max.z - min.z) * multZ)								// z
-			);
-			break;
-		case modelSide::LEFT:
-			from = Vector3D(
-				((max.x - min.x) < 1) ? -2 : -((max.x - min.x) * multX),							// x
-				((max.y - min.y) < 1) ? 9 : ((max.y + min.y) / 2 + (max.y - min.y) * multY),		// y
-				0																					// z
-			);
-			break;
-		case modelSide::RIGHT:
-			from = Vector3D(
-				((max.x - min.x) < 1) ? 2 : ((max.x - min.x) * multX),								// x
-				((max.y - min.y) < 1) ? 9 : ((max.y + min.y) / 2 + (max.y - min.y) * multY),		// y
-				0																					// z
-			);
-			break;
-		default:
-			break;
+
+			Matrix4x4 camToWorld;
+			camToWorld = camToWorld.lookAt(from, to);
+			DI.set<Matrix4x4>(camToWorld);
+			*/
+			std::vector<FigureI*> figures;
+			Sphere* sp1 = new Sphere(Vector3D(2.5, 0, -10), 1, Vector3D(1, 1, 1));
+			sp1->surfType = surfaceType::REFLECT;
+			sp1->ior = 5;
+			figures.push_back(sp1);
+			figures.push_back(new Sphere(Vector3D(5, 0, -50), 5, Vector3D(1, 0.1, 0.1)));
+			Triangle* trig = new Triangle(Vector3D(0, 2, -22), Vector3D(-2.5, -2, -20), Vector3D(2.5, -2, -20), Vector3D(1, 1, 1));
+			//trig->setDotNormals(Vector3D(0,-1 , 0.5).normalize(), Vector3D(0, 1, -0.5).normalize(), Vector3D(1, 1, -0.5).normalize());
+			float mat[3][3] = { { 0.86602540378, -0.5,0 }, { 0.5, 0.86602540378,0 }, {0, 0, 1} };
+			MatrixTRS trs = MatrixTRS(mat, Vector3D(0, 0, 0), Vector3D(1, 1, 1));
+			trig->transform(trs);
+			//figures.push_back(trig);
+			//figures.push_back(new Triangle(Vector3D(2.5, 0, -10), Vector3D(2.5, 0, -10), Vector3D(2.5, 0, -10), Vector3D(1, 0.1, 0.1)));
+			Sphere* sp = new Sphere(Vector3D(-2.5, 0, -10), 1, Vector3D(1, 1, 1));
+			sp->surfType = surfaceType::SP;
+			//sp->transform(trs);
+			figures.push_back(sp);
+			/*Sphere* sp1 = new Sphere(Vector3D(0, 0, -5), 1, Vector3D(0.1, 1, 0.1));
+			sp1->surfType = surfaceType::REFLECT_AND_REFRACT;
+			sp1->ior = 1.5;
+			figures.push_back(sp1);*/
+			figures.push_back(new Plane());
+			DI.set<std::vector<FigureI*>>(figures);
+			ICameraPositionProvider* camera = new StaticCameraPositionProvider();
+			DI.set<ICameraPositionProvider*>(camera);
+			std::vector<ILight*> lights;
+			lights.push_back(new PointLight(Vector3D(1, 1, 1), 800, Vector3D(0, 10, -10)));
+			//lights.push_back(new PointLight(Vector3D(1, 1, 1), 800, Vector3D(-10, 10, -10)));
+			//lights.push_back(new DirectionalLight(Vector3D(1, 1, 1),0.5,Vector3D(0, 1, 0)));
+			DI.set<std::vector<ILight*>>(lights);
+
+			DI.set<IRayProvider*>(new PerspectiveRayProvider(DI.get<ICameraPositionProvider*>()[0]));
+
+			DI.get<RayTracer>()->render(DI);
 		}
-		Vector3D to(
-				(max.x + min.x) / 2,
-				(max.y + min.y) / 2,
-				(max.z + min.z) / 2
-		);
-
-		Matrix4x4 camToWorld;
-		camToWorld = camToWorld.lookAt(from, to);
-		DI.set<Matrix4x4>(camToWorld);
-		*/
-		std::vector<FigureI*> figures;
-		Sphere* sp1 = new Sphere(Vector3D(2.5, 0, -10), 1, Vector3D(1, 1, 1));
-		sp1->surfType = surfaceType::REFLECT;
-		sp1->ior = 5;
-		figures.push_back(sp1);
-		figures.push_back(new Sphere(Vector3D(5, 0, -50), 5, Vector3D(1, 0.1, 0.1)));
-		Triangle* trig = new Triangle(Vector3D(0, 2, -22), Vector3D(-2.5, -2, -20), Vector3D(2.5, -2, -20), Vector3D(1, 1, 1));
-		//trig->setDotNormals(Vector3D(0,-1 , 0.5).normalize(), Vector3D(0, 1, -0.5).normalize(), Vector3D(1, 1, -0.5).normalize());
-		float mat[3][3] = { { 0.86602540378, -0.5,0 }, { 0.5, 0.86602540378,0 }, {0, 0, 1} };
-		MatrixTRS trs = MatrixTRS(mat,Vector3D(0,0,0), Vector3D(1, 1,1));
-		trig->transform(trs);
-		//figures.push_back(trig);
-		//figures.push_back(new Triangle(Vector3D(2.5, 0, -10), Vector3D(2.5, 0, -10), Vector3D(2.5, 0, -10), Vector3D(1, 0.1, 0.1)));
-		Sphere* sp = new Sphere(Vector3D(-2.5, 0, -10), 1, Vector3D(1, 1,1));
-		sp->surfType = surfaceType::SP;
-		//sp->transform(trs);
-		figures.push_back(sp);
-		/*Sphere* sp1 = new Sphere(Vector3D(0, 0, -5), 1, Vector3D(0.1, 1, 0.1));
-		sp1->surfType = surfaceType::REFLECT_AND_REFRACT;
-		sp1->ior = 1.5;
-		figures.push_back(sp1);*/
-		figures.push_back(new Plane());
-		DI.set<std::vector<FigureI*>>(figures);
-		ICameraPositionProvider* camera = new StaticCameraPositionProvider();
-		DI.set<ICameraPositionProvider*>(camera);
-		std::vector<ILight*> lights;
-		lights.push_back(new PointLight(Vector3D(1, 1, 1),800,  Vector3D(0,10,-10)));
-		//lights.push_back(new PointLight(Vector3D(1, 1, 1), 800, Vector3D(-10, 10, -10)));
-		//lights.push_back(new DirectionalLight(Vector3D(1, 1, 1),0.5,Vector3D(0, 1, 0)));
-		DI.set<std::vector<ILight*>>(lights);
-
-		DI.set<IRayProvider*>(new PerspectiveRayProvider(DI.get<ICameraPositionProvider*>()[0]));
-
-		DI.get<RayTracer>()->render(DI);
 	}
 	catch (const std::exception& e)
 	{

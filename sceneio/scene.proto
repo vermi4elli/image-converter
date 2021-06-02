@@ -1,0 +1,358 @@
+syntax = "proto3";
+
+package scene_format;
+option java_package = "com.github.computergraphicscourse.sceneformat";
+option java_outer_classname = "SceneFormat";
+
+message Scene {
+  int32 version = 1; // "1" is the only allowed value at the moment.
+  RenderOptions render_options = 2;
+  repeated SceneObject scene_objects = 3;
+  repeated Light lights = 4;
+  repeated Camera cameras = 5;
+  repeated Material materials = 6;
+}
+
+// Representation of 3D vectors and points
+message Vector3 {
+  double x = 1;
+  double y = 2;
+  double z = 3;
+}
+
+/*
+Representation of RGB colors.
+Components should be greater or equal 0. No upper bound
+(0, 0, 0) - white
+(1, 1, 1) - black
+All values greater than 1 should be mapped to range [0, 1] by using gamma correction or just clamping values
+*/
+message Color {
+  double r = 1;
+  double g = 2;
+  double b = 3;
+}
+
+/*
+Position, rotation and scale of an object
+To calculate transformation matrix:
+<ul>
+  <li>create translation matrix using position</li>
+  <li>create rotation matrix using rotation</li>
+  <li>create scale matrix using scale</li>
+  <li>multiple 3 matrices to get final matrix</li>
+</ul>
+Process using parent is specified below
+
+Right vector can be extracted
+from 1st column of the matrix if your renderer uses column-major conversion 
+from 1st row of the matrix if your renderer uses row-major conversion 
+
+Up vector can be extracted
+from 2nd column of the matrix if your renderer uses column-major conversion 
+from 2nd row of the matrix if your renderer uses row-major conversion
+
+Forward vector can be extracted
+from 3rd column of the matrix if your renderer uses column-major conversion 
+from 3rd row of the matrix if your renderer uses row-major conversion 
+
+<a href="https://www.scratchapixel.com/lessons/mathematics-physics-for-computer-graphics/geometry/how-does-matrix-work-part-1">Detailed explanation</a> about matrices
+<a href="https://www.scratchapixel.com/lessons/mathematics-physics-for-computer-graphics/geometry/row-major-vs-column-major-vector">Explanation</a> about different conversions
+*/
+message Transform {
+  /*
+  @default (0, 0, 0)
+  */
+  Vector3 position = 2;
+  /*
+  @default (0, 0, 0)
+  Rotation in euler angles.
+  Can be negative or positive.
+  Angles are measured counterclockwise.
+  */
+  Vector3 rotation = 3;
+  /*
+  @default (1, 1, 1)
+  */
+  Vector3 scale = 4;
+  /*
+  @optional
+  @default 0
+  Id of parent relative to which transformation should be applied.
+  If parent_id is 0 transformation is specified in world space.
+  To correctly apply transformation you should build a tree structure representing relationships between objects.
+  Then from top to bottom create transformation matrix.
+  If object has parent: multiply parent's matrix by object's matrix to get final matrix
+  */
+  int32 parent_id = 5;
+}
+
+/*
+Default options for rendering scene.
+Can be overridden in renderer
+*/
+message RenderOptions {
+  /*
+  @default 1
+  Camera from which scene should be rendered
+  */
+  int32 camera_id = 1;
+  /*
+  @default 640
+  Width of final image
+  */
+  int32 width = 2;
+  /*
+  @default 320
+  Height of final image
+  */
+  int32 height = 3;
+
+  /*
+  @optional
+  Can be used as a map containing custom properties specific to renderer implementation.
+  If you are using this field, consider adding it to the format spec as a regular field if you think that
+  other implementations may benefit from your custom fields.
+  */
+  repeated CustomProperty custom_properties = 4;
+}
+
+/*
+Representation of cube (rectangular parallelepiped, to be precise.)
+To determine the position of a cube look at Transform.position
+Transform.scale should be ignored
+If your renderer supports only axis aligned box Transform.rotation should be ignored
+For more detailed explanation about aabb follow <a href="https://www.scratchapixel.com/lessons/3d-basic-rendering/minimal-ray-tracer-rendering-simple-shapes/ray-box-intersection">link</a>
+For those who dare to support oriented bounding box here <a href="http://www.opengl-tutorial.org/miscellaneous/clicking-on-objects/picking-with-custom-ray-obb-function/">link</a> how obb is implemented in opengl
+*/
+message Cube {
+  /*
+  @default (1, 1, 1)
+  Size of cube in each dimension (in other words, you can view vector components as the length of parallelepiped sides)
+  */
+  Vector3 size = 1;
+}
+
+/*
+Representation of sphere
+Transform.scale should be ignored
+To determine the position of a sphere look at Transform.position
+For more detailed explanation follow <a href="https://www.scratchapixel.com/lessons/3d-basic-rendering/minimal-ray-tracer-rendering-simple-shapes/ray-sphere-intersection">link</a>
+*/
+message Sphere {
+  /*
+  @default 1
+  Radius of sphere
+  */
+  double radius = 1;
+}
+
+/*
+Representation of plane - unbound surface defined by point and normal
+To determine the position of a plane look at Transform.position
+To determine the normal of a plane look at Transform.up
+For more detailed explanation follow <a href="https://www.scratchapixel.com/lessons/3d-basic-rendering/minimal-ray-tracer-rendering-simple-shapes/ray-plane-and-ray-disk-intersection">link</a>
+*/
+message Plane {}
+
+/*
+Representation of disk - surface defined by point and normal with limited radius
+To determine the position of a disk look at Transform.position
+To determine the normal of a disk look at Transform.up
+For more detailed explanation follow <a href="https://www.scratchapixel.com/lessons/3d-basic-rendering/minimal-ray-tracer-rendering-simple-shapes/ray-plane-and-ray-disk-intersection">link</a>
+*/
+message Disk {
+  /*
+  @default 1
+  Radius of disk
+  */
+  double radius = 1;
+}
+
+// Mesh specified in obj file 
+message MeshedObject {
+  /*
+  Reference to obj file.
+  Absolute or relative path 
+  */
+  string reference = 2;
+}
+
+// Representation of object to render.
+// A sceneObject is one of the main things of this format. It describes all the required fields to use if you want to render something.
+// Using this fields you can render a transformed object of any type with applied material.
+//
+// SceneObject contains:
+// - id: defines the id which is unique across the scene.
+// - transform: this part has all data for transformation of the object.
+// - material: this part contains information about the material, which should be applied to object.
+// - mesh: this is the object itself.
+message SceneObject {
+  /*
+  Object id in scene.
+  Should be equal or greater than 1.
+  Should be unique across all Camera, Light and SceneObject
+  */
+  int32 id = 1;
+  Transform transform = 2;
+
+  oneof object_material {
+    // @oneof 2 material
+    // Reference to a material in the array of materials
+    string material_id = 3;
+    Material material = 4; // @oneof_item
+  }
+
+  oneof mesh {
+    Sphere sphere = 5; // @oneof 5 mesh
+    Cube cube = 6; // @oneof_item
+    Plane plane = 7; // @oneof_item
+    Disk disk = 8; // @oneof_item
+    MeshedObject meshed_object = 9; // @oneof_item
+  }
+}
+
+/*
+Representation of directional light
+To determine the direction of a light look at Transform.forward
+For more detailed explanation follow <a href="https://www.scratchapixel.com/lessons/3d-basic-rendering/introduction-to-shading/shading-lights">link</a>
+*/
+message LightDirectional {}
+
+/*
+Representation of point light
+To determine the position of a light look at Transform.position
+For more detailed explanation follow <a href="https://www.scratchapixel.com/lessons/3d-basic-rendering/introduction-to-shading/shading-spherical-light">link</a>
+In article above this light source is named spherical light but it is actually a point light
+*/
+message LightPoint {}
+
+/*
+Representation of environment light
+<b>No transformation should be applied</b>
+Direction is determined randomly
+For more detailed explanation follow <a href="https://pbr-book.org/3ed-2018/Light_Sources/Infinite_Area_Lights">link</a>
+*/
+message LightEnvironment {}
+
+/*
+@optional
+Representation of sphere light
+*/
+message LightSphere {
+  /*
+  @default 1
+  Radius of source light
+  */
+  double radius = 1;
+}
+
+// Representation of light
+message Light {
+  /*
+  Object id in scene.
+  Should be equal or greater than 1.
+  Should be unique across all Camera, Light and SceneObject
+  */
+  int32 id = 1;
+  Transform transform = 3;
+  /*
+  @default (1, 1, 1)
+  Color of source light
+  */
+  Color color = 4;
+  oneof light {
+    LightPoint point = 5; // @oneof 4 light
+    LightDirectional directional = 6; // @oneof_item
+    LightSphere sphere = 7; // @oneof_item @optional
+    LightEnvironment environment = 8; // @oneof_item
+  }
+}
+
+// Representation of perspective camera
+message PerspectiveCamera {
+  /*
+  @default 60
+  Horizontal field of view
+  Should be in range (0, 180)
+  */
+  double fov = 1;
+}
+
+/*
+@optional
+Representation of orthographic camera
+*/
+message OrthographicCamera {}
+
+/*
+Representation of camera
+Camera can be transformed as any other point is space using transformation matrix
+and camera viewport is located along negative z-axis
+For more detailed explanation follow <a href="https://www.scratchapixel.com/lessons/3d-basic-rendering/computing-pixel-coordinates-of-3d-point/mathematics-computing-2d-coordinates-of-3d-points#:~:text=camera%20coordinate%20system%20and%20camera%20space">link</a>
+*/
+message Camera {
+  /*
+  Object id in scene.
+  Should be equal or greater than 1.
+  Should be unique across all Camera, Light and SceneObject
+  */
+  int32 id = 1;
+  Transform transform = 2;
+  oneof camera {
+    PerspectiveCamera perspective = 3; // @oneof 2 camera
+    // @oneof_item
+    // @optional
+    OrthographicCamera orthographic = 4;
+  }
+}
+
+/*
+Representation of material
+For more detailed explanation follow <a href="https://www.scratchapixel.com/lessons/3d-basic-rendering/phong-shader-BRDF">link</a>
+or this <a href="https://pbr-book.org/3ed-2018/Reflection_Models">link</a>
+*/
+message Material {
+  string id = 1;
+  oneof material {
+    LambertReflectionMaterial lambert_reflection = 2; // @oneof 2 material
+    SpecularReflectionMaterial specular_reflection = 3; // @oneof_item
+  }
+}
+
+/*
+Representation of Lambert material
+This material reflects light in all directions with equal probability
+For more detailed explanation follow <a href="https://pbr-book.org/3ed-2018/Reflection_Models/Lambertian_Reflection">link</a>
+*/
+message LambertReflectionMaterial {
+  Color color = 1;
+}
+
+/*
+Representation of specular reflection material
+This material reflects light strictly in one direction which can be found by reflecting ray direction around normal
+For more detailed explanation follow <a href="https://pbr-book.org/3ed-2018/Reflection_Models/Specular_Reflection_and_Transmission">link</a>
+*/
+message SpecularReflectionMaterial {
+  /*
+  @default 1.5
+  @optional
+  Index of refraction
+  The index of refraction describes how much more slowly light travels in a particular medium than in a vacuum
+  <a href="https://en.wikipedia.org/wiki/List_of_refractive_indices">Index of refraction for different medium</a>
+  */
+  double eta = 1;
+}
+
+/*
+Custom properties can be used to extend format in ways specific to implementation.
+Please consider opening a PR/issue in format repo if you think your property would better be a regular field.
+*/
+message CustomProperty {
+  string key = 1;
+  oneof value {
+    string text_value = 2; // @oneof 2 value
+    int32 int32_value = 3; // @oneof_item
+  }
+}

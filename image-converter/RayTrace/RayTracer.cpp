@@ -7,6 +7,7 @@
 #include <stdio.h>      
 #include <stdlib.h>     
 #include <time.h>    
+#include <algorithm>
 
 Intersection RayTracer::trace(Vector3D originray, Vector3D directionray, std::vector<FigureI*> figures) {
 

@@ -43,6 +43,11 @@ OBJParser::OBJParser(const std::string& inputPath)
 		}
 		else if (line[0] == 'f')
 		{
+			if (vertice_normals.empty())
+			{
+				vertice_normals.resize(normals.size());
+			}
+
 			boost::split(splitVertVec, line.substr(2), boost::is_any_of(" "), boost::token_compress_on);
 			for (auto& i : splitVertVec)
 			{
@@ -52,6 +57,7 @@ OBJParser::OBJParser(const std::string& inputPath)
 
 					vs.push_back(atoi(splitVertNormVec[0].c_str()));
 					if (normals.size() > 1) ns.push_back(atoi(splitVertNormVec[1].c_str()));
+					if (normals.size() > 1) vertice_normals[std::stoi(splitVertNormVec[0])] = normals[atoi(splitVertNormVec[1].c_str())];
 
 					splitVertNormVec.clear();
 				}
@@ -62,7 +68,7 @@ OBJParser::OBJParser(const std::string& inputPath)
 			}
 
 			if (normals.size() > 1) faces.push_back(new Triangle(*vertices[vs[0]], *vertices[vs[1]], *vertices[vs[2]],
-				Vector3D(0.32, 1, 0.32), *normals[ns[0]]));
+				Vector3D(0.32, 1, 0.32), *normals[ns[0]], *vertice_normals[vs[0]], *vertice_normals[vs[1]], *vertice_normals[vs[2]]));
 			else faces.push_back(new Triangle(*vertices[vs[0]], *vertices[vs[1]], *vertices[vs[2]],
 				Vector3D(0.32, 1, 0.32)));
 

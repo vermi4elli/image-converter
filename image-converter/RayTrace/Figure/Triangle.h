@@ -20,7 +20,7 @@ public:
     Vector3D normal;
     bool dotNormals = false;
     Vector3D median;
-    Triangle(Vector3D a, Vector3D b, Vector3D c, Vector3D sc = Vector3D(0), Vector3D normal_ = Vector3D(0)) {
+    Triangle(Vector3D a, Vector3D b, Vector3D c, Vector3D sc = Vector3D(0), Vector3D normal_ = Vector3D(0), Vector3D normal_a = Vector3D(0), Vector3D normal_b = Vector3D(0), Vector3D normal_c = Vector3D(0)) {
         this->a = a;
         this->b = b;
         this->c = c;
@@ -31,6 +31,9 @@ public:
             Vector3D edge2 = c - a;
             normal = edge1.crossprod(edge2);
         };
+        a_norm = normal_a;
+        b_norm = normal_b;
+        c_norm = normal_c;
         median = Vector3D((a.x + b.x + c.x) / 3, (a.y + b.y + c.y) / 3, (a.z + b.z + c.z) / 3);
     };
     bool intersect(Vector3D& originray, Vector3D& directionray, intersectParameters& param, float& t0, float& t1) const;

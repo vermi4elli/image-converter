@@ -97,13 +97,21 @@ int main(int argc, char* argv[]) {
 		//figures.push_back(sp1);
 		//figures.push_back(new Sphere(Vector3D(0, 0, -50), 3, Vector3D(1, 0.1, 0.1)));
 		Triangle* trig = new Triangle(Vector3D(0, 2, 1), Vector3D(-2.5, -2, 1), Vector3D(2.5, -2, 1), Vector3D(1, 0.32, 0.32));
-		trig->setDotNormals(Vector3D(0,-1 ,1).normalize(), Vector3D(0, 0.5, -1).normalize(), Vector3D(1, 1, -1).normalize());
+		//trig->setDotNormals(Vector3D(0,-1 ,1).normalize(), Vector3D(0, 0.5, -1).normalize(), Vector3D(1, 1, -1).normalize());
 		//trig->surfType = surfaceType::REFLECT_AND_REFRACT;
 		float mat[3][3] = {
 			{ 0.86602540378, 0,-0.5 },
 			{0, 1,0 },
 			{ 0.5, 0, 0.86602540378} };
-		MatrixTRS trs = MatrixTRS(mat,Vector3D(0,0,-10), Vector3D(1, 1,1));
+		MatrixTRS trs = MatrixTRS(mat,Vector3D(0,0,-15), Vector3D(1, 1,1));
+		trig->transform(trs);
+		figures.push_back(trig);
+		trig = new Triangle(Vector3D(0, 2, 1), Vector3D(-2.5, -2, 1), Vector3D(-5, -2, 1), Vector3D(1, 0.32, 0.32));
+		//trig->setDotNormals(Vector3D(0, -1, 1).normalize(), Vector3D(0, 0.5, -1).normalize(), Vector3D(1, 1, -1).normalize());
+		trig->transform(trs);
+		figures.push_back(trig);
+		trig = new Triangle(Vector3D(0, 2, 1), Vector3D(5, -2, 1), Vector3D(2.5, -2, 1), Vector3D(1, 0.32, 0.32));
+		//trig->setDotNormals(Vector3D(0, -1, 1).normalize(), Vector3D(0, 0.5, -1).normalize(), Vector3D(1, 1, -1).normalize());
 		trig->transform(trs);
 		figures.push_back(trig);
 		//figures.push_back(new Triangle(Vector3D(2.5, 0, -10), Vector3D(2.5, 0, -10), Vector3D(2.5, 0, -10), Vector3D(1, 0.1, 0.1)));

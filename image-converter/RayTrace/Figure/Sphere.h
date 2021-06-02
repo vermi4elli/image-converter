@@ -6,8 +6,8 @@
 
 class Sphere : public FigureI{
 public:
-    Vector3D center;                           /// position of the sphere 
-    float radius, radius2;                  /// sphere radius and radius^2 
+    Vector3D center;                        
+    float radius, radius2;                  
 
     Sphere(
         const Vector3D& c,
@@ -16,8 +16,15 @@ public:
         center(c), radius(r), radius2(r* r){
         surfaceColor = sc;
     };
+    void transform(MatrixTRS m) {
+        center = m.mult(center);
+        Vector3D v(1);
+        v = m.toscale(v);
+        radius *= v.x;
+        radius2 = radius* radius;
 
-    bool intersect(Vector3D& originray, Vector3D& directionray, float& t0, float& t1) const
+    };
+    bool intersect(Vector3D& originray, Vector3D& directionray, intersectParameters& param, float& t0, float& t1) const
     {
         Vector3D l = center - originray;
         float tca = l.dot(directionray);
@@ -27,7 +34,13 @@ public:
         float thc = sqrt(radius2 - d2);
         t0 = tca - thc;
         t1 = tca + thc;
-
+        float tNear = t0 < 0 ? t1 : t0;
+        Vector3D phit = originray + directionray * tNear;
+        param = intersectParameters(
+                tNear,
+                phit,
+                getnormal(phit)
+            );
         return true;
     }
     Vector3D getnormal(Vector3D& hitpoint) const {

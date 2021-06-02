@@ -121,12 +121,12 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\local\boost_1_75_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\boost_1_75_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\local\boost_1_75_0\stage\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\boost_1_75_0\stage\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -178,15 +178,18 @@
     <ClInclude Include="RayTrace\Figure\Cube.h" />
     <ClInclude Include="RayTrace\Figure\FigureI.h" />
     <ClInclude Include="RayTrace\Figure\MatrixTRS.h" />
+    <ClInclude Include="RayTrace\Figure\Plane.h" />
     <ClInclude Include="RayTrace\Figure\Sphere.h" />
     <ClInclude Include="RayTrace\Figure\Triangle.h" />
     <ClInclude Include="RayTrace\KDTree\KDTree.h" />
+    <ClInclude Include="RayTrace\Light\DirectionalLight.h" />
     <ClInclude Include="RayTrace\Light\ILight.h" />
     <ClInclude Include="RayTrace\Light\PointLight.h" />
     <ClInclude Include="RayTrace\Matrix4x4.h" />
     <ClInclude Include="RayTrace\RayProvider\IRayProvider.h" />
     <ClInclude Include="RayTrace\RayProvider\PerspectiveRayProvider.h" />
     <ClInclude Include="RayTrace\RayTracer.h" />
+    <ClInclude Include="RayTrace\SceneFormat\SceneReader.h" />
     <ClInclude Include="RayTrace\Vector3D.h" />
   </ItemGroup>
   <ItemGroup>
